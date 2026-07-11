@@ -1,0 +1,16 @@
+---
+import { render } from 'astro:content';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import { getCollectionStaticPaths } from '../../lib/content';
+
+export async function getStaticPaths() {
+	return getCollectionStaticPaths('projects');
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ProjectLayout entry={entry}>
+	<Content />
+</ProjectLayout>

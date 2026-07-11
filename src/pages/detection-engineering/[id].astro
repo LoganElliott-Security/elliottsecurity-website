@@ -1,0 +1,16 @@
+---
+import { render } from 'astro:content';
+import DetectionLayout from '../../layouts/DetectionLayout.astro';
+import { getCollectionStaticPaths } from '../../lib/content';
+
+export async function getStaticPaths() {
+	return getCollectionStaticPaths('detections');
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<DetectionLayout entry={entry}>
+	<Content />
+</DetectionLayout>

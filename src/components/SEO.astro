@@ -1,0 +1,42 @@
+---
+import { getSeoMetadata, type SeoInput } from '../lib/seo';
+import { SITE } from '../config/site';
+
+interface Props extends SeoInput {}
+
+const seo = getSeoMetadata(Astro.props);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+<meta name="description" content={seo.description} />
+<meta name="author" content={SITE.author.name} />
+<meta name="keywords" content={SITE.keywords.join(', ')} />
+<link rel="canonical" href={seo.canonical} />
+
+{seo.noindex ? (
+	<meta name="robots" content="noindex, nofollow" />
+) : (
+	<meta name="robots" content="index, follow, max-image-preview:large" />
+)}
+
+<meta property="og:title" content={seo.ogTitle} />
+<meta property="og:description" content={seo.ogDescription} />
+<meta property="og:type" content={seo.ogType} />
+<meta property="og:url" content={seo.canonical} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:image" content={seo.ogImage} />
+<meta property="og:image:alt" content={seo.ogTitle} />
+
+<meta name="twitter:card" content={seo.twitterCard} />
+<meta name="twitter:title" content={seo.ogTitle} />
+<meta name="twitter:description" content={seo.ogDescription} />
+<meta name="twitter:image" content={seo.ogImage} />
+<meta name="twitter:image:alt" content={seo.ogTitle} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#08080d" />

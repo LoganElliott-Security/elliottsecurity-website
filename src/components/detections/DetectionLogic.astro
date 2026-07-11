@@ -1,0 +1,24 @@
+---
+import type { DetectionLogicBlock } from '../../types/detection';
+import CodeBlock from './CodeBlock.astro';
+
+interface Props {
+	blocks: DetectionLogicBlock[];
+}
+
+const { blocks } = Astro.props;
+---
+
+<div class="space-y-6">
+	{
+		blocks.map((block) => (
+			<CodeBlock
+				language={block.language}
+				title={block.title}
+				code={block.code}
+				fileName={block.fileName}
+				downloadPath={block.downloadPath}
+			/>
+		))
+	}
+</div>

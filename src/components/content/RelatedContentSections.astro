@@ -1,0 +1,61 @@
+---
+import ContentCard from './ContentCard.astro';
+import ContentGrid from './ContentGrid.astro';
+import type { ScoredRelatedEntry } from '../../types/knowledge';
+import { toContentCardProps } from '../../lib/knowledge';
+
+interface SectionConfig {
+	title: string;
+	items: ScoredRelatedEntry[];
+}
+
+interface Props {
+	all: ScoredRelatedEntry[];
+	articles: ScoredRelatedEntry[];
+	projects: ScoredRelatedEntry[];
+	threatHunts: ScoredRelatedEntry[];
+	detections: ScoredRelatedEntry[];
+	homelab: ScoredRelatedEntry[];
+}
+
+const { all, articles, projects, threatHunts, detections, homelab } = Astro.props;
+
+const sections: SectionConfig[] = [
+	{ title: 'Related Content', items: all },
+	{ title: 'Related Articles', items: articles },
+	{ title: 'Related Projects', items: projects },
+	{ title: 'Related Threat Hunts', items: threatHunts },
+	{ title: 'Related Detections', items: detections },
+	{ title: 'Related Homelab', items: homelab },
+].filter((section) => section.items.length > 0);
+---
+
+{
+	sections.length > 0 && (
+		<div class="mt-16 space-y-12 border-t border-border-subtle pt-12">
+			{sections.map((section) => (
+				<section aria-labelledby={`related-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>
+					<h2
+						id={`related-${section.title.toLowerCase().replace(/\s+/g, '-')}`}
+						class="mb-6 text-xl font-semibold text-foreground"
+					>
+						{section.title}
+					</h2>
+					<ContentGrid columns={section.items.length === 1 ? 1 : 3}>
+						{section.items.map((item) => {
+							const card = toContentCardProps(item.collection, item.entry);
+							return (
+								<ContentCard
+									title={card.title}
+									description={card.description}
+									href={card.href}
+									tags={card.tags}
+								/>
+							);
+						})}
+					</ContentGrid>
+				</section>
+			))}
+		</div>
+	)
+}

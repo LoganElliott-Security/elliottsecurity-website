@@ -1,0 +1,16 @@
+---
+import { render } from 'astro:content';
+import ThreatHuntLayout from '../../layouts/ThreatHuntLayout.astro';
+import { getCollectionStaticPaths } from '../../lib/content';
+
+export async function getStaticPaths() {
+	return getCollectionStaticPaths('threat-hunts');
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ThreatHuntLayout entry={entry}>
+	<Content />
+</ThreatHuntLayout>

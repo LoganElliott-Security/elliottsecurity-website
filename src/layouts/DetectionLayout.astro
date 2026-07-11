@@ -1,0 +1,168 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import RelatedContentSections from '../components/content/RelatedContentSections.astro';
+import TagList from '../components/content/TagList.astro';
+import DetectionCoverage from '../components/detections/DetectionCoverage.astro';
+import DetectionLogic from '../components/detections/DetectionLogic.astro';
+import DetectionMetadata from '../components/detections/DetectionMetadata.astro';
+import DetectionRelated from '../components/detections/DetectionRelated.astro';
+import DetectionSection from '../components/detections/DetectionSection.astro';
+import DetectionTimeline from '../components/detections/DetectionTimeline.astro';
+import FalsePositiveCard from '../components/detections/FalsePositiveCard.astro';
+import MITREMatrix from '../components/detections/MITREMatrix.astro';
+import ReferenceList from '../components/detections/ReferenceList.astro';
+import TestingProcedure from '../components/detections/TestingProcedure.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import Container from '../components/ui/Container.astro';
+import Section from '../components/ui/Section.astro';
+import { COLLECTION_ROUTES } from '../types/content';
+import { getEntryUrl } from '../lib/content';
+import {
+	resolveDetectionRelated,
+	sortRevisionsDesc,
+} from '../lib/detections';
+import { getDetailPageRelatedSections } from '../lib/knowledge';
+import {
+	buildBreadcrumbSchema,
+	buildDetailBreadcrumbs,
+	buildWebPageSchema,
+} from '../lib/structured-data';
+
+interface Props {
+	entry: CollectionEntry<'detections'>;
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+const {
+	title,
+	description,
+	tags,
+	coverImage,
+	detectionLogic = [],
+	falsePositives = [],
+	testingProcedure,
+	tuningGuidance,
+	detectionCoverage = [],
+	revisions = [],
+	mitreTechniques = [],
+	references = [],
+} = data;
+
+const route = COLLECTION_ROUTES.detections;
+const pageUrl = getEntryUrl('detections', entry);
+const sortedRevisions = sortRevisionsDesc(revisions);
+const explicitRelated = await resolveDetectionRelated(entry);
+const knowledgeRelated = await getDetailPageRelatedSections('detections', entry);
+const breadcrumbs = buildDetailBreadcrumbs('detections', entry, route.label, route.path);
+const structuredData = [
+	buildWebPageSchema({ title, description, url: pageUrl }),
+	buildBreadcrumbSchema(breadcrumbs),
+];
+---
+
+<BaseLayout title={title} description={description} image={coverImage}>
+	<StructuredData slot="head" data={structuredData} />
+	<Section background="default" padding={true}>
+		<Container size="narrow">
+			<article>
+				<Breadcrumbs items={breadcrumbs} />
+
+				<header class="mb-10 border-b border-border-subtle pb-8">
+					<p class="mb-3 text-sm font-medium uppercase tracking-widest text-accent">Detection Engineering</p>
+					<h1 class="text-balance text-foreground">{title}</h1>
+					<p class="mt-4 text-lg">{description}</p>
+					<div class="mt-6">
+						<DetectionMetadata entry={entry} />
+					</div>
+					{tags.length > 0 && <TagList tags={tags} class="mt-6" />}
+				</header>
+
+				{
+					sortedRevisions.length > 0 && (
+						<DetectionSection title="Revision History" id="detection-revisions">
+							<DetectionTimeline revisions={sortedRevisions} />
+						</DetectionSection>
+					)
+				}
+
+				{
+					detectionCoverage.length > 0 && (
+						<DetectionSection title="Detection Coverage" id="detection-coverage">
+							<DetectionCoverage coverage={detectionCoverage} />
+						</DetectionSection>
+					)
+				}
+
+				{
+					detectionLogic.length > 0 && (
+						<DetectionSection title="Detection Logic" id="detection-logic">
+							<DetectionLogic blocks={detectionLogic} />
+						</DetectionSection>
+					)
+				}
+
+				{
+					falsePositives.length > 0 && (
+						<DetectionSection title="False Positives" id="detection-false-positives">
+							<div class="space-y-4">
+								{falsePositives.map((item) => (
+									<FalsePositiveCard item={item} />
+								))}
+							</div>
+						</DetectionSection>
+					)
+				}
+
+				{
+					tuningGuidance && (
+						<DetectionSection title="Tuning Guidance" id="detection-tuning">
+							<p class="text-sm leading-relaxed">{tuningGuidance}</p>
+						</DetectionSection>
+					)
+				}
+
+				{
+					testingProcedure && (
+						<DetectionSection title="Testing Procedure" id="detection-testing">
+							<TestingProcedure procedure={testingProcedure} />
+						</DetectionSection>
+					)
+				}
+
+				{
+					mitreTechniques.length > 0 && (
+						<DetectionSection title="MITRE ATT&CK Mapping" id="detection-mitre">
+							<MITREMatrix techniques={mitreTechniques} />
+						</DetectionSection>
+					)
+				}
+
+				<div class="content-prose mt-10 border-t border-border-subtle pt-10">
+					<slot />
+				</div>
+
+				{
+					references.length > 0 && (
+						<DetectionSection title="References" id="detection-references">
+							<ReferenceList references={references} />
+						</DetectionSection>
+					)
+				}
+
+				<DetectionRelated related={explicitRelated} />
+
+				<RelatedContentSections
+					all={knowledgeRelated.all}
+					articles={knowledgeRelated.articles}
+					projects={knowledgeRelated.projects}
+					threatHunts={knowledgeRelated.threatHunts}
+					detections={knowledgeRelated.detections}
+					homelab={knowledgeRelated.homelab}
+				/>
+			</article>
+		</Container>
+	</Section>
+</BaseLayout>

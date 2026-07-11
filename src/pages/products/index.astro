@@ -1,0 +1,27 @@
+---
+import ContentCard from '../../components/content/ContentCard.astro';
+import CollectionListingLayout from '../../layouts/CollectionListingLayout.astro';
+import { formatLabel, getEntryUrl, getPublishedCollection } from '../../lib/content';
+
+const products = await getPublishedCollection('products');
+---
+
+<CollectionListingLayout
+	eyebrow="Products"
+	title="Products"
+	description="Guides, templates, downloads, and open-source resources."
+	path="/products"
+	isEmpty={products.length === 0}
+>
+	{
+		products.map((product) => (
+			<ContentCard
+				title={product.data.title}
+				description={product.data.description}
+				href={getEntryUrl('products', product)}
+				meta={`${product.data.price} · ${formatLabel(product.data.status)}`}
+				tags={product.data.tags}
+			/>
+		))
+	}
+</CollectionListingLayout>

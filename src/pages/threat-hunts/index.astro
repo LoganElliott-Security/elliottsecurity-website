@@ -1,0 +1,27 @@
+---
+import ContentCard from '../../components/content/ContentCard.astro';
+import CollectionListingLayout from '../../layouts/CollectionListingLayout.astro';
+import { formatDate, getEntryUrl, getPublishedCollection, sortByDateDesc } from '../../lib/content';
+
+const hunts = sortByDateDesc(await getPublishedCollection('threat-hunts'), 'huntDate');
+---
+
+<CollectionListingLayout
+	eyebrow="Threat Hunting"
+	title="Threat Hunts"
+	description="Documented investigations with hypothesis, methodology, and lessons learned."
+	path="/threat-hunts"
+	isEmpty={hunts.length === 0}
+>
+	{
+		hunts.map((hunt) => (
+			<ContentCard
+				title={hunt.data.title}
+				description={hunt.data.description}
+				href={getEntryUrl('threat-hunts', hunt)}
+				meta={formatDate(hunt.data.huntDate)}
+				tags={hunt.data.tags}
+			/>
+		))
+	}
+</CollectionListingLayout>

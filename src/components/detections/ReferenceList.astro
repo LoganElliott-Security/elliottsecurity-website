@@ -1,0 +1,26 @@
+---
+import type { DetectionReference } from '../../types/detection';
+
+interface Props {
+	references: DetectionReference[];
+}
+
+const { references } = Astro.props;
+---
+
+<ul class="space-y-3" role="list">
+	{
+		references.map((reference) => (
+			<li>
+				<a
+					href={reference.url}
+					class="text-sm text-accent no-underline hover:text-accent-hover"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{reference.title}
+				</a>
+			</li>
+		))
+	}
+</ul>

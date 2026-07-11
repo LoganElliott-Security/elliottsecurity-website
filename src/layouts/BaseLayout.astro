@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import SEO from '../components/SEO.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import { SITE } from '../config/site';
+import { getGlobalStructuredData } from '../lib/structured-data';
+import { getCanonicalUrl, getSeoMetadata, type SeoInput } from '../lib/seo';
+
+interface Props extends SeoInput {
+	title?: string;
+}
+
+const { title, description, image, noindex } = Astro.props;
+const canonical = getCanonicalUrl(Astro.url.pathname);
+const seo = getSeoMetadata({ title, description, image, canonical, noindex });
+const globalStructuredData = getGlobalStructuredData();
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+	<head>
+		<SEO
+			title={title}
+			description={description}
+			image={image}
+			canonical={canonical}
+			noindex={noindex}
+		/>
+		<title>{seo.title}</title>
+		<StructuredData data={globalStructuredData} />
+		<slot name="head" />
+	</head>
+	<body class="flex min-h-screen flex-col">
+		<a
+			href="#main-content"
+			class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground"
+		>
+			Skip to main content
+		</a>
+		<Navigation />
+		<main id="main-content" class="flex-1">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

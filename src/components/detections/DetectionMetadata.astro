@@ -1,0 +1,91 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import MetaItem from '../content/MetaItem.astro';
+import TechnologyBadgeList from '../content/TechnologyBadgeList.astro';
+import { formatDate, formatLabel } from '../../lib/content';
+import { formatDetectionId } from '../../lib/detections';
+import { getTagUrl } from '../../lib/knowledge';
+
+interface Props {
+	entry: CollectionEntry<'detections'>;
+}
+
+const { entry } = Astro.props;
+const {
+	detectionId,
+	version,
+	severity,
+	status,
+	validationStatus,
+	platform,
+	ruleType,
+	language,
+	author,
+	reviewer,
+	reviewDate,
+	dataSources,
+	requiredLogs,
+	requiredTools,
+	github,
+} = entry.data;
+---
+
+<div class="rounded-lg border border-border bg-surface-elevated p-6">
+	<dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		<MetaItem label="Detection ID" value={formatDetectionId(detectionId)} />
+		<MetaItem label="Version" value={version} />
+		<MetaItem label="Severity" value={formatLabel(severity)} />
+		<MetaItem label="Status" value={formatLabel(status)} />
+		<MetaItem label="Validation" value={formatLabel(validationStatus)} />
+		<MetaItem label="Rule Type" value={ruleType.toUpperCase()} />
+		<MetaItem label="Platform" value={platform} href={getTagUrl(platform)} />
+		<MetaItem label="Language" value={language} />
+		<MetaItem label="Author" value={author} href={getTagUrl(author)} />
+		{
+			reviewer && (
+				<MetaItem label="Reviewer" value={reviewer} href={getTagUrl(reviewer)} />
+			)
+		}
+		{
+			reviewDate && (
+				<MetaItem label="Review Date" value={formatDate(reviewDate)} />
+			)
+		}
+		{
+			github && (
+				<MetaItem label="GitHub" value="View repository" href={github} />
+			)
+		}
+	</dl>
+
+	{
+		dataSources.length > 0 && (
+			<div class="mt-6">
+				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Data Sources</p>
+				<TechnologyBadgeList technologies={dataSources} />
+			</div>
+		)
+	}
+
+	{
+		requiredLogs.length > 0 && (
+			<div class="mt-6">
+				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Required Logs</p>
+				<ul class="space-y-1 text-sm text-muted" role="list">
+					{requiredLogs.map((log) => (
+						<li>{log}</li>
+					))}
+				</ul>
+			</div>
+		)
+	}
+
+	{
+		requiredTools.length > 0 && (
+			<div class="mt-6">
+				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Required Tools</p>
+				<TechnologyBadgeList technologies={requiredTools} />
+			</div>
+		)
+	}
+</div>

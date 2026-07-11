@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ContentDetailLayout from './ContentDetailLayout.astro';
+import MetaItem from '../components/content/MetaItem.astro';
+import { formatDate } from '../lib/content';
+import { getTagUrl } from '../lib/knowledge';
+
+interface Props {
+	entry: CollectionEntry<'articles'>;
+}
+
+const { entry } = Astro.props;
+const { title, description, author, category, publishDate, updatedDate, readingTime, tags, seoTitle, seoDescription, coverImage } = entry.data;
+---
+
+<ContentDetailLayout
+	title={title}
+	description={description}
+	collection="articles"
+	entry={entry}
+	seoTitle={seoTitle}
+	seoDescription={seoDescription}
+	coverImage={coverImage}
+	tags={tags}
+	eyebrow="Article"
+>
+	<dl slot="meta" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		<MetaItem label="Author" value={author} href={getTagUrl(author)} />
+		<MetaItem label="Category" value={category} href={getTagUrl(category)} />
+		<MetaItem label="Published" value={formatDate(publishDate)} />
+		{
+			updatedDate && (
+				<MetaItem label="Updated" value={formatDate(updatedDate)} />
+			)
+		}
+		{
+			readingTime && (
+				<MetaItem label="Reading Time" value={`${readingTime} min read`} />
+			)
+		}
+	</dl>
+	<slot />
+</ContentDetailLayout>

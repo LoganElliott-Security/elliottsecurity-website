@@ -1,0 +1,27 @@
+---
+import ContentCard from '../../components/content/ContentCard.astro';
+import CollectionListingLayout from '../../layouts/CollectionListingLayout.astro';
+import { formatDate, getEntryUrl, getPublishedCollection, sortByDateDesc } from '../../lib/content';
+
+const articles = sortByDateDesc(await getPublishedCollection('articles'), 'publishDate');
+---
+
+<CollectionListingLayout
+	eyebrow="Articles"
+	title="Articles"
+	description="Educational technical content published from Markdown."
+	path="/articles"
+	isEmpty={articles.length === 0}
+>
+	{
+		articles.map((article) => (
+			<ContentCard
+				title={article.data.title}
+				description={article.data.description}
+				href={getEntryUrl('articles', article)}
+				meta={formatDate(article.data.publishDate)}
+				tags={article.data.tags}
+			/>
+		))
+	}
+</CollectionListingLayout>

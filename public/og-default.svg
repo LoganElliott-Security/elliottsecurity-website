@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#08080d"/>
+  <rect x="80" y="80" width="1040" height="470" rx="24" fill="#0f0f17" stroke="#252533" stroke-width="2"/>
+  <path
+    d="M120 180h48l24 48 24-48h48l-36 72 36 72h-48l-24-48-24 48h-48l36-72-36-72Z"
+    fill="#22d3ee"
+  />
+  <text x="200" y="210" fill="#f4f4f5" font-family="system-ui, sans-serif" font-size="56" font-weight="600">
+    ElliottSecurity Platform
+  </text>
+  <text x="200" y="290" fill="#a1a1aa" font-family="system-ui, sans-serif" font-size="32">
+    Cybersecurity knowledge platform
+  </text>
+  <text x="200" y="360" fill="#71717a" font-family="system-ui, sans-serif" font-size="24">
+    Document the work. Share the knowledge. Keep building.
+  </text>
+</svg>

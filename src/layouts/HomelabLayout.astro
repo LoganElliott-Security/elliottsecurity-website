@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ContentDetailLayout from './ContentDetailLayout.astro';
+import MetaItem from '../components/content/MetaItem.astro';
+import TechnologyBadgeList from '../components/content/TechnologyBadgeList.astro';
+import { formatDate, formatLabel } from '../lib/content';
+import { getTagUrl } from '../lib/knowledge';
+
+interface Props {
+	entry: CollectionEntry<'homelab'>;
+}
+
+const { entry } = Astro.props;
+const { title, description, category, platform, difficulty, technologies, updatedDate, tags, coverImage } = entry.data;
+---
+
+<ContentDetailLayout
+	title={title}
+	description={description}
+	collection="homelab"
+	entry={entry}
+	coverImage={coverImage}
+	tags={tags}
+	eyebrow="Homelab"
+>
+	<dl slot="meta" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		<MetaItem label="Category" value={category} href={getTagUrl(category)} />
+		<MetaItem label="Platform" value={platform} href={getTagUrl(platform)} />
+		<MetaItem label="Difficulty" value={formatLabel(difficulty)} href={getTagUrl(difficulty)} />
+		<MetaItem label="Updated" value={formatDate(updatedDate)} />
+	</dl>
+	{
+		technologies.length > 0 && (
+			<div slot="meta" class="mt-2">
+				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Technologies</p>
+				<TechnologyBadgeList technologies={technologies} />
+			</div>
+		)
+	}
+	<slot />
+</ContentDetailLayout>

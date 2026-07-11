@@ -1,0 +1,22 @@
+---
+import TechnologyBadge from './TechnologyBadge.astro';
+
+interface Props {
+	technologies: string[];
+	class?: string;
+}
+
+const { technologies, class: className } = Astro.props;
+---
+
+{
+	technologies.length > 0 && (
+		<ul class={`flex flex-wrap gap-2 ${className ?? ''}`} role="list">
+			{technologies.map((technology) => (
+				<li>
+					<TechnologyBadge technology={technology} />
+				</li>
+			))}
+		</ul>
+	)
+}

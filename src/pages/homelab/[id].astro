@@ -1,0 +1,16 @@
+---
+import { render } from 'astro:content';
+import HomelabLayout from '../../layouts/HomelabLayout.astro';
+import { getCollectionStaticPaths } from '../../lib/content';
+
+export async function getStaticPaths() {
+	return getCollectionStaticPaths('homelab');
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<HomelabLayout entry={entry}>
+	<Content />
+</HomelabLayout>

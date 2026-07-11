@@ -1,0 +1,27 @@
+---
+import ContentCard from '../../components/content/ContentCard.astro';
+import CollectionListingLayout from '../../layouts/CollectionListingLayout.astro';
+import { formatLabel, getEntryUrl, getPublishedCollection, sortDetectionsByRecency } from '../../lib/content';
+
+const detections = sortDetectionsByRecency(await getPublishedCollection('detections'));
+---
+
+<CollectionListingLayout
+	eyebrow="Detection Engineering"
+	title="Detection Engineering"
+	description="Detection logic, rules, and engineering documentation."
+	path="/detection-engineering"
+	isEmpty={detections.length === 0}
+>
+	{
+		detections.map((detection) => (
+			<ContentCard
+				title={detection.data.title}
+				description={detection.data.description}
+				href={getEntryUrl('detections', detection)}
+				meta={`${detection.data.detectionId} · ${detection.data.ruleType.toUpperCase()} · ${formatLabel(detection.data.severity)}`}
+				tags={detection.data.tags}
+			/>
+		))
+	}
+</CollectionListingLayout>

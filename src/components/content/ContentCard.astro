@@ -1,0 +1,31 @@
+---
+import Card from '../ui/Card.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	href: string;
+	meta?: string;
+	tags?: string[];
+}
+
+const { title, description, href, meta, tags = [] } = Astro.props;
+---
+
+<a href={href} class="group block no-underline">
+	<Card padding="md" hover={true} class="h-full">
+		<div class="flex h-full flex-col gap-3">
+			{
+				meta && (
+					<p class="text-xs font-medium uppercase tracking-wider text-accent">{meta}</p>
+				)
+			}
+			<h3 class="text-lg font-semibold text-foreground transition-colors group-hover:text-accent">
+				{title}
+			</h3>
+			<p class="line-clamp-3 flex-1 text-sm">{description}</p>
+			<TagList tags={tags.slice(0, 3)} />
+		</div>
+	</Card>
+</a>

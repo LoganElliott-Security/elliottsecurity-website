@@ -1,0 +1,32 @@
+---
+import type { DetectionCoverageItem } from '../../types/detection';
+import Card from '../ui/Card.astro';
+
+interface Props {
+	coverage: DetectionCoverageItem[];
+}
+
+const { coverage } = Astro.props;
+---
+
+<div class="grid gap-4 sm:grid-cols-2">
+	{
+		coverage.map((item) => (
+			<Card padding="md">
+				<div class="flex items-start justify-between gap-4">
+					<div>
+						<h3 class="text-sm font-semibold text-foreground">{item.category}</h3>
+						{item.description && <p class="mt-2 text-sm">{item.description}</p>}
+					</div>
+					{
+						item.percentage !== undefined && (
+							<span class="rounded-md border border-border bg-surface-muted px-2 py-1 text-sm font-medium text-accent">
+								{item.percentage}%
+							</span>
+						)
+					}
+				</div>
+			</Card>
+		))
+	}
+</div>

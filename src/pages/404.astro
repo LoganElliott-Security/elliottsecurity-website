@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import Container from '../components/ui/Container.astro';
+import Section from '../components/ui/Section.astro';
+---
+
+<BaseLayout
+	title="Page Not Found"
+	description="The requested page could not be found on ElliottSecurity Platform."
+	noindex={true}
+>
+	<Section background="default" padding={true}>
+		<Container size="narrow">
+			<div class="py-16 text-center">
+				<p class="text-sm font-medium uppercase tracking-widest text-accent">404</p>
+				<h1 class="mt-4 text-foreground">Page not found</h1>
+				<p class="mx-auto mt-4 max-w-lg">
+					The page you requested does not exist or may have moved. Return to the homepage or browse published content.
+				</p>
+				<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+					<Button href="/" size="lg">Return home</Button>
+					<Button href="/articles" variant="outline" size="lg">Browse articles</Button>
+				</div>
+			</div>
+		</Container>
+	</Section>
+</BaseLayout>

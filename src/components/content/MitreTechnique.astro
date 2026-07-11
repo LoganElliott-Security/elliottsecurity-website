@@ -1,0 +1,16 @@
+---
+import { getTagUrl } from '../../lib/knowledge';
+
+interface Props {
+	technique: string;
+}
+
+const { technique } = Astro.props;
+---
+
+<a
+	href={getTagUrl(technique)}
+	class="inline-flex items-center rounded-md border border-border bg-surface-muted px-2.5 py-1 text-xs font-medium text-foreground no-underline transition-colors hover:border-accent/40 hover:text-accent"
+>
+	{technique}
+</a>

@@ -1,0 +1,27 @@
+---
+import MitreTechnique from './MitreTechnique.astro';
+
+interface Props {
+	techniques: string[];
+	class?: string;
+}
+
+const { techniques, class: className } = Astro.props;
+---
+
+{
+	techniques.length > 0 && (
+		<section class={className} aria-labelledby="mitre-techniques-heading">
+			<h2 id="mitre-techniques-heading" class="mb-4 text-lg font-semibold text-foreground">
+				MITRE ATT&CK Techniques
+			</h2>
+			<ul class="flex flex-wrap gap-2" role="list">
+				{techniques.map((technique) => (
+					<li>
+						<MitreTechnique technique={technique} />
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}

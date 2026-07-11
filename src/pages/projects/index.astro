@@ -1,0 +1,27 @@
+---
+import ContentCard from '../../components/content/ContentCard.astro';
+import CollectionListingLayout from '../../layouts/CollectionListingLayout.astro';
+import { formatLabel, getEntryUrl, getPublishedCollection, sortByDateDesc } from '../../lib/content';
+
+const projects = sortByDateDesc(await getPublishedCollection('projects'), 'startDate');
+---
+
+<CollectionListingLayout
+	eyebrow="Projects"
+	title="Projects"
+	description="Infrastructure and software engineering projects documented in Git."
+	path="/projects"
+	isEmpty={projects.length === 0}
+>
+	{
+		projects.map((project) => (
+			<ContentCard
+				title={project.data.title}
+				description={project.data.description}
+				href={getEntryUrl('projects', project)}
+				meta={formatLabel(project.data.status)}
+				tags={project.data.tags}
+			/>
+		))
+	}
+</CollectionListingLayout>

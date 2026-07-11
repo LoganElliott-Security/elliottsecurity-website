@@ -1,0 +1,52 @@
+---
+import Button from './Button.astro';
+import { cn } from '../../lib/cn';
+
+interface Props {
+	title: string;
+	description?: string;
+	eyebrow?: string;
+	actionLabel?: string;
+	actionHref?: string;
+	align?: 'left' | 'center';
+	class?: string;
+}
+
+const {
+	title,
+	description,
+	eyebrow,
+	actionLabel,
+	actionHref,
+	align = 'left',
+	class: className,
+} = Astro.props;
+
+const alignClasses = {
+	left: 'text-left items-start',
+	center: 'text-center items-center mx-auto',
+};
+---
+
+<header
+	class={cn(
+		'mb-10 flex max-w-3xl flex-col gap-3 sm:mb-12',
+		alignClasses[align],
+		className,
+	)}
+>
+	{eyebrow && (
+		<p class="text-sm font-medium uppercase tracking-widest text-accent">{eyebrow}</p>
+	)}
+	<h2 class="text-balance text-foreground">{title}</h2>
+	{description && <p class="text-balance text-base sm:text-lg">{description}</p>}
+	{
+		actionLabel && actionHref && (
+			<div class="mt-2">
+				<Button href={actionHref} variant="ghost" size="sm">
+					{actionLabel}
+				</Button>
+			</div>
+		)
+	}
+</header>

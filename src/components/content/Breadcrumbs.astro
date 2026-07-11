@@ -1,0 +1,37 @@
+---
+import type { BreadcrumbItem } from '../../types/knowledge';
+
+interface Props {
+	items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+{
+	items.length > 0 && (
+		<nav aria-label="Breadcrumb" class="mb-8">
+			<ol class="flex flex-wrap items-center gap-2 text-sm text-muted-foreground" role="list">
+				{items.map((item, index) => {
+					const isLast = index === items.length - 1;
+					return (
+						<li class="flex items-center gap-2">
+							{index > 0 && <span aria-hidden="true">/</span>}
+							{
+								isLast ? (
+									<span class="text-foreground" aria-current="page">
+										{item.name}
+									</span>
+								) : (
+									<a href={item.path} class="text-muted no-underline hover:text-accent">
+										{item.name}
+									</a>
+								)
+							}
+						</li>
+					);
+				})}
+			</ol>
+		</nav>
+	)
+}

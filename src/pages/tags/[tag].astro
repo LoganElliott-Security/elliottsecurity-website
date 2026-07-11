@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/content/Breadcrumbs.astro';
+import ContentCard from '../../components/content/ContentCard.astro';
+import ContentGrid from '../../components/content/ContentGrid.astro';
+import StructuredData from '../../components/seo/StructuredData.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import { COLLECTION_ROUTES } from '../../types/content';
+import { formatDate, formatLabel } from '../../lib/content';
+import {
+	getAllTagSlugs,
+	getEntriesByTag,
+	getTagIndex,
+	getTagLabel,
+	getTagUrl,
+	toContentCardProps,
+} from '../../lib/knowledge';
+import { buildBreadcrumbSchema, buildTagBreadcrumbs, buildWebPageSchema } from '../../lib/structured-data';
+
+export async function getStaticPaths() {
+	const tagSlugs = await getAllTagSlugs();
+	return tagSlugs.map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+const tagIndex = await getTagIndex();
+const tagLabel = getTagLabel(tag!, tagIndex);
+const groups = await getEntriesByTag(tag!);
+const breadcrumbs = buildTagBreadcrumbs(tagLabel, tag!);
+const totalEntries = groups.reduce((count, group) => count + group.entries.length, 0);
+
+function getCardMeta(collection: string, entry: (typeof groups)[number]['entries'][number]): string | undefined {
+	const data = entry.data as Record<string, unknown>;
+
+	switch (collection) {
+		case 'articles':
+			return formatDate(data.publishDate as Date);
+		case 'projects':
+			return formatLabel(data.status as string);
+		case 'threat-hunts':
+			return formatDate(data.huntDate as Date);
+		case 'detections':
+			return `${String(data.ruleType).toUpperCase()} · ${formatLabel(data.status as string)}`;
+		case 'homelab':
+			return formatDate(data.updatedDate as Date);
+		case 'products':
+			return `${data.price} · ${formatLabel(data.status as string)}`;
+		default:
+			return undefined;
+	}
+}
+---
+
+<BaseLayout
+	title={`Tag: ${tagLabel}`}
+	description={`Browse ${totalEntries} ElliottSecurity Platform entries tagged with ${tagLabel}.`}
+>
+	<StructuredData
+		slot="head"
+		data={[
+			buildWebPageSchema({
+				title: `Tag: ${tagLabel}`,
+				description: `Browse ${totalEntries} ElliottSecurity Platform entries tagged with ${tagLabel}.`,
+				url: getTagUrl(tagLabel),
+			}),
+			buildBreadcrumbSchema(breadcrumbs),
+		]}
+	/>
+	<Section background="default" padding={true}>
+		<Breadcrumbs items={breadcrumbs} />
+		<SectionHeader
+			eyebrow="Tag"
+			title={tagLabel}
+			description={`${totalEntries} related ${totalEntries === 1 ? 'entry' : 'entries'} across the platform.`}
+		/>
+
+		<div class="space-y-12">
+			{
+				groups.map((group) => (
+					<section aria-labelledby={`tag-group-${group.collection}`}>
+						<h2 id={`tag-group-${group.collection}`} class="mb-6 text-xl font-semibold text-foreground">
+							{COLLECTION_ROUTES[group.collection].label}
+						</h2>
+						<ContentGrid>
+							{group.entries.map((entry) => {
+								const card = toContentCardProps(group.collection, entry);
+								return (
+									<ContentCard
+										title={card.title}
+										description={card.description}
+										href={card.href}
+										meta={getCardMeta(group.collection, entry)}
+										tags={card.tags}
+									/>
+								);
+							})}
+						</ContentGrid>
+					</section>
+				))
+			}
+		</div>
+	</Section>
+</BaseLayout>

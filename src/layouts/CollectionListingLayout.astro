@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import ContentGrid from '../components/content/ContentGrid.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import EmptyState from '../components/ui/EmptyState.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import {
+	buildBreadcrumbSchema,
+	buildCollectionPageSchema,
+	buildListingBreadcrumbs,
+} from '../lib/structured-data';
+
+interface Props {
+	title: string;
+	description: string;
+	eyebrow?: string;
+	path: string;
+	isEmpty?: boolean;
+	emptyTitle?: string;
+	emptyDescription?: string;
+}
+
+const {
+	title,
+	description,
+	eyebrow,
+	path,
+	isEmpty = false,
+	emptyTitle = 'No content published yet',
+	emptyDescription = 'New entries will appear here automatically when Markdown content is published.',
+} = Astro.props;
+
+const breadcrumbs = buildListingBreadcrumbs(title, path);
+---
+
+<BaseLayout title={title} description={description}>
+	<StructuredData
+		slot="head"
+		data={[
+			buildCollectionPageSchema({ title, description, url: path }),
+			buildBreadcrumbSchema(breadcrumbs),
+		]}
+	/>
+	<Section background="default" padding={true}>
+		<Breadcrumbs items={breadcrumbs} />
+		<SectionHeader eyebrow={eyebrow} title={title} description={description} />
+		{
+			isEmpty ? (
+				<EmptyState title={emptyTitle} description={emptyDescription} />
+			) : (
+				<ContentGrid>
+					<slot />
+				</ContentGrid>
+			)
+		}
+	</Section>
+</BaseLayout>
