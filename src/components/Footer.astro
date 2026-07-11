@@ -1,15 +1,18 @@
 ---
 import { FOOTER_NAV } from '../config/navigation';
-import { SITE, SOCIAL_LINKS } from '../config/site';
+import { PROFILE } from '../config/profile';
+import { SITE } from '../config/site';
+import { getFooterSocialLabel, getSocialProfiles } from '../config/social';
 import Container from './ui/Container.astro';
 
 const currentYear = new Date().getFullYear();
+const footerSocial = getSocialProfiles({ footer: true });
 ---
 
 <footer class="border-t border-border-subtle bg-surface">
 	<Container>
-		<div class="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-			<div class="sm:col-span-2 lg:col-span-1">
+		<div class="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
+			<div class="sm:col-span-2">
 				<a href="/" class="inline-flex items-center gap-2 text-foreground no-underline">
 					<span
 						class="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-surface-elevated text-accent"
@@ -23,10 +26,14 @@ const currentYear = new Date().getFullYear();
 							></path>
 						</svg>
 					</span>
-					<span class="font-semibold">{SITE.name}</span>
+					<span class="font-semibold">{PROFILE.name}</span>
 				</a>
+				{
+					PROFILE.titles.map((title) => (
+						<p class="mt-3 text-sm font-medium text-foreground">{title}</p>
+					))
+				}
 				<p class="mt-4 max-w-xs text-sm">{SITE.motto}</p>
-				<p class="mt-2 text-xs text-muted-foreground">v{SITE.version}</p>
 			</div>
 
 			{
@@ -36,10 +43,7 @@ const currentYear = new Date().getFullYear();
 						<ul class="mt-4 space-y-2" role="list">
 							{group.items.map((item) => (
 								<li>
-									<a
-										href={item.href}
-										class="text-sm text-muted no-underline hover:text-accent"
-									>
+									<a href={item.href} class="text-sm text-muted no-underline hover:text-accent">
 										{item.label}
 									</a>
 								</li>
@@ -50,28 +54,36 @@ const currentYear = new Date().getFullYear();
 			}
 		</div>
 
-		<div
-			class="flex flex-col items-start justify-between gap-4 border-t border-border-subtle py-6 sm:flex-row sm:items-center"
-		>
-			<p class="text-sm text-muted-foreground">
-				&copy; {currentYear} {SITE.author.name}. All rights reserved.
-			</p>
+		<div class="flex flex-col gap-6 border-t border-border-subtle py-6">
 			<ul class="flex flex-wrap gap-4" role="list">
 				{
-					SOCIAL_LINKS.map((link) => (
-						<li>
-							<a
-								href={link.href}
-								class="text-sm text-muted no-underline hover:text-accent"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{link.label}
-							</a>
-						</li>
-					))
+					footerSocial.map((profile) => {
+						const isExternal =
+							profile.href.startsWith('http') || profile.href.startsWith('mailto:');
+						return (
+							<li>
+								<a
+									href={profile.href}
+									class="text-sm text-muted no-underline hover:text-accent"
+									target={isExternal ? '_blank' : undefined}
+									rel={isExternal ? 'noopener noreferrer' : undefined}
+									download={profile.id === 'resume' ? true : undefined}
+								>
+									{getFooterSocialLabel(profile)}
+								</a>
+							</li>
+						);
+					})
 				}
 			</ul>
+			<div class="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+				<p>&copy; {currentYear} {PROFILE.name}. All rights reserved.</p>
+				<p>
+					Powered by <a href="https://astro.build" class="text-muted hover:text-accent" target="_blank" rel="noopener noreferrer">Astro</a>
+					{' · '}
+					Hosted on <a href="https://pages.cloudflare.com" class="text-muted hover:text-accent" target="_blank" rel="noopener noreferrer">Cloudflare Pages</a>
+				</p>
+			</div>
 		</div>
 	</Container>
 </footer>

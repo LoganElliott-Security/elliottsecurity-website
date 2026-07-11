@@ -2,9 +2,9 @@ import type { FooterNavGroup, NavItem } from '../types/navigation';
 
 export const MAIN_NAV: NavItem[] = [
 	{
-		label: 'Articles',
-		href: '/articles',
-		description: 'Educational technical content',
+		label: 'Home',
+		href: '/',
+		description: 'Platform homepage',
 	},
 	{
 		label: 'Projects',
@@ -12,14 +12,14 @@ export const MAIN_NAV: NavItem[] = [
 		description: 'Infrastructure and engineering projects',
 	},
 	{
-		label: 'Threat Hunts',
-		href: '/threat-hunts',
-		description: 'Documented investigations and methodologies',
-	},
-	{
 		label: 'Detection Engineering',
 		href: '/detection-engineering',
 		description: 'Detection logic and engineering work',
+	},
+	{
+		label: 'Threat Hunts',
+		href: '/threat-hunts',
+		description: 'Documented investigations and methodologies',
 	},
 	{
 		label: 'Homelab',
@@ -27,9 +27,24 @@ export const MAIN_NAV: NavItem[] = [
 		description: 'Infrastructure and lab documentation',
 	},
 	{
-		label: 'Products',
-		href: '/products',
-		description: 'Guides, templates, and resources',
+		label: 'Articles',
+		href: '/articles',
+		description: 'Educational technical content',
+	},
+	{
+		label: 'About',
+		href: '/about',
+		description: 'Professional profile and background',
+	},
+	{
+		label: 'Now',
+		href: '/now',
+		description: 'Current engineering priorities',
+	},
+	{
+		label: 'Contact',
+		href: '/contact',
+		description: 'Connect and collaborate',
 	},
 ];
 
@@ -51,4 +66,19 @@ export const FOOTER_NAV: FooterNavGroup[] = [
 			{ label: 'Products', href: '/products' },
 		],
 	},
+	{
+		title: 'About',
+		items: [
+			{ label: 'About', href: '/about' },
+			{ label: 'Now', href: '/now' },
+			{ label: 'Contact', href: '/contact' },
+		],
+	},
 ];
+
+export function isNavItemActive(href: string, currentPath: string): boolean {
+	if (href === '/') {
+		return currentPath === '/';
+	}
+	return currentPath === href || currentPath.startsWith(`${href}/`);
+}

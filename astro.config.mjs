@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://elliottsecurity.com',
+  site: 'https://elliottsecurity.net',
 
   markdown: {
       remarkPlugins: [remarkCallouts],

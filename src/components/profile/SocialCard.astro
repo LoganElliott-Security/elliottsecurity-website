@@ -1,0 +1,55 @@
+---
+import Card from '../ui/Card.astro';
+import type { SocialProfile } from '../../types/profile';
+
+interface Props {
+	profile: SocialProfile;
+	size?: 'default' | 'large';
+}
+
+const { profile, size = 'default' } = Astro.props;
+
+const isExternal = profile.href.startsWith('http') || profile.href.startsWith('mailto:');
+const isResume = profile.id === 'resume';
+const isLarge = size === 'large';
+const actionLabel = isResume ? 'Download resume →' : profile.id === 'email' ? 'Send email →' : 'Visit profile →';
+---
+
+<a
+	href={profile.href}
+	class="group block h-full no-underline"
+	target={isExternal ? '_blank' : undefined}
+	rel={isExternal ? 'noopener noreferrer' : undefined}
+	download={isResume ? true : undefined}
+>
+	<Card
+		padding={isLarge ? 'lg' : 'md'}
+		hover={true}
+		class="h-full transition-colors group-hover:border-accent/40"
+	>
+		<div class="flex h-full flex-col gap-3">
+			<div class="flex items-center gap-3">
+				<span
+					class:list={[
+						'flex items-center justify-center rounded-md border border-border bg-surface-muted font-semibold text-accent',
+						isLarge ? 'h-12 w-12 text-base' : 'h-10 w-10 text-sm',
+					]}
+					aria-hidden="true"
+				>
+					{profile.label.slice(0, 1)}
+				</span>
+				<h3 class:list={['font-semibold text-foreground', isLarge ? 'text-xl' : 'text-base']}>
+					{profile.label}
+				</h3>
+			</div>
+			{
+				profile.description && (
+					<p class:list={['leading-relaxed text-muted', isLarge ? 'text-base' : 'text-sm']}>
+						{profile.description}
+					</p>
+				)
+			}
+			<p class="mt-auto text-sm text-accent group-hover:text-accent-hover">{actionLabel}</p>
+		</div>
+	</Card>
+</a>

@@ -12,6 +12,8 @@ const projects = sortByDateDesc(await getPublishedCollection('projects'), 'start
 	description="Infrastructure and software engineering projects documented in Git."
 	path="/projects"
 	isEmpty={projects.length === 0}
+	emptyTitle="No public projects have been released yet."
+	emptyDescription="Projects will appear here when published from Markdown in the projects collection."
 >
 	{
 		projects.map((project) => (

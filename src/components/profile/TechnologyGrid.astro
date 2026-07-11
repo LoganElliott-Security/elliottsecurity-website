@@ -1,0 +1,38 @@
+---
+import Card from '../ui/Card.astro';
+import type { Technology } from '../../types/profile';
+
+interface Props {
+	technologies: Technology[];
+}
+
+const { technologies } = Astro.props;
+
+const categoryLabels: Record<Technology['category'], string> = {
+	security: 'Security',
+	platform: 'Platform',
+	development: 'Development',
+	infrastructure: 'Infrastructure',
+	forensics: 'Forensics',
+	skills: 'Skills',
+};
+---
+
+<ul class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" role="list">
+	{
+		technologies.map((tech) => (
+			<li>
+				<Card padding="md" class="h-full text-center">
+					<div
+						class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-surface-muted text-sm font-bold text-accent"
+						aria-hidden="true"
+					>
+						{tech.name.slice(0, 2).toUpperCase()}
+					</div>
+					<h3 class="text-sm font-semibold text-foreground">{tech.name}</h3>
+					<p class="mt-1 text-xs text-muted-foreground">{categoryLabels[tech.category]}</p>
+				</Card>
+			</li>
+		))
+	}
+</ul>

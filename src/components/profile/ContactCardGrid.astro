@@ -1,0 +1,22 @@
+---
+import SocialCard from './SocialCard.astro';
+import { CONTACT_PROFILE_IDS, getSocialProfiles } from '../../config/social';
+
+interface Props {
+	size?: 'default' | 'large';
+}
+
+const { size = 'large' } = Astro.props;
+
+const profileMap = new Map(
+	getSocialProfiles({ contact: true }).map((profile) => [profile.id, profile]),
+);
+
+const profiles = CONTACT_PROFILE_IDS.map((id) => profileMap.get(id)).filter(
+	(profile): profile is NonNullable<typeof profile> => profile !== undefined,
+);
+---
+
+<div class="grid gap-6 sm:grid-cols-2">
+	{profiles.map((profile) => <SocialCard profile={profile} size={size} />)}
+</div>

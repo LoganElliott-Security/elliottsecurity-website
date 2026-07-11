@@ -1,5 +1,5 @@
 ---
-import { MAIN_NAV } from '../config/navigation';
+import { MAIN_NAV, isNavItemActive } from '../config/navigation';
 import { SITE } from '../config/site';
 import { cn } from '../lib/cn';
 import Container from './ui/Container.astro';
@@ -12,7 +12,7 @@ const currentPath = Astro.url.pathname;
 		<nav class="flex h-16 items-center justify-between gap-4" aria-label="Main navigation">
 			<a
 				href="/"
-				class="group flex items-center gap-2.5 text-foreground no-underline"
+				class="group flex shrink-0 items-center gap-2.5 text-foreground no-underline"
 				aria-label={`${SITE.name} home`}
 			>
 				<span
@@ -27,22 +27,22 @@ const currentPath = Astro.url.pathname;
 						></path>
 					</svg>
 				</span>
-				<span class="font-semibold tracking-tight">{SITE.name}</span>
+				<span class="hidden font-semibold tracking-tight sm:inline">{SITE.name}</span>
 			</a>
 
-			<ul class="hidden items-center gap-1 lg:flex" role="list">
+			<ul class="hidden items-center gap-0.5 xl:flex" role="list">
 				{
 					MAIN_NAV.map((item) => (
 						<li>
 							<a
 								href={item.href}
 								class={cn(
-									'rounded-md px-3 py-2 text-sm font-medium no-underline transition-colors',
-									currentPath.startsWith(item.href)
+									'rounded-md px-2.5 py-2 text-sm font-medium no-underline transition-colors xl:px-3',
+									isNavItemActive(item.href, currentPath)
 										? 'bg-surface-elevated text-accent'
 										: 'text-muted hover:bg-surface-elevated hover:text-foreground',
 								)}
-								aria-current={currentPath.startsWith(item.href) ? 'page' : undefined}
+								aria-current={isNavItemActive(item.href, currentPath) ? 'page' : undefined}
 							>
 								{item.label}
 							</a>
@@ -53,7 +53,7 @@ const currentPath = Astro.url.pathname;
 
 			<button
 				type="button"
-				class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-surface-elevated text-foreground lg:hidden"
+				class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-surface-elevated text-foreground xl:hidden"
 				aria-expanded="false"
 				aria-controls="mobile-nav"
 				aria-label="Open menu"
@@ -85,7 +85,7 @@ const currentPath = Astro.url.pathname;
 		</nav>
 	</Container>
 
-	<div id="mobile-nav" class="hidden border-t border-border-subtle lg:hidden" data-mobile-nav>
+	<div id="mobile-nav" class="hidden border-t border-border-subtle xl:hidden" data-mobile-nav>
 		<Container>
 			<ul class="flex flex-col gap-1 py-4" role="list">
 				{
@@ -95,11 +95,11 @@ const currentPath = Astro.url.pathname;
 								href={item.href}
 								class={cn(
 									'block rounded-md px-3 py-2.5 text-sm font-medium no-underline transition-colors',
-									currentPath.startsWith(item.href)
+									isNavItemActive(item.href, currentPath)
 										? 'bg-surface-elevated text-accent'
 										: 'text-muted hover:bg-surface-elevated hover:text-foreground',
 								)}
-								aria-current={currentPath.startsWith(item.href) ? 'page' : undefined}
+								aria-current={isNavItemActive(item.href, currentPath) ? 'page' : undefined}
 							>
 								{item.label}
 							</a>

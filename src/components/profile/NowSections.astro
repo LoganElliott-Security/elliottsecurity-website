@@ -1,0 +1,34 @@
+---
+import Card from '../ui/Card.astro';
+import type { NowSection } from '../../types/profile';
+
+interface Props {
+	sections: NowSection[];
+}
+
+const { sections } = Astro.props;
+---
+
+<div class="space-y-10">
+	{
+		sections.map((section) => (
+			<section aria-labelledby={`now-${section.title.toLowerCase().replace(/\s+/g, '-')}`}>
+				<h2
+					id={`now-${section.title.toLowerCase().replace(/\s+/g, '-')}`}
+					class="mb-4 text-xl font-semibold text-foreground"
+				>
+					{section.title}
+				</h2>
+				<ul class="grid gap-3 sm:grid-cols-2" role="list">
+					{section.items.map((item) => (
+						<li>
+							<Card padding="md">
+								<p class="text-sm leading-relaxed text-foreground">{item}</p>
+							</Card>
+						</li>
+					))}
+				</ul>
+			</section>
+		))
+	}
+</div>

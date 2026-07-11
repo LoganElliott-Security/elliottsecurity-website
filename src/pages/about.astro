@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import CertificationCard from '../components/profile/CertificationCard.astro';
+import CurrentFocusGrid from '../components/profile/CurrentFocusGrid.astro';
+import ExperienceTimeline from '../components/profile/ExperienceTimeline.astro';
+import TechnologyGrid from '../components/profile/TechnologyGrid.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import Container from '../components/ui/Container.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import {
+	CERTIFICATIONS,
+	CURRENT_FOCUS,
+	EXPERIENCE,
+	PLATFORM_TOPICS,
+	PROFESSIONAL_SKILLS,
+	PROFILE,
+	SEO,
+	TECHNOLOGIES,
+} from '../config/profile';
+import {
+	buildBreadcrumbSchema,
+	buildListingBreadcrumbs,
+	buildPersonSchema,
+	buildWebPageSchema,
+} from '../lib/structured-data';
+
+const breadcrumbs = buildListingBreadcrumbs(SEO.about.title, '/about');
+const displayName = `${PROFILE.name}, ${PROFILE.credential}`;
+---
+
+<BaseLayout title={SEO.about.title} description={SEO.about.description}>
+	<StructuredData
+		slot="head"
+		data={[
+			buildWebPageSchema({ title: SEO.about.title, description: SEO.about.description, url: '/about' }),
+			buildBreadcrumbSchema(breadcrumbs),
+			buildPersonSchema(),
+		]}
+	/>
+	<Section background="default" padding={true} class="relative overflow-hidden">
+		<div
+			class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(34,211,238,0.08)_0%,_transparent_50%)]"
+			aria-hidden="true"
+		>
+		</div>
+		<Container size="narrow" class="relative">
+			<Breadcrumbs items={breadcrumbs} />
+			<header class="mb-12 text-center">
+				<p class="mb-4 text-sm font-medium uppercase tracking-widest text-accent">About</p>
+				<h1 class="text-balance text-foreground">{displayName}</h1>
+				<div class="mt-6 space-y-1 text-base font-medium text-muted sm:text-lg">
+					{PROFILE.titles.map((title) => <p>{title}</p>)}
+				</div>
+				<p class="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">{PROFILE.headline}</p>
+				<p class="mx-auto mt-2 text-sm text-muted-foreground">
+					{PROFILE.location} · {PROFILE.clearance}
+				</p>
+			</header>
+		</Container>
+	</Section>
+
+	<Section background="muted">
+		<Container size="narrow">
+			<SectionHeader
+				title="Professional Summary"
+				description="ElliottSecurity Platform documents real-world cybersecurity engineering work across detection, hunting, forensics, and automation."
+			/>
+			<p class="mb-8 leading-relaxed">{PROFILE.summary}</p>
+			<h3 class="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">Core Skills</h3>
+			<ul class="mb-8 grid gap-3 sm:grid-cols-2" role="list">
+				{
+					PROFESSIONAL_SKILLS.map((skill) => (
+						<li class="rounded-md border border-border bg-surface-elevated px-4 py-3 text-sm font-medium text-foreground">
+							{skill}
+						</li>
+					))
+				}
+			</ul>
+			<h3 class="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">Platform Focus</h3>
+			<ul class="grid gap-3 sm:grid-cols-2" role="list">
+				{
+					PLATFORM_TOPICS.map((topic) => (
+						<li class="rounded-md border border-border bg-surface-elevated px-4 py-3 text-sm font-medium text-foreground">
+							{topic}
+						</li>
+					))
+				}
+			</ul>
+		</Container>
+	</Section>
+
+	<Section>
+		<Container size="narrow">
+			<SectionHeader title="Current Focus" description="Active engineering areas and tooling priorities." />
+			<CurrentFocusGrid items={CURRENT_FOCUS} columns={3} />
+		</Container>
+	</Section>
+
+	<Section background="muted">
+		<Container size="narrow">
+			<SectionHeader
+				title="Professional Experience"
+				description="Career timeline including current role, prior positions, and education."
+			/>
+			<ExperienceTimeline entries={EXPERIENCE} />
+		</Container>
+	</Section>
+
+	<Section>
+		<Container size="narrow">
+			<SectionHeader title="Certifications" description="CompTIA credentials supporting enterprise security operations." />
+			<div class="grid gap-4 sm:grid-cols-2">
+				{CERTIFICATIONS.map((certification) => <CertificationCard certification={certification} />)}
+			</div>
+		</Container>
+	</Section>
+
+	<Section background="muted">
+		<Container>
+			<SectionHeader
+				title="Technology Stack"
+				description="Security platforms, infrastructure, query languages, and forensic tooling from professional operations."
+				align="center"
+				class="mx-auto"
+			/>
+			<TechnologyGrid technologies={TECHNOLOGIES} />
+		</Container>
+	</Section>
+</BaseLayout>

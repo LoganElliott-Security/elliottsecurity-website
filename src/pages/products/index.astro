@@ -12,6 +12,8 @@ const products = await getPublishedCollection('products');
 	description="Guides, templates, downloads, and open-source resources."
 	path="/products"
 	isEmpty={products.length === 0}
+	emptyTitle="Products coming soon."
+	emptyDescription="Guides, templates, and resources will be listed here when available."
 >
 	{
 		products.map((product) => (

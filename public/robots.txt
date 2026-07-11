@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://elliottsecurity.com/sitemap-index.xml
+Sitemap: https://elliottsecurity.net/sitemap-index.xml

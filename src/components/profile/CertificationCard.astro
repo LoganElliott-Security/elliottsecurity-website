@@ -1,0 +1,59 @@
+---
+import Card from '../ui/Card.astro';
+import type { Certification, CertificationStatus } from '../../types/profile';
+
+interface Props {
+	certification: Certification;
+}
+
+const { certification } = Astro.props;
+
+const statusLabels: Record<CertificationStatus, string> = {
+	earned: 'Earned',
+	'in-progress': 'In Progress',
+	planned: 'Planned',
+};
+
+const statusClasses: Record<CertificationStatus, string> = {
+	earned: 'border-accent/30 bg-accent-muted/20 text-accent',
+	'in-progress': 'border-amber-500/30 bg-amber-950/20 text-amber-300',
+	planned: 'border-border bg-surface-muted text-muted-foreground',
+};
+---
+
+<Card padding="md" class="h-full">
+	<div class="flex h-full flex-col gap-4">
+		<div class="flex items-start justify-between gap-3">
+			<h3 class="text-base font-semibold text-foreground">{certification.name}</h3>
+			<span
+				class:list={[
+					'shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium',
+					statusClasses[certification.status],
+				]}
+			>
+				{statusLabels[certification.status]}
+			</span>
+		</div>
+		{
+			certification.issueDate && (
+				<p class="text-sm text-muted-foreground">Issued {certification.issueDate}</p>
+			)
+		}
+		{
+			certification.credentialUrl ? (
+				<a
+					href={certification.credentialUrl}
+					class="mt-auto text-sm text-accent no-underline hover:text-accent-hover hover:underline"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					View credential
+				</a>
+			) : certification.status === 'earned' ? (
+				<p class="mt-auto text-sm text-muted-foreground">CompTIA certified</p>
+			) : (
+				<p class="mt-auto text-sm text-muted-foreground">In progress</p>
+			)
+		}
+	</div>
+</Card>

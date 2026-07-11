@@ -12,6 +12,8 @@ const articles = sortByDateDesc(await getPublishedCollection('articles'), 'publi
 	description="Educational technical content published from Markdown."
 	path="/articles"
 	isEmpty={articles.length === 0}
+	emptyTitle="No technical articles have been published yet."
+	emptyDescription="New articles will appear here when Markdown content is published to the articles collection."
 >
 	{
 		articles.map((article) => (

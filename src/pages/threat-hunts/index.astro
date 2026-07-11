@@ -12,6 +12,8 @@ const hunts = sortByDateDesc(await getPublishedCollection('threat-hunts'), 'hunt
 	description="Documented investigations with hypothesis, methodology, and lessons learned."
 	path="/threat-hunts"
 	isEmpty={hunts.length === 0}
+	emptyTitle="No threat hunts have been published yet."
+	emptyDescription="Threat hunts will appear here when investigation writeups are published."
 >
 	{
 		hunts.map((hunt) => (

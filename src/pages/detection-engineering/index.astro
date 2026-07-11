@@ -12,6 +12,8 @@ const detections = sortDetectionsByRecency(await getPublishedCollection('detecti
 	description="Detection logic, rules, and engineering documentation."
 	path="/detection-engineering"
 	isEmpty={detections.length === 0}
+	emptyTitle="No detections have been published yet."
+	emptyDescription="Detection rules and engineering documentation will appear here when published."
 >
 	{
 		detections.map((detection) => (

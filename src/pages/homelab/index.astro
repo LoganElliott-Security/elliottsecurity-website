@@ -12,6 +12,8 @@ const entries = sortByDateDesc(await getPublishedCollection('homelab'), 'updated
 	description="Infrastructure and lab documentation for detection engineering and research."
 	path="/homelab"
 	isEmpty={entries.length === 0}
+	emptyTitle="Homelab documentation coming soon."
+	emptyDescription="Lab architecture and engineering notes will be published here."
 >
 	{
 		entries.map((entry) => (

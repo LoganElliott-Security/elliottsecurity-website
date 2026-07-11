@@ -1,5 +1,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { SITE } from '../config/site';
+import { PROFILE } from '../config/profile';
+import { getSocialSameAsUrls } from '../config/social';
 import type { ContentCollectionName } from '../types/content';
 import type { BreadcrumbItem } from '../types/knowledge';
 import { getEntryUrl } from './content';
@@ -18,7 +20,31 @@ export function buildOrganizationSchema(): JsonLdObject {
 		name: SITE.name,
 		url: SITE.url,
 		description: SITE.description,
-		sameAs: [SITE.author.url],
+		sameAs: getSocialSameAsUrls(),
+	};
+}
+
+export function buildPersonSchema(): JsonLdObject {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'Person',
+		name: `${PROFILE.name}, ${PROFILE.credential}`,
+		givenName: PROFILE.name.split(' ')[0],
+		familyName: PROFILE.name.split(' ').slice(1).join(' '),
+		url: getCanonicalUrl('/about'),
+		jobTitle: PROFILE.titles,
+		description: PROFILE.summary,
+		email: PROFILE.email,
+		address: {
+			'@type': 'PostalAddress',
+			addressLocality: PROFILE.location,
+		},
+		sameAs: getSocialSameAsUrls(),
+		worksFor: {
+			'@type': 'Organization',
+			name: SITE.name,
+			url: SITE.url,
+		},
 	};
 }
 

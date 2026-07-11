@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import ContactCardGrid from '../components/profile/ContactCardGrid.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import Button from '../components/ui/Button.astro';
+import Container from '../components/ui/Container.astro';
+import Section from '../components/ui/Section.astro';
+import { RESUME_PATH, SEO } from '../config/profile';
+import { buildBreadcrumbSchema, buildListingBreadcrumbs, buildPersonSchema, buildWebPageSchema } from '../lib/structured-data';
+
+const breadcrumbs = buildListingBreadcrumbs(SEO.contact.title, '/contact');
+---
+
+<BaseLayout title={SEO.contact.title} description={SEO.contact.description}>
+	<StructuredData
+		slot="head"
+		data={[
+			buildWebPageSchema({ title: SEO.contact.title, description: SEO.contact.description, url: '/contact' }),
+			buildBreadcrumbSchema(breadcrumbs),
+			buildPersonSchema(),
+		]}
+	/>
+	<Section background="default" padding={true} class="relative overflow-hidden">
+		<div
+			class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(34,211,238,0.08)_0%,_transparent_50%)]"
+			aria-hidden="true"
+		>
+		</div>
+		<Container size="narrow" class="relative">
+			<Breadcrumbs items={breadcrumbs} />
+			<header class="mb-12 text-center">
+				<p class="mb-4 text-sm font-medium uppercase tracking-widest text-accent">Contact</p>
+				<h1 class="text-balance text-foreground">Let's Connect</h1>
+				<p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed">
+					Interested in cybersecurity engineering, detection engineering, threat hunting, DFIR, or collaborative
+					research? Feel free to reach out.
+				</p>
+				<div class="mt-8">
+					<Button href={RESUME_PATH} size="lg" download>
+						Download Resume
+					</Button>
+				</div>
+			</header>
+			<ContactCardGrid size="large" />
+		</Container>
+	</Section>
+</BaseLayout>

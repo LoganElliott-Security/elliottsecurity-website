@@ -1,40 +1,31 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContentCard from '../components/content/ContentCard.astro';
-import ContentGrid from '../components/content/ContentGrid.astro';
 import StructuredData from '../components/seo/StructuredData.astro';
-import ContentPlaceholder from '../components/ui/ContentPlaceholder.astro';
+import CurrentFocusGrid from '../components/profile/CurrentFocusGrid.astro';
 import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
+import Container from '../components/ui/Container.astro';
 import Section from '../components/ui/Section.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
-import { SITE } from '../config/site';
-import {
-	formatDate,
-	formatLabel,
-	getEntryUrl,
-	getFeaturedProjects,
-	getFeaturedThreatHunts,
-	getHomelabFocus,
-	getLatestArticles,
-	getLatestDetections,
-} from '../lib/content';
-import { buildWebPageSchema } from '../lib/structured-data';
+import { CURRENT_FOCUS, PLATFORM_TOPICS, PROFILE, SEO } from '../config/profile';
+import { getSocialProfile } from '../config/social';
+import { buildPersonSchema, buildWebPageSchema } from '../lib/structured-data';
 
-const latestArticles = await getLatestArticles(3);
-const featuredProjects = await getFeaturedProjects(3);
-const featuredThreatHunts = await getFeaturedThreatHunts(3);
-const homelabFocus = await getHomelabFocus(3);
-const latestDetections = await getLatestDetections(3);
+const githubUrl = getSocialProfile('github')?.href ?? 'https://github.com/LoganElliott-Security';
 ---
 
-<BaseLayout>
+<BaseLayout title={SEO.homepage.title} description={SEO.homepage.description}>
+	<title slot="head">{SEO.homepage.title}</title>
 	<StructuredData
 		slot="head"
-		data={buildWebPageSchema({
-			title: SITE.title,
-			description: SITE.description,
-			url: '/',
-		})}
+		data={[
+			buildWebPageSchema({
+				title: SEO.homepage.title,
+				description: SEO.homepage.description,
+				url: '/',
+			}),
+			buildPersonSchema(),
+		]}
 	/>
 	<Section background="default" padding={true} class="relative overflow-hidden">
 		<div
@@ -42,150 +33,56 @@ const latestDetections = await getLatestDetections(3);
 			aria-hidden="true"
 		>
 		</div>
-		<div class="relative mx-auto max-w-4xl text-center">
-			<p class="mb-4 text-sm font-medium uppercase tracking-widest text-accent">Cybersecurity Knowledge Platform</p>
-			<h1 class="text-balance text-foreground">{SITE.title}</h1>
-			<p class="mx-auto mt-6 max-w-2xl text-lg sm:text-xl">{SITE.description}</p>
-			<p class="mt-4 text-sm font-medium text-muted-foreground">{SITE.motto}</p>
-			<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-				<Button href="/articles" size="lg">Explore Articles</Button>
-				<Button href="/detection-engineering" variant="outline" size="lg">Browse Detections</Button>
+		<Container class="relative">
+			<div class="mx-auto max-w-4xl text-center">
+				<p class="mb-4 text-sm font-medium uppercase tracking-widest text-accent">Cybersecurity Engineering</p>
+				<h1 class="text-balance text-foreground">{PROFILE.name}, {PROFILE.credential}</h1>
+				<div class="mt-6 space-y-1 text-base font-medium text-muted sm:text-lg">
+					{PROFILE.titles.map((title) => <p>{title}</p>)}
+				</div>
+				<p class="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">{PROFILE.headline}</p>
+				<p class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed sm:text-xl">{PROFILE.tagline}</p>
+				<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+					<Button href="/projects" size="lg">View Projects</Button>
+					<Button href="/detection-engineering" size="lg" variant="outline">View Detection Engineering</Button>
+				</div>
+				<div class="mt-4">
+					<Button href={githubUrl} variant="ghost" size="md">View GitHub</Button>
+				</div>
 			</div>
-		</div>
-	</Section>
-
-	<Section id="latest-articles" background="muted">
-		<SectionHeader
-			eyebrow="Articles"
-			title="Latest Articles"
-			description="Educational technical content published from Markdown."
-			actionLabel="View all articles"
-			actionHref="/articles"
-		/>
-		{
-			latestArticles.length > 0 ? (
-				<ContentGrid>
-					{latestArticles.map((article) => (
-						<ContentCard
-							title={article.data.title}
-							description={article.data.description}
-							href={getEntryUrl('articles', article)}
-							meta={formatDate(article.data.publishDate)}
-							tags={article.data.tags}
-						/>
-					))}
-				</ContentGrid>
-			) : (
-				<ContentPlaceholder message="No articles published yet. New entries appear here automatically when Markdown content is added." />
-			)
-		}
-	</Section>
-
-	<Section id="featured-projects">
-		<SectionHeader
-			eyebrow="Projects"
-			title="Featured Projects"
-			description="Infrastructure and software engineering work documented in Git."
-			actionLabel="View all projects"
-			actionHref="/projects"
-		/>
-		{
-			featuredProjects.length > 0 ? (
-				<ContentGrid>
-					{featuredProjects.map((project) => (
-						<ContentCard
-							title={project.data.title}
-							description={project.data.description}
-							href={getEntryUrl('projects', project)}
-							meta={formatLabel(project.data.status)}
-							tags={project.data.tags}
-						/>
-					))}
-				</ContentGrid>
-			) : (
-				<ContentPlaceholder message="No featured projects yet. Mark a project as featured in frontmatter to highlight it here." />
-			)
-		}
+		</Container>
 	</Section>
 
 	<Section id="current-focus" background="muted">
-		<SectionHeader
-			eyebrow="Homelab"
-			title="Current Homelab Focus"
-			description="Active engineering priorities and ongoing homelab work."
-			actionLabel="View homelab"
-			actionHref="/homelab"
-		/>
-		{
-			homelabFocus.length > 0 ? (
-				<ContentGrid>
-					{homelabFocus.map((entry) => (
-						<ContentCard
-							title={entry.data.title}
-							description={entry.data.description}
-							href={getEntryUrl('homelab', entry)}
-							meta={formatDate(entry.data.updatedDate)}
-							tags={entry.data.tags}
-						/>
-					))}
-				</ContentGrid>
-			) : (
-				<ContentPlaceholder message="No homelab entries published yet." />
-			)
-		}
+		<Container>
+			<SectionHeader
+				eyebrow="Current Focus"
+				title="Current Focus"
+				description="Active engineering priorities across detection engineering, threat hunting, DFIR, and lab infrastructure."
+			/>
+			<CurrentFocusGrid items={CURRENT_FOCUS} columns={3} />
+		</Container>
 	</Section>
 
-	<Section id="latest-threat-hunts">
-		<SectionHeader
-			eyebrow="Threat Hunting"
-			title="Featured Threat Hunts"
-			description="Documented investigations with hypothesis, methodology, and lessons learned."
-			actionLabel="View all threat hunts"
-			actionHref="/threat-hunts"
-		/>
-		{
-			featuredThreatHunts.length > 0 ? (
-				<ContentGrid>
-					{featuredThreatHunts.map((hunt) => (
-						<ContentCard
-							title={hunt.data.title}
-							description={hunt.data.description}
-							href={getEntryUrl('threat-hunts', hunt)}
-							meta={formatDate(hunt.data.huntDate)}
-							tags={hunt.data.tags}
-						/>
-					))}
-				</ContentGrid>
-			) : (
-				<ContentPlaceholder message="No featured threat hunts yet. Mark a hunt as featured in frontmatter to highlight it here." />
-			)
-		}
-	</Section>
-
-	<Section id="detection-engineering" background="muted">
-		<SectionHeader
-			eyebrow="Detection Engineering"
-			title="Latest Detections"
-			description="Detection rules, logic, and engineering documentation with downloadable artifacts."
-			actionLabel="View all detections"
-			actionHref="/detection-engineering"
-		/>
-		{
-			latestDetections.length > 0 ? (
-				<ContentGrid>
-					{latestDetections.map((detection) => (
-						<ContentCard
-							title={detection.data.title}
-							description={detection.data.description}
-							href={getEntryUrl('detections', detection)}
-							meta={`${detection.data.detectionId} · ${formatLabel(detection.data.severity)}`}
-							tags={detection.data.tags}
-						/>
-					))}
-				</ContentGrid>
-			) : (
-				<ContentPlaceholder message="No detection rules published yet." />
-			)
-		}
+	<Section id="platform">
+		<Container>
+			<SectionHeader
+				eyebrow="Platform"
+				title="ElliottSecurity Platform"
+				description="A static, Markdown-driven cybersecurity knowledge platform for publishing real engineering work."
+			/>
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				{
+					PLATFORM_TOPICS.map((topic) => (
+						<Card padding="md" class="h-full">
+							<h3 class="text-lg font-semibold text-foreground">{topic}</h3>
+							<p class="mt-3 text-sm leading-relaxed">
+								Documenting {topic.toLowerCase()} work from enterprise operations and lab engineering.
+							</p>
+						</Card>
+					))
+				}
+			</div>
+		</Container>
 	</Section>
 </BaseLayout>

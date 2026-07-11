@@ -11,6 +11,7 @@ interface Props {
 	class?: string;
 	type?: 'button' | 'submit' | 'reset';
 	disabled?: boolean;
+	download?: boolean | string;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
 	class: className,
 	type = 'button',
 	disabled = false,
+	download,
 } = Astro.props;
 
 const baseClasses =
@@ -43,7 +45,7 @@ const classes = cn(baseClasses, variantClasses[variant], sizeClasses[size], clas
 
 {
 	href ? (
-		<a href={href} class={classes}>
+		<a href={href} class={classes} download={download}>
 			<slot />
 		</a>
 	) : (

@@ -1,0 +1,49 @@
+---
+import Card from '../ui/Card.astro';
+import type { ExperienceEntry } from '../../types/profile';
+
+interface Props {
+	entries: ExperienceEntry[];
+}
+
+const { entries } = Astro.props;
+---
+
+<ol class="relative space-y-8 border-l border-border pl-6" role="list">
+	{
+		entries.map((entry) => (
+			<li class="relative">
+				<span
+					class="absolute -left-[1.625rem] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-background"
+					aria-hidden="true"
+				/>
+				<Card padding="md">
+					<div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+						<div>
+							{
+								entry.kind === 'education' ? (
+									<p class="mb-1 text-xs font-medium uppercase tracking-widest text-accent">Education</p>
+								) : null
+							}
+							<h3 class="text-lg font-semibold text-foreground">{entry.role}</h3>
+							<p class="text-sm font-medium text-accent">{entry.organization}</p>
+						</div>
+						{entry.period && <p class="shrink-0 text-sm text-muted-foreground">{entry.period}</p>}
+					</div>
+					<p class="mt-4 text-sm leading-relaxed">{entry.description}</p>
+					{
+						entry.highlights && entry.highlights.length > 0 && (
+							<ul class="mt-4 space-y-2" role="list">
+								{entry.highlights.map((highlight) => (
+									<li class="text-sm text-muted before:mr-2 before:text-accent before:content-['—']">
+										{highlight}
+									</li>
+								))}
+							</ul>
+						)
+					}
+				</Card>
+			</li>
+		))
+	}
+</ol>
