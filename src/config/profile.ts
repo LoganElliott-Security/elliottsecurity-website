@@ -199,9 +199,4 @@ export const SEO = {
 		description:
 			'Connect with Logan Elliott for cybersecurity engineering, detection engineering, threat hunting, DFIR collaboration, and research.',
 	},
-	now: {
-		title: 'Now',
-		description:
-			'What Logan Elliott is working on now — detection engineering lab projects, threat hunting, DFIR research, and ElliottSecurity Platform publishing.',
-	},
 } as const;

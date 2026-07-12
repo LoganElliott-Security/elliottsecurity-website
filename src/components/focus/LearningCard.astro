@@ -1,0 +1,26 @@
+---
+import Card from '../ui/Card.astro';
+import type { LearningItem } from '../../types/currentFocus';
+
+interface Props {
+	item: LearningItem;
+}
+
+const { item } = Astro.props;
+---
+
+{
+	item.href ? (
+		<a href={item.href} class="block h-full no-underline">
+			<Card padding="md" hover={true} class="h-full">
+				<h3 class="text-base font-semibold text-foreground">{item.title}</h3>
+				{item.description && <p class="mt-3 text-sm leading-relaxed text-muted">{item.description}</p>}
+			</Card>
+		</a>
+	) : (
+		<Card padding="md" class="h-full">
+			<h3 class="text-base font-semibold text-foreground">{item.title}</h3>
+			{item.description && <p class="mt-3 text-sm leading-relaxed text-muted">{item.description}</p>}
+		</Card>
+	)
+}

@@ -1,17 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StructuredData from '../components/seo/StructuredData.astro';
-import CurrentFocusGrid from '../components/profile/CurrentFocusGrid.astro';
+import EngineeringProjectCard from '../components/focus/EngineeringProjectCard.astro';
 import Button from '../components/ui/Button.astro';
 import Card from '../components/ui/Card.astro';
 import Container from '../components/ui/Container.astro';
 import Section from '../components/ui/Section.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
-import { CURRENT_FOCUS, PLATFORM_TOPICS, PROFILE, SEO } from '../config/profile';
+import { getHomepagePriorities } from '../config/currentFocus';
+import { PLATFORM_TOPICS, PROFILE, SEO } from '../config/profile';
 import { getSocialProfile } from '../config/social';
 import { buildPersonSchema, buildWebPageSchema } from '../lib/structured-data';
 
 const githubUrl = getSocialProfile('github')?.href ?? 'https://github.com/LoganElliott-Security';
+const homepagePriorities = getHomepagePriorities(3);
 ---
 
 <BaseLayout title={SEO.homepage.title} description={SEO.homepage.description}>
@@ -58,9 +60,17 @@ const githubUrl = getSocialProfile('github')?.href ?? 'https://github.com/LoganE
 			<SectionHeader
 				eyebrow="Current Focus"
 				title="Current Focus"
-				description="Active engineering priorities across detection engineering, threat hunting, DFIR, and lab infrastructure."
+				description="Top active engineering priorities — detection lab, platform development, and threat hunting research."
+				actionLabel="View full dashboard"
+				actionHref="/current-focus"
 			/>
-			<CurrentFocusGrid items={CURRENT_FOCUS} columns={3} />
+			<ul class="grid gap-4 md:grid-cols-3" role="list">
+				{homepagePriorities.map((project) => (
+					<li>
+						<EngineeringProjectCard project={project} />
+					</li>
+				))}
+			</ul>
 		</Container>
 	</Section>
 

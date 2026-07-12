@@ -42,11 +42,6 @@ export interface Technology {
 	category: 'security' | 'platform' | 'development' | 'infrastructure' | 'forensics' | 'skills';
 }
 
-export interface NowSection {
-	title: string;
-	items: string[];
-}
-
 export interface ProfileConfig {
 	name: string;
 	credential: string;

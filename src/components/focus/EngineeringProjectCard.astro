@@ -1,0 +1,65 @@
+---
+import Card from '../ui/Card.astro';
+import type { EngineeringProject, ProjectStatus } from '../../types/currentFocus';
+import { cn } from '../../lib/cn';
+
+interface Props {
+	project: EngineeringProject;
+}
+
+const { project } = Astro.props;
+
+const statusLabels: Record<ProjectStatus, string> = {
+	planning: 'Planning',
+	'in-progress': 'In Progress',
+	testing: 'Testing',
+	completed: 'Completed',
+};
+
+const statusClasses: Record<ProjectStatus, string> = {
+	planning: 'border-muted-foreground/30 bg-surface-muted text-muted-foreground',
+	'in-progress': 'border-accent/30 bg-accent-muted/20 text-accent',
+	testing: 'border-amber-500/30 bg-amber-950/20 text-amber-300',
+	completed: 'border-emerald-500/30 bg-emerald-950/20 text-emerald-300',
+};
+
+const Wrapper = project.href ? 'a' : 'div';
+const wrapperProps = project.href
+	? { href: project.href, class: 'block h-full no-underline' }
+	: { class: 'h-full' };
+---
+
+<Wrapper {...wrapperProps}>
+	<Card padding="md" hover={Boolean(project.href)} class="flex h-full flex-col gap-4">
+		<div class="flex items-start justify-between gap-3">
+			<h3 class="text-base font-semibold text-foreground">{project.title}</h3>
+			<span
+				class={cn(
+					'shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium',
+					statusClasses[project.status],
+				)}
+			>
+				{statusLabels[project.status]}
+			</span>
+		</div>
+		<p class="flex-1 text-sm leading-relaxed text-muted">{project.description}</p>
+		<div>
+			<div class="mb-1 flex items-center justify-between text-xs text-muted-foreground">
+				<span>Progress</span>
+				<span>{project.progress}%</span>
+			</div>
+			<div class="h-2 overflow-hidden rounded-full bg-surface-muted">
+				<div
+					class="h-full rounded-full bg-accent transition-all"
+					style={`width: ${project.progress}%`}
+					role="progressbar"
+					aria-valuenow={project.progress}
+					aria-valuemin={0}
+					aria-valuemax={100}
+					aria-label={`${project.title} progress`}
+				/>
+			</div>
+		</div>
+		{project.href && <p class="text-sm text-accent">View details →</p>}
+	</Card>
+</Wrapper>

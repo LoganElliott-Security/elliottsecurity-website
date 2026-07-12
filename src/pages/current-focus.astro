@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import EngineeringProjectCard from '../components/focus/EngineeringProjectCard.astro';
+import LabRoadmapTimeline from '../components/focus/LabRoadmapTimeline.astro';
+import LearningCard from '../components/focus/LearningCard.astro';
+import PublishingQueue from '../components/focus/PublishingQueue.astro';
+import CurrentFocusGrid from '../components/profile/CurrentFocusGrid.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import Container from '../components/ui/Container.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import {
+	ACTIVE_TECH_STACK,
+	CURRENT_FOCUS_SEO,
+	CURRENT_FOCUS_UPDATED,
+	ENGINEERING_PROJECTS,
+	LAB_ROADMAP,
+	LEARNING_ITEMS,
+	PUBLISHING_QUEUE,
+} from '../config/currentFocus';
+import { buildBreadcrumbSchema, buildListingBreadcrumbs, buildWebPageSchema } from '../lib/structured-data';
+import { formatDate } from '../lib/content';
+
+const breadcrumbs = buildListingBreadcrumbs(CURRENT_FOCUS_SEO.title, '/current-focus');
+const updatedLabel = formatDate(new Date(CURRENT_FOCUS_UPDATED));
+const techItems = ACTIVE_TECH_STACK.map((tech) => tech.name);
+---
+
+<BaseLayout title={CURRENT_FOCUS_SEO.title} description={CURRENT_FOCUS_SEO.description}>
+	<title slot="head">{CURRENT_FOCUS_SEO.pageTitle}</title>
+	<StructuredData
+		slot="head"
+		data={[
+			buildWebPageSchema({
+				title: CURRENT_FOCUS_SEO.pageTitle,
+				description: CURRENT_FOCUS_SEO.description,
+				url: '/current-focus',
+			}),
+			buildBreadcrumbSchema(breadcrumbs),
+		]}
+	/>
+	<Section background="default" padding={true}>
+		<Container size="narrow">
+			<Breadcrumbs items={breadcrumbs} />
+			<SectionHeader
+				eyebrow="Engineering Dashboard"
+				title={CURRENT_FOCUS_SEO.title}
+				description={CURRENT_FOCUS_SEO.subtitle}
+			/>
+			<p class="mb-12 text-sm text-muted-foreground">Last updated: {updatedLabel}</p>
+
+			<div class="space-y-16">
+				<section aria-labelledby="engineering-projects">
+					<h2 id="engineering-projects" class="mb-6 text-xl font-semibold text-foreground">
+						Current Engineering Projects
+					</h2>
+					<ul class="grid gap-4 sm:grid-cols-2" role="list">
+						{ENGINEERING_PROJECTS.map((project) => (
+							<li>
+								<EngineeringProjectCard project={project} />
+							</li>
+						))}
+					</ul>
+				</section>
+
+				<section aria-labelledby="current-learning">
+					<h2 id="current-learning" class="mb-6 text-xl font-semibold text-foreground">Current Learning</h2>
+					<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+						{LEARNING_ITEMS.map((item) => (
+							<li>
+								<LearningCard item={item} />
+							</li>
+						))}
+					</ul>
+				</section>
+
+				<section aria-labelledby="publishing-queue">
+					<h2 id="publishing-queue" class="mb-6 text-xl font-semibold text-foreground">Publishing Queue</h2>
+					<PublishingQueue items={PUBLISHING_QUEUE} />
+				</section>
+
+				<section aria-labelledby="lab-roadmap">
+					<h2 id="lab-roadmap" class="mb-6 text-xl font-semibold text-foreground">Lab Roadmap</h2>
+					<LabRoadmapTimeline milestones={LAB_ROADMAP} />
+				</section>
+
+				<section aria-labelledby="active-tech-stack">
+					<h2 id="active-tech-stack" class="mb-6 text-xl font-semibold text-foreground">
+						Current Technology Stack
+					</h2>
+					<CurrentFocusGrid items={techItems} columns={4} />
+				</section>
+			</div>
+		</Container>
+	</Section>
+</BaseLayout>

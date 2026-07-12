@@ -37,14 +37,14 @@ export const MAIN_NAV: NavItem[] = [
 		description: 'Professional profile and background',
 	},
 	{
-		label: 'Now',
-		href: '/now',
-		description: 'Current engineering priorities',
-	},
-	{
 		label: 'Contact',
 		href: '/contact',
 		description: 'Connect and collaborate',
+	},
+	{
+		label: 'Current Focus',
+		href: '/current-focus',
+		description: 'Active engineering dashboard',
 	},
 ];
 
@@ -70,7 +70,7 @@ export const FOOTER_NAV: FooterNavGroup[] = [
 		title: 'About',
 		items: [
 			{ label: 'About', href: '/about' },
-			{ label: 'Now', href: '/now' },
+			{ label: 'Current Focus', href: '/current-focus' },
 			{ label: 'Contact', href: '/contact' },
 		],
 	},
