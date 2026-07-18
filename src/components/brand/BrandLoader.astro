@@ -1,0 +1,54 @@
+---
+/**
+ * Subtle loading indicator using the ElliottSecurity monogram.
+ * Prefer CSS-only motion; respects prefers-reduced-motion.
+ */
+import LogoMark from './LogoMark.astro';
+import { cn } from '../../lib/cn';
+
+interface Props {
+	class?: string;
+	label?: string;
+}
+
+const { class: className, label = 'Loading' } = Astro.props;
+---
+
+<div class={cn('es-loader', className)} role="status" aria-live="polite">
+	<LogoMark class="es-loader__mark" />
+	<span class="sr-only">{label}</span>
+</div>
+
+<style>
+	.es-loader {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-primary);
+	}
+
+	.es-loader__mark {
+		width: 1.75rem;
+		height: 1.75rem;
+		animation: es-loader-pulse var(--duration-slower) var(--ease-in-out) infinite;
+	}
+
+	@keyframes es-loader-pulse {
+		0%,
+		100% {
+			opacity: 0.45;
+			transform: scale(0.96);
+		}
+		50% {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.es-loader__mark {
+			animation: none;
+			opacity: 0.85;
+		}
+	}
+</style>

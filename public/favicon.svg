@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="ElliottSecurity">
-  <rect width="32" height="32" rx="6" fill="#181824"/>
-  <path
-    d="M16 4.5 7 8.5v7c0 5.25 3.85 10.15 9 11.5 5.15-1.35 9-6.25 9-11.5v-7L16 4.5Z"
-    stroke="#7C3AED"
-    stroke-width="1.75"
-    stroke-linejoin="round"
-  />
-  <path
-    d="M12.5 16.5 14.75 18.75 19.5 14"
-    stroke="#A855F7"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="ElliottSecurity">
+  <rect width="64" height="64" rx="12" fill="#09090B"/>
+  <defs>
+    <linearGradient id="g" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 5 54.5 18v28L32 59 9.5 46V18L32 5Z" stroke="url(#g)" stroke-width="3.5" stroke-linejoin="round"/>
+  <path fill="url(#g)" d="M20 18h26v7H28.5v4H42v7H28.5v4H46v7H20V18Z"/>
 </svg>

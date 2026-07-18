@@ -21,6 +21,9 @@ This project follows Semantic Versioning.
 - Markdown prose, callouts, and tables styled via design tokens
 - Brand assets (favicon, apple-touch-icon, OG image) updated to purple system
 - Full PWA icon set generated from `public/brand/logo.svg` (favicon.ico/svg, apple-touch-icon.png, android-chrome 192/512)
+- Geometric ElliottSecurity monogram (custom E in hexagonal shield) as primary brand mark
+- Brand documentation under `docs/branding/`
+- `LogoMark` and `BrandLoader` components for nav, footer, and loading states
 
 ## Planned
 

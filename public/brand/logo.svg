@@ -1,17 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="ElliottSecurity">
-  <!-- ElliottSecurity brand mark - source of truth for all app icons -->
-  <rect width="512" height="512" rx="96" fill="#181824"/>
+  <rect width="512" height="512" rx="96" fill="#09090B"/>
+  <defs>
+    <linearGradient id="es-app-grad" x1="80" y1="48" x2="432" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+  <!-- Hexagonal shield (scaled from 64-unit mark: +64 offset, *6) -->
   <path
-    d="M256 72 112 136v112c0 84 61.6 162.4 144 184 82.4-21.6 144-100 144-184V136L256 72Z"
-    stroke="#7C3AED"
-    stroke-width="28"
+    d="M256 94 391 172v168L256 418 121 340V172L256 94Z"
+    stroke="url(#es-app-grad)"
+    stroke-width="21"
     stroke-linejoin="round"
   />
+  <!-- Geometric E -->
   <path
-    d="M200 264 236 300 312 216"
-    stroke="#A855F7"
-    stroke-width="28"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    fill="url(#es-app-grad)"
+    d="M184 172h156v42H235v24h81v42H235v24h105v42H184V172Z"
   />
 </svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="ElliottSecurity">
+  <defs>
+    <linearGradient id="es-mark-grad" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+  <!-- Geometric hexagonal shield -->
+  <path
+    d="M32 5 54.5 18v28L32 59 9.5 46V18L32 5Z"
+    stroke="url(#es-mark-grad)"
+    stroke-width="3.5"
+    stroke-linejoin="round"
+  />
+  <!-- Custom geometric E -->
+  <path
+    fill="url(#es-mark-grad)"
+    d="M20 18h26v7H28.5v4H42v7H28.5v4H46v7H20V18Z"
+  />
+</svg>
