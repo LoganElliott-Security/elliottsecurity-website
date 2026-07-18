@@ -39,27 +39,82 @@ const displayName = `${PROFILE.name}, ${PROFILE.credential}`;
 			buildPersonSchema(),
 		]}
 	/>
-	<Section background="default" padding={true} class="relative overflow-hidden">
-		<div
-			class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(34,211,238,0.08)_0%,_transparent_50%)]"
-			aria-hidden="true"
-		>
-		</div>
-		<Container size="narrow" class="relative">
+	<section class="about-hero">
+		<div class="about-hero__glow" aria-hidden="true"></div>
+		<Container size="narrow" class="about-hero__content">
 			<Breadcrumbs items={breadcrumbs} />
-			<header class="mb-12 text-center">
-				<p class="mb-4 text-sm font-medium uppercase tracking-widest text-accent">About</p>
-				<h1 class="text-balance text-foreground">{displayName}</h1>
-				<div class="mt-6 space-y-1 text-base font-medium text-muted sm:text-lg">
+			<header class="about-hero__header">
+				<p class="type-eyebrow">About</p>
+				<h1 class="type-h1 text-balance">{displayName}</h1>
+				<div class="about-hero__titles">
 					{PROFILE.titles.map((title) => <p>{title}</p>)}
 				</div>
-				<p class="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">{PROFILE.headline}</p>
-				<p class="mx-auto mt-2 text-sm text-muted-foreground">
+				<p class="about-hero__meta">{PROFILE.headline}</p>
+				<p class="about-hero__meta">
 					{PROFILE.location} · {PROFILE.clearance}
 				</p>
 			</header>
 		</Container>
-	</Section>
+	</section>
+
+	<style>
+		.about-hero {
+			position: relative;
+			overflow: hidden;
+			padding-block: var(--space-section-sm);
+		}
+
+		@media (min-width: 640px) {
+			.about-hero {
+				padding-block: var(--space-section);
+			}
+		}
+
+		.about-hero__glow {
+			pointer-events: none;
+			position: absolute;
+			inset: 0;
+			background-image: var(--gradient-hero), var(--gradient-glow);
+			background-repeat: no-repeat;
+		}
+
+		.about-hero__content {
+			position: relative;
+		}
+
+		.about-hero__header {
+			margin-bottom: var(--space-4);
+			text-align: center;
+		}
+
+		.about-hero__header .type-eyebrow {
+			margin-bottom: var(--space-4);
+		}
+
+		.about-hero__titles {
+			margin-top: var(--space-6);
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-1);
+			font-size: var(--font-size-body);
+			font-weight: var(--font-weight-medium);
+			color: var(--color-text-secondary);
+		}
+
+		@media (min-width: 640px) {
+			.about-hero__titles {
+				font-size: var(--font-size-body-lg);
+			}
+		}
+
+		.about-hero__meta {
+			margin-inline: auto;
+			margin-top: var(--space-4);
+			max-width: 42rem;
+			font-size: var(--font-size-small);
+			color: var(--color-text-muted);
+		}
+	</style>
 
 	<Section background="muted">
 		<Container size="narrow">

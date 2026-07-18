@@ -15,9 +15,9 @@ const statusLabels: Record<CertificationStatus, string> = {
 };
 
 const statusClasses: Record<CertificationStatus, string> = {
-	earned: 'border-accent/30 bg-accent-muted/20 text-accent',
-	'in-progress': 'border-amber-500/30 bg-amber-950/20 text-amber-300',
-	planned: 'border-border bg-surface-muted text-muted-foreground',
+	earned: 'cert-status cert-status--earned',
+	'in-progress': 'cert-status cert-status--progress',
+	planned: 'cert-status cert-status--planned',
 };
 ---
 
@@ -25,12 +25,7 @@ const statusClasses: Record<CertificationStatus, string> = {
 	<div class="flex h-full flex-col gap-4">
 		<div class="flex items-start justify-between gap-3">
 			<h3 class="text-base font-semibold text-foreground">{certification.name}</h3>
-			<span
-				class:list={[
-					'shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium',
-					statusClasses[certification.status],
-				]}
-			>
+			<span class:list={['cert-status-base', statusClasses[certification.status]]}>
 				{statusLabels[certification.status]}
 			</span>
 		</div>
@@ -43,7 +38,7 @@ const statusClasses: Record<CertificationStatus, string> = {
 			certification.credentialUrl ? (
 				<a
 					href={certification.credentialUrl}
-					class="mt-auto text-sm text-accent no-underline hover:text-accent-hover hover:underline"
+					class="cert-link mt-auto"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -57,3 +52,44 @@ const statusClasses: Record<CertificationStatus, string> = {
 		}
 	</div>
 </Card>
+
+<style>
+	.cert-status-base {
+		flex-shrink: 0;
+		border-radius: var(--radius-pill);
+		border: 1px solid transparent;
+		padding: var(--space-1) 0.625rem;
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+	}
+
+	.cert-status--earned {
+		border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+		background-color: var(--color-primary-muted);
+		color: var(--color-soft);
+	}
+
+	.cert-status--progress {
+		border-color: color-mix(in srgb, var(--color-warning) 35%, transparent);
+		background-color: var(--color-warning-muted);
+		color: var(--color-warning-foreground);
+	}
+
+	.cert-status--planned {
+		border-color: var(--color-border);
+		background-color: var(--color-surface-muted);
+		color: var(--color-text-muted);
+	}
+
+	.cert-link {
+		font-size: var(--font-size-small);
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: var(--transition-hover);
+	}
+
+	.cert-link:hover {
+		color: var(--color-soft);
+		text-decoration: underline;
+	}
+</style>

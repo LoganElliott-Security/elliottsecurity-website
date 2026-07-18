@@ -12,13 +12,10 @@ const { tags, class: className } = Astro.props;
 
 {
 	tags.length > 0 && (
-		<ul class={cn('flex flex-wrap gap-2', className)} role="list">
+		<ul class={cn('tag-list', className)} role="list">
 			{tags.map((tag) => (
 				<li>
-					<a
-						href={getTagUrl(tag)}
-						class="rounded-full border border-border bg-surface-muted px-2.5 py-0.5 text-xs font-medium text-muted no-underline transition-colors hover:border-accent/40 hover:text-accent"
-					>
+					<a href={getTagUrl(tag)} class="tag">
 						{tag}
 					</a>
 				</li>
@@ -26,3 +23,33 @@ const { tags, class: className } = Astro.props;
 		</ul>
 	)
 }
+
+<style>
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.tag {
+		display: inline-block;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-muted);
+		padding: var(--space-1) 0.625rem;
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text-muted);
+		text-decoration: none;
+		transition: var(--transition-hover);
+	}
+
+	.tag:hover {
+		border-color: color-mix(in srgb, var(--color-primary) 40%, var(--color-border));
+		color: var(--color-accent);
+		background-color: var(--color-primary-muted);
+	}
+</style>

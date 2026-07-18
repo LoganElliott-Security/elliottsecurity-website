@@ -32,17 +32,57 @@ const globalStructuredData = getGlobalStructuredData();
 		<StructuredData data={globalStructuredData} />
 		<slot name="head" />
 	</head>
-	<body class="flex min-h-screen flex-col">
-		<a
-			href="#main-content"
-			class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground"
-		>
+	<body class="site-body bg-atmosphere" data-theme="dark">
+		<a href="#main-content" class="skip-link">
 			Skip to main content
 		</a>
 		<Navigation />
-		<main id="main-content" class="flex-1">
+		<main id="main-content" class="site-main">
 			<slot />
 		</main>
 		<Footer />
 	</body>
+
+	<style>
+		.site-body {
+			display: flex;
+			min-height: 100vh;
+			flex-direction: column;
+		}
+
+		.site-main {
+			flex: 1;
+		}
+
+		.skip-link {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border-width: 0;
+		}
+
+		.skip-link:focus {
+			position: absolute;
+			left: var(--space-4);
+			top: var(--space-4);
+			z-index: var(--z-max);
+			width: auto;
+			height: auto;
+			margin: 0;
+			overflow: visible;
+			clip: auto;
+			border-radius: var(--radius-md);
+			background-image: var(--gradient-primary);
+			padding: var(--space-2) var(--space-4);
+			color: var(--color-primary-foreground);
+			white-space: normal;
+			outline: 2px solid var(--color-ring);
+			outline-offset: 2px;
+		}
+	</style>
 </html>

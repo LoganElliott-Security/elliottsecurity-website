@@ -4,39 +4,13 @@
 @import "@fontsource/inter/700.css";
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/500.css";
+
+@import "./tokens.css";
 @import "tailwindcss";
-
-@theme {
-	--font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-	--font-mono: "JetBrains Mono", ui-monospace, monospace;
-
-	--color-background: #08080d;
-	--color-foreground: #f4f4f5;
-	--color-surface: #0f0f17;
-	--color-surface-elevated: #161622;
-	--color-surface-muted: #12121c;
-	--color-border: #252533;
-	--color-border-subtle: #1a1a26;
-	--color-muted: #a1a1aa;
-	--color-muted-foreground: #71717a;
-	--color-accent: #22d3ee;
-	--color-accent-hover: #67e8f9;
-	--color-accent-muted: #164e63;
-	--color-accent-foreground: #083344;
-	--color-ring: #22d3ee;
-
-	--radius-sm: 0.375rem;
-	--radius-md: 0.5rem;
-	--radius-lg: 0.75rem;
-	--radius-xl: 1rem;
-
-	--shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
-	--shadow-md: 0 4px 12px rgb(0 0 0 / 0.35);
-	--shadow-lg: 0 12px 32px rgb(0 0 0 / 0.45);
-
-	--spacing-section: 5rem;
-	--spacing-section-sm: 3.5rem;
-}
+@import "./theme.css";
+@import "./typography.css";
+@import "./animations.css";
+@import "./utilities.css";
 
 @layer base {
 	*,
@@ -51,8 +25,14 @@
 	}
 
 	body {
-		@apply bg-background font-sans text-foreground antialiased;
 		min-width: 320px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-body);
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text);
+		background-color: var(--color-bg);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	h1,
@@ -61,193 +41,285 @@
 	h4,
 	h5,
 	h6 {
-		@apply font-semibold tracking-tight text-foreground;
+		font-weight: var(--font-weight-semibold);
+		letter-spacing: var(--letter-spacing-tight);
+		color: var(--color-text);
 	}
 
 	h1 {
-		@apply text-4xl sm:text-5xl lg:text-6xl;
+		font-size: var(--font-size-h1);
+		line-height: var(--line-height-tight);
 	}
 
 	h2 {
-		@apply text-3xl sm:text-4xl;
+		font-size: var(--font-size-h2);
+		line-height: var(--line-height-snug);
 	}
 
 	h3 {
-		@apply text-xl sm:text-2xl;
+		font-size: var(--font-size-h3);
+		line-height: var(--line-height-snug);
+	}
+
+	h4 {
+		font-size: var(--font-size-h4);
+		line-height: var(--line-height-snug);
 	}
 
 	p {
-		@apply leading-relaxed text-muted;
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text-secondary);
 	}
 
 	a {
-		@apply transition-colors duration-200;
+		transition: var(--transition-hover);
 	}
 
 	code,
 	pre {
-		@apply font-mono;
+		font-family: var(--font-mono);
 	}
 
 	:focus-visible {
-		@apply outline-2 outline-offset-2 outline-ring;
+		outline: 2px solid var(--color-ring);
+		outline-offset: 2px;
 	}
 
 	::selection {
-		background-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
-		color: var(--color-foreground);
-	}
-}
-
-@layer utilities {
-	.text-balance {
-		text-wrap: balance;
+		background-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+		color: var(--color-text);
 	}
 
-	.section-padding {
-		@apply py-section-sm sm:py-section;
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--font-size-small);
 	}
 
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border-width: 0;
+	th,
+	td {
+		padding: var(--space-3) var(--space-4);
+		border: 1px solid var(--color-border);
+		text-align: left;
 	}
 
-	.focus\:not-sr-only:focus {
-		position: absolute;
-		width: auto;
-		height: auto;
-		padding: 0.5rem 1rem;
-		margin: 0;
-		overflow: visible;
-		clip: auto;
-		white-space: normal;
+	th {
+		background-color: var(--color-surface);
+		color: var(--color-text);
+		font-weight: var(--font-weight-semibold);
+	}
+
+	td {
+		background-color: var(--color-bg-secondary);
+		color: var(--color-text-secondary);
+	}
+
+	tr:hover td {
+		background-color: var(--color-surface);
 	}
 }
 
 @layer components {
 	.content-prose {
-		@apply text-muted;
+		color: var(--color-text-secondary);
 	}
 
 	.content-prose > * + * {
-		@apply mt-4;
+		margin-top: var(--space-4);
 	}
 
 	.content-prose h2 {
-		@apply mt-10 mb-4 text-2xl text-foreground;
+		margin-top: var(--space-10);
+		margin-bottom: var(--space-4);
+		font-size: var(--font-size-h3);
+		color: var(--color-text);
 	}
 
 	.content-prose h3 {
-		@apply mt-8 mb-3 text-xl text-foreground;
+		margin-top: var(--space-8);
+		margin-bottom: var(--space-3);
+		font-size: var(--font-size-h4);
+		color: var(--color-text);
 	}
 
 	.content-prose a {
-		@apply text-accent underline-offset-4 hover:text-accent-hover hover:underline;
+		color: var(--color-accent);
+		text-decoration: none;
+		background-image: linear-gradient(currentColor, currentColor);
+		background-position: 0 100%;
+		background-repeat: no-repeat;
+		background-size: 0 1px;
+		transition: background-size var(--duration-normal) var(--ease-default),
+			color var(--duration-normal) var(--ease-default);
+	}
+
+	.content-prose a:hover {
+		color: var(--color-soft);
+		background-size: 100% 1px;
 	}
 
 	.content-prose ul,
 	.content-prose ol {
-		@apply ml-6 space-y-2;
+		margin-left: var(--space-6);
+	}
+
+	.content-prose ul > * + *,
+	.content-prose ol > * + * {
+		margin-top: var(--space-2);
 	}
 
 	.content-prose ul {
-		@apply list-disc;
+		list-style-type: disc;
 	}
 
 	.content-prose ol {
-		@apply list-decimal;
+		list-style-type: decimal;
 	}
 
 	.content-prose li {
-		@apply leading-relaxed;
+		line-height: var(--line-height-relaxed);
 	}
 
 	.content-prose code {
-		@apply rounded-sm bg-surface-muted px-1.5 py-0.5 text-sm text-accent;
+		border-radius: var(--radius-sm);
+		background-color: var(--color-surface-muted);
+		padding: var(--space-1) var(--space-2);
+		font-size: var(--font-size-small);
+		color: var(--color-soft);
 	}
 
 	.content-prose pre {
-		@apply overflow-x-auto rounded-lg border border-border bg-surface p-4 text-sm;
+		overflow-x: auto;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-bg-secondary);
+		padding: var(--space-4);
+		font-size: var(--font-size-small);
+		box-shadow: var(--shadow-soft);
 	}
 
 	.content-prose pre code {
-		@apply bg-transparent p-0 text-foreground;
+		background-color: transparent;
+		padding: 0;
+		color: var(--color-text);
+		border-radius: 0;
+	}
+
+	.content-prose pre[data-language] {
+		position: relative;
+		overflow-x: auto;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-bg-secondary);
+		padding: var(--space-4);
+		font-size: var(--font-size-small);
+		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 12%, transparent);
 	}
 
 	.content-prose blockquote {
-		@apply border-l-2 border-accent pl-4 italic text-muted-foreground;
+		border-left: 2px solid var(--color-primary);
+		padding-left: var(--space-4);
+		font-style: italic;
+		color: var(--color-text-muted);
 	}
 
 	.content-prose strong {
-		@apply font-semibold text-foreground;
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
 	}
 
-	.line-clamp-3 {
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
+	.content-prose table {
+		display: block;
+		overflow-x: auto;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-soft);
+	}
+
+	.content-prose th {
+		background-color: var(--color-surface);
+		color: var(--color-text);
+	}
+
+	.content-prose td {
+		background-color: var(--color-bg-secondary);
+	}
+
+	.content-prose hr {
+		border: none;
+		border-top: 1px solid var(--color-border-subtle);
+		margin-block: var(--space-8);
 	}
 
 	.markdown-callout {
-		@apply my-6 rounded-lg border border-border bg-surface-elevated p-4;
+		margin-block: var(--space-6);
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-elevated);
+		padding: var(--space-4);
+		box-shadow: var(--shadow-soft);
 	}
 
 	.markdown-callout-title {
-		@apply mb-2 text-sm font-semibold text-foreground;
+		margin-bottom: var(--space-2);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
 	}
 
 	.markdown-callout p {
-		@apply text-sm leading-relaxed;
+		font-size: var(--font-size-small);
+		line-height: var(--line-height-relaxed);
 	}
 
 	.markdown-callout ul,
 	.markdown-callout ol {
-		@apply ml-6 mt-2 space-y-1 text-sm;
+		margin-left: var(--space-6);
+		margin-top: var(--space-2);
+		font-size: var(--font-size-small);
+	}
+
+	.markdown-callout ul > * + *,
+	.markdown-callout ol > * + * {
+		margin-top: var(--space-1);
 	}
 
 	.markdown-callout-warning {
-		@apply border-amber-500/40 bg-amber-950/20;
+		border-color: color-mix(in srgb, var(--color-warning) 40%, transparent);
+		background-color: var(--color-warning-muted);
 	}
 
 	.markdown-callout-tip {
-		@apply border-accent/40 bg-accent-muted/20;
+		border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+		background-color: var(--color-primary-muted);
 	}
 
 	.markdown-callout-important {
-		@apply border-sky-500/40 bg-sky-950/20;
+		border-color: color-mix(in srgb, var(--color-info) 40%, transparent);
+		background-color: var(--color-info-muted);
 	}
 
 	.markdown-callout-example {
-		@apply border-violet-500/40 bg-violet-950/20;
+		border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+		background-color: var(--color-accent-muted);
 	}
 
 	.markdown-callout-callout {
-		@apply border-border bg-surface-muted;
+		border-color: var(--color-border);
+		background-color: var(--color-surface-muted);
 	}
 
 	.detection-code-block pre {
-		@apply m-0 bg-transparent p-0;
+		margin: 0;
+		background-color: transparent;
+		padding: 0;
+		border: none;
+		box-shadow: none;
 	}
 
 	.detection-code-block code {
-		@apply bg-transparent p-0 text-foreground;
-	}
-
-	.content-prose pre[data-language] {
-		@apply relative overflow-x-auto rounded-lg border border-border bg-surface p-4 text-sm;
-	}
-
-	.content-prose pre[data-language='yaml'] code,
-	.content-prose pre[data-language='yml'] code {
-		@apply text-foreground;
+		background-color: transparent;
+		padding: 0;
+		color: var(--color-text);
 	}
 }

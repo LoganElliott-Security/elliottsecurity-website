@@ -9,12 +9,44 @@ interface Props {
 const { class: className, size = 'default' } = Astro.props;
 
 const sizeClasses = {
-	default: 'max-w-7xl',
-	narrow: 'max-w-3xl',
-	wide: 'max-w-[90rem]',
+	default: 'container-default',
+	narrow: 'container-narrow',
+	wide: 'container-wide',
 };
 ---
 
-<div class={cn('mx-auto w-full px-4 sm:px-6 lg:px-8', sizeClasses[size], className)}>
+<div class={cn('es-container', sizeClasses[size], className)}>
 	<slot />
 </div>
+
+<style>
+	.es-container {
+		margin-inline: auto;
+		width: 100%;
+		padding-inline: var(--container-padding);
+	}
+
+	@media (min-width: 640px) {
+		.es-container {
+			padding-inline: var(--container-padding-sm);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.es-container {
+			padding-inline: var(--container-padding-lg);
+		}
+	}
+
+	.container-default {
+		max-width: var(--container-default);
+	}
+
+	.container-narrow {
+		max-width: var(--container-narrow);
+	}
+
+	.container-wide {
+		max-width: var(--container-wide);
+	}
+</style>

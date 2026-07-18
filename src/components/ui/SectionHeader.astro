@@ -23,26 +23,18 @@ const {
 } = Astro.props;
 
 const alignClasses = {
-	left: 'text-left items-start',
-	center: 'text-center items-center mx-auto',
+	left: 'section-header--left',
+	center: 'section-header--center',
 };
 ---
 
-<header
-	class={cn(
-		'mb-10 flex max-w-3xl flex-col gap-3 sm:mb-12',
-		alignClasses[align],
-		className,
-	)}
->
-	{eyebrow && (
-		<p class="text-sm font-medium uppercase tracking-widest text-accent">{eyebrow}</p>
-	)}
-	<h2 class="text-balance text-foreground">{title}</h2>
-	{description && <p class="text-balance text-base sm:text-lg">{description}</p>}
+<header class={cn('section-header', alignClasses[align], className)}>
+	{eyebrow && <p class="type-eyebrow">{eyebrow}</p>}
+	<h2 class="type-h2 text-balance">{title}</h2>
+	{description && <p class="section-header__desc text-balance">{description}</p>}
 	{
 		actionLabel && actionHref && (
-			<div class="mt-2">
+			<div class="section-header__action">
 				<Button href={actionHref} variant="ghost" size="sm">
 					{actionLabel}
 				</Button>
@@ -50,3 +42,45 @@ const alignClasses = {
 		)
 	}
 </header>
+
+<style>
+	.section-header {
+		display: flex;
+		max-width: 48rem;
+		flex-direction: column;
+		gap: var(--space-3);
+		margin-bottom: var(--space-10);
+	}
+
+	@media (min-width: 640px) {
+		.section-header {
+			margin-bottom: var(--space-12);
+		}
+	}
+
+	.section-header--left {
+		align-items: flex-start;
+		text-align: left;
+	}
+
+	.section-header--center {
+		align-items: center;
+		margin-inline: auto;
+		text-align: center;
+	}
+
+	.section-header__desc {
+		font-size: var(--font-size-body);
+		color: var(--color-text-secondary);
+	}
+
+	@media (min-width: 640px) {
+		.section-header__desc {
+			font-size: var(--font-size-body-lg);
+		}
+	}
+
+	.section-header__action {
+		margin-top: var(--space-2);
+	}
+</style>

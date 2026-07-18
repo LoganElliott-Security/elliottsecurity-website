@@ -10,20 +10,20 @@ const { items } = Astro.props;
 
 {
 	items.length > 0 && (
-		<nav aria-label="Breadcrumb" class="mb-8">
-			<ol class="flex flex-wrap items-center gap-2 text-sm text-muted-foreground" role="list">
+		<nav aria-label="Breadcrumb" class="breadcrumbs">
+			<ol class="breadcrumbs__list" role="list">
 				{items.map((item, index) => {
 					const isLast = index === items.length - 1;
 					return (
-						<li class="flex items-center gap-2">
-							{index > 0 && <span aria-hidden="true">/</span>}
+						<li class="breadcrumbs__item">
+							{index > 0 && <span class="breadcrumbs__sep" aria-hidden="true">/</span>}
 							{
 								isLast ? (
-									<span class="text-foreground" aria-current="page">
+									<span class="breadcrumbs__current" aria-current="page">
 										{item.name}
 									</span>
 								) : (
-									<a href={item.path} class="text-muted no-underline hover:text-accent">
+									<a href={item.path} class="breadcrumbs__link link-underline">
 										{item.name}
 									</a>
 								)
@@ -35,3 +35,44 @@ const { items } = Astro.props;
 		</nav>
 	)
 }
+
+<style>
+	.breadcrumbs {
+		margin-bottom: var(--space-8);
+	}
+
+	.breadcrumbs__list {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+
+	.breadcrumbs__item {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+	}
+
+	.breadcrumbs__sep {
+		color: var(--color-disabled);
+	}
+
+	.breadcrumbs__current {
+		color: var(--color-text);
+	}
+
+	.breadcrumbs__link {
+		color: var(--color-text-muted);
+		text-decoration: none;
+	}
+
+	.breadcrumbs__link:hover {
+		color: var(--color-accent);
+	}
+</style>

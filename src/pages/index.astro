@@ -29,70 +29,186 @@ const homepagePriorities = getHomepagePriorities(3);
 			buildPersonSchema(),
 		]}
 	/>
-	<Section background="default" padding={true} class="relative overflow-hidden">
-		<div
-			class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(34,211,238,0.08)_0%,_transparent_50%)]"
-			aria-hidden="true"
-		>
-		</div>
-		<Container class="relative">
-			<div class="mx-auto max-w-4xl text-center">
-				<p class="mb-4 text-sm font-medium uppercase tracking-widest text-accent">Cybersecurity Engineering</p>
-				<h1 class="text-balance text-foreground">{PROFILE.name}, {PROFILE.credential}</h1>
-				<div class="mt-6 space-y-1 text-base font-medium text-muted sm:text-lg">
-					{PROFILE.titles.map((title) => <p>{title}</p>)}
-				</div>
-				<p class="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">{PROFILE.headline}</p>
-				<p class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed sm:text-xl">{PROFILE.tagline}</p>
-				<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-					<Button href="/projects" size="lg">View Projects</Button>
-					<Button href="/detection-engineering" size="lg" variant="outline">View Detection Engineering</Button>
-				</div>
-				<div class="mt-4">
-					<Button href={githubUrl} variant="ghost" size="md">View GitHub</Button>
-				</div>
+
+	<section class="hero">
+		<div class="hero__glow" aria-hidden="true"></div>
+		<Container class="hero__content">
+			<p class="type-eyebrow animate-fade-in">Cybersecurity Engineering</p>
+			<h1 class="hero__title type-display animate-slide-up">
+				{PROFILE.name}<span class="hero__credential">, {PROFILE.credential}</span>
+			</h1>
+			<div class="hero__titles animate-slide-up-delay-1">
+				{PROFILE.titles.map((title) => <p>{title}</p>)}
+			</div>
+			<p class="hero__headline animate-slide-up-delay-1">{PROFILE.headline}</p>
+			<p class="hero__tagline type-body-lg animate-slide-up-delay-2">{PROFILE.tagline}</p>
+			<div class="hero__actions animate-slide-up-delay-2">
+				<Button href="/projects" size="lg">View Projects</Button>
+				<Button href="/detection-engineering" size="lg" variant="outline">View Detection Engineering</Button>
+				<Button href={githubUrl} variant="ghost" size="md">View GitHub</Button>
 			</div>
 		</Container>
-	</Section>
+	</section>
 
-	<Section id="current-focus" background="muted">
-		<Container>
-			<SectionHeader
-				eyebrow="Current Focus"
-				title="Current Focus"
-				description="Top active engineering priorities — detection lab, platform development, and threat hunting research."
-				actionLabel="View full dashboard"
-				actionHref="/current-focus"
-			/>
-			<ul class="grid gap-4 md:grid-cols-3" role="list">
-				{homepagePriorities.map((project) => (
-					<li>
-						<EngineeringProjectCard project={project} />
-					</li>
-				))}
-			</ul>
-		</Container>
+	<Section id="current-focus" background="secondary">
+		<SectionHeader
+			eyebrow="Current Focus"
+			title="Current Focus"
+			description="Top active engineering priorities — detection lab, platform development, and threat hunting research."
+			actionLabel="View full dashboard"
+			actionHref="/current-focus"
+		/>
+		<ul class="home-grid home-grid--focus" role="list">
+			{homepagePriorities.map((project) => (
+				<li>
+					<EngineeringProjectCard project={project} />
+				</li>
+			))}
+		</ul>
 	</Section>
 
 	<Section id="platform">
-		<Container>
-			<SectionHeader
-				eyebrow="Platform"
-				title="ElliottSecurity Platform"
-				description="A static, Markdown-driven cybersecurity knowledge platform for publishing real engineering work."
-			/>
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{
-					PLATFORM_TOPICS.map((topic) => (
-						<Card padding="md" class="h-full">
-							<h3 class="text-lg font-semibold text-foreground">{topic}</h3>
-							<p class="mt-3 text-sm leading-relaxed">
-								Documenting {topic.toLowerCase()} work from enterprise operations and lab engineering.
-							</p>
-						</Card>
-					))
-				}
-			</div>
-		</Container>
+		<SectionHeader
+			eyebrow="Platform"
+			title="ElliottSecurity Platform"
+			description="A static, Markdown-driven cybersecurity knowledge platform for publishing real engineering work."
+		/>
+		<div class="home-grid home-grid--topics">
+			{
+				PLATFORM_TOPICS.map((topic) => (
+					<Card padding="lg" hover={true} class="topic-card">
+						<h3 class="type-h4">{topic}</h3>
+						<p class="topic-card__body">
+							Documenting {topic.toLowerCase()} work from enterprise operations and lab engineering.
+						</p>
+					</Card>
+				))
+			}
+		</div>
 	</Section>
 </BaseLayout>
+
+<style>
+	.hero {
+		position: relative;
+		overflow: hidden;
+		padding-block: var(--space-20) var(--space-24);
+	}
+
+	@media (min-width: 640px) {
+		.hero {
+			padding-block: var(--space-24) var(--space-24);
+		}
+	}
+
+	.hero__glow {
+		pointer-events: none;
+		position: absolute;
+		inset: 0;
+		background-image: var(--gradient-hero), var(--gradient-glow), var(--gradient-vignette);
+		background-repeat: no-repeat;
+	}
+
+	.hero__content {
+		position: relative;
+		max-width: var(--container-narrow);
+		margin-inline: auto;
+		text-align: center;
+	}
+
+	.hero__title {
+		margin-top: var(--space-4);
+		text-wrap: balance;
+	}
+
+	.hero__credential {
+		color: var(--color-soft);
+		font-weight: var(--font-weight-semibold);
+	}
+
+	.hero__titles {
+		margin-top: var(--space-6);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		font-size: var(--font-size-body);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text-secondary);
+	}
+
+	@media (min-width: 640px) {
+		.hero__titles {
+			font-size: var(--font-size-body-lg);
+		}
+	}
+
+	.hero__headline {
+		margin-inline: auto;
+		margin-top: var(--space-4);
+		max-width: 42rem;
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+
+	.hero__tagline {
+		margin-inline: auto;
+		margin-top: var(--space-8);
+		max-width: 42rem;
+		color: var(--color-text-secondary);
+	}
+
+	.hero__actions {
+		margin-top: var(--space-10);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-4);
+	}
+
+	@media (min-width: 640px) {
+		.hero__actions {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+	}
+
+	.home-grid {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: var(--space-6);
+	}
+
+	.home-grid--focus {
+		gap: var(--space-4);
+	}
+
+	@media (min-width: 768px) {
+		.home-grid--focus {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.home-grid--topics {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.home-grid--topics {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	.topic-card {
+		height: 100%;
+	}
+
+	.topic-card__body {
+		margin-top: var(--space-3);
+		font-size: var(--font-size-small);
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text-muted);
+	}
+</style>

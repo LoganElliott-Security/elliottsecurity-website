@@ -7,7 +7,31 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<div class="rounded-lg border border-dashed border-border bg-surface/50 p-8 text-center">
-	<h2 class="text-lg font-semibold text-foreground">{title}</h2>
-	<p class="mx-auto mt-3 max-w-md text-sm text-muted-foreground">{description}</p>
+<div class="empty-state">
+	<h2 class="empty-state__title">{title}</h2>
+	<p class="empty-state__desc">{description}</p>
 </div>
+
+<style>
+	.empty-state {
+		border-radius: var(--radius-lg);
+		border: 1px dashed var(--color-border);
+		background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
+		padding: var(--space-8);
+		text-align: center;
+	}
+
+	.empty-state__title {
+		font-size: var(--font-size-body-lg);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.empty-state__desc {
+		margin-inline: auto;
+		margin-top: var(--space-3);
+		max-width: 28rem;
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+</style>

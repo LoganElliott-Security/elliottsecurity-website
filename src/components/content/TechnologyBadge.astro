@@ -8,9 +8,28 @@ interface Props {
 const { technology } = Astro.props;
 ---
 
-<a
-	href={getTagUrl(technology)}
-	class="inline-flex items-center rounded-full border border-border bg-surface-muted px-2.5 py-0.5 text-xs font-medium text-muted no-underline transition-colors hover:border-accent/40 hover:text-accent"
->
+<a href={getTagUrl(technology)} class="tech-badge">
 	{technology}
 </a>
+
+<style>
+	.tech-badge {
+		display: inline-flex;
+		align-items: center;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-muted);
+		padding: var(--space-1) 0.625rem;
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text-muted);
+		text-decoration: none;
+		transition: var(--transition-hover);
+	}
+
+	.tech-badge:hover {
+		border-color: color-mix(in srgb, var(--color-primary) 40%, var(--color-border));
+		color: var(--color-accent);
+		background-color: var(--color-primary-muted);
+	}
+</style>

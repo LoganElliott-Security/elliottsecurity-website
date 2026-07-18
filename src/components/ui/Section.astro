@@ -6,7 +6,7 @@ interface Props {
 	id?: string;
 	class?: string;
 	containerClass?: string;
-	background?: 'default' | 'muted' | 'elevated';
+	background?: 'default' | 'muted' | 'elevated' | 'secondary';
 	padding?: boolean;
 }
 
@@ -19,17 +19,36 @@ const {
 } = Astro.props;
 
 const backgroundClasses = {
-	default: 'bg-background',
-	muted: 'bg-surface',
-	elevated: 'bg-surface-elevated',
+	default: 'section-bg-default',
+	muted: 'section-bg-muted',
+	elevated: 'section-bg-elevated',
+	secondary: 'section-bg-secondary',
 };
 ---
 
 <section
 	id={id}
-	class={cn(backgroundClasses[background], padding && 'section-padding', className)}
+	class={cn('es-section', backgroundClasses[background], padding && 'section-padding', className)}
 >
 	<Container class={containerClass}>
 		<slot />
 	</Container>
 </section>
+
+<style>
+	.section-bg-default {
+		background-color: transparent;
+	}
+
+	.section-bg-muted {
+		background-color: var(--color-bg-secondary);
+	}
+
+	.section-bg-elevated {
+		background-color: var(--color-surface);
+	}
+
+	.section-bg-secondary {
+		background-color: var(--color-bg-secondary);
+	}
+</style>

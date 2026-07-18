@@ -16,9 +16,9 @@ const statusLabels: Record<PublicationStatus, string> = {
 };
 
 const statusClasses: Record<PublicationStatus, string> = {
-	planned: 'text-muted-foreground',
-	'in-progress': 'text-accent',
-	draft: 'text-amber-300',
+	planned: 'pub-status pub-status--planned',
+	'in-progress': 'pub-status pub-status--progress',
+	draft: 'pub-status pub-status--draft',
 };
 ---
 
@@ -29,7 +29,7 @@ const statusClasses: Record<PublicationStatus, string> = {
 				<Card padding="md" class="h-full">
 					<div class="flex items-start justify-between gap-3">
 						<h3 class="text-sm font-semibold text-foreground">{item.title}</h3>
-						<span class={cn('shrink-0 text-xs font-medium', statusClasses[item.status])}>
+						<span class={cn('pub-status-base', statusClasses[item.status])}>
 							{statusLabels[item.status]}
 						</span>
 					</div>
@@ -39,3 +39,23 @@ const statusClasses: Record<PublicationStatus, string> = {
 		))
 	}
 </ul>
+
+<style>
+	.pub-status-base {
+		flex-shrink: 0;
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+	}
+
+	.pub-status--planned {
+		color: var(--color-text-muted);
+	}
+
+	.pub-status--progress {
+		color: var(--color-accent);
+	}
+
+	.pub-status--draft {
+		color: var(--color-warning-foreground);
+	}
+</style>

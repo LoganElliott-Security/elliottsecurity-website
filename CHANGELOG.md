@@ -8,11 +8,25 @@ This project follows Semantic Versioning.
 
 # [Unreleased]
 
+## Added
+
+- Centralized design token system (`tokens.css`, `theme.css`, `typography.css`, `animations.css`, `utilities.css`)
+- Future theme stubs: dark (default), light, high-contrast
+- Atmosphere backgrounds with layered purple gradients, vignette, and subtle noise
+
+## Changed
+
+- Brand palette migrated from cyan to ElliottSecurity purple tokens
+- Navigation, footer, buttons, cards, tags, code blocks, and homepage redesigned on tokens
+- Markdown prose, callouts, and tables styled via design tokens
+- Brand assets (favicon, apple-touch-icon, OG image) updated to purple system
+
 ## Planned
 
 - Client-side search UI
 - RSS feed
 - Research content collection
+- Theme switcher UI (tokens already support light / high-contrast)
 
 ---
 

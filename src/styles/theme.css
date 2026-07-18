@@ -1,0 +1,114 @@
+/**
+ * Maps design tokens → Tailwind v4 theme utilities.
+ * Components consume classes like bg-background, text-primary, shadow-card.
+ * Changing tokens.css is enough to retheme the platform.
+ */
+
+@theme inline {
+	/* Fonts */
+	--font-sans: var(--font-family-sans);
+	--font-mono: var(--font-family-mono);
+
+	/* Surfaces */
+	--color-bg: var(--color-bg);
+	--color-bg-secondary: var(--color-bg-secondary);
+	--color-background: var(--color-background);
+	--color-surface: var(--color-surface);
+	--color-surface-elevated: var(--color-surface-elevated);
+	--color-surface-muted: var(--color-surface-muted);
+	--color-border: var(--color-border);
+	--color-border-subtle: var(--color-border-subtle);
+
+	/* Brand */
+	--color-primary: var(--color-primary);
+	--color-primary-hover: var(--color-primary-hover);
+	--color-primary-foreground: var(--color-primary-foreground);
+	--color-primary-muted: var(--color-primary-muted);
+	--color-accent: var(--color-accent);
+	--color-accent-hover: var(--color-accent-hover);
+	--color-accent-muted: var(--color-accent-muted);
+	--color-accent-foreground: var(--color-accent-foreground);
+	--color-soft: var(--color-soft);
+	--color-highlight: var(--color-highlight);
+
+	/* Text */
+	--color-text: var(--color-text);
+	--color-text-secondary: var(--color-text-secondary);
+	--color-text-muted: var(--color-text-muted);
+	--color-foreground: var(--color-foreground);
+	--color-muted: var(--color-muted);
+	--color-muted-foreground: var(--color-muted-foreground);
+	--color-disabled: var(--color-disabled);
+
+	/* Status */
+	--color-success: var(--color-success);
+	--color-success-muted: var(--color-success-muted);
+	--color-success-foreground: var(--color-success-foreground);
+	--color-warning: var(--color-warning);
+	--color-warning-muted: var(--color-warning-muted);
+	--color-warning-foreground: var(--color-warning-foreground);
+	--color-danger: var(--color-danger);
+	--color-danger-muted: var(--color-danger-muted);
+	--color-danger-foreground: var(--color-danger-foreground);
+	--color-info: var(--color-info);
+	--color-info-muted: var(--color-info-muted);
+	--color-info-foreground: var(--color-info-foreground);
+
+	/* Focus */
+	--color-ring: var(--color-ring);
+
+	/* Radius */
+	--radius-sm: var(--radius-sm);
+	--radius-md: var(--radius-md);
+	--radius-lg: var(--radius-lg);
+	--radius-xl: var(--radius-xl);
+	--radius-2xl: var(--radius-2xl);
+	--radius-pill: var(--radius-pill);
+
+	/* Shadows */
+	--shadow-soft: var(--shadow-soft);
+	--shadow-card: var(--shadow-card);
+	--shadow-hover: var(--shadow-hover);
+	--shadow-glow: var(--shadow-glow);
+	--shadow-glow-strong: var(--shadow-glow-strong);
+	--shadow-hero: var(--shadow-hero);
+	--shadow-sm: var(--shadow-soft);
+	--shadow-md: var(--shadow-card);
+	--shadow-lg: var(--shadow-hover);
+
+	/* Spacing scale (Tailwind spacing utilities) */
+	--spacing-1: var(--space-1);
+	--spacing-2: var(--space-2);
+	--spacing-3: var(--space-3);
+	--spacing-4: var(--space-4);
+	--spacing-5: var(--space-5);
+	--spacing-6: var(--space-6);
+	--spacing-7: var(--space-7);
+	--spacing-8: var(--space-8);
+	--spacing-10: var(--space-10);
+	--spacing-12: var(--space-12);
+	--spacing-14: var(--space-14);
+	--spacing-16: var(--space-16);
+	--spacing-20: var(--space-20);
+	--spacing-24: var(--space-24);
+	--spacing-section: var(--space-section);
+	--spacing-section-sm: var(--space-section-sm);
+
+	/* Blur */
+	--blur-sm: var(--blur-sm);
+	--blur-md: var(--blur-md);
+	--blur-lg: var(--blur-lg);
+	--blur-xl: var(--blur-xl);
+
+	/* Z-index */
+	--z-index-nav: var(--z-nav);
+	--z-index-overlay: var(--z-overlay);
+	--z-index-modal: var(--z-modal);
+
+	/* Motion */
+	--ease-default: var(--ease-default);
+	--ease-spring: var(--ease-spring);
+	--animate-duration-fast: var(--duration-fast);
+	--animate-duration-normal: var(--duration-normal);
+	--animate-duration-slow: var(--duration-slow);
+}

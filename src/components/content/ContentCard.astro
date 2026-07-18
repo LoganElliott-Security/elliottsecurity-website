@@ -13,19 +13,45 @@ interface Props {
 const { title, description, href, meta, tags = [] } = Astro.props;
 ---
 
-<a href={href} class="group block no-underline">
+<a href={href} class="content-card">
 	<Card padding="md" hover={true} class="h-full">
-		<div class="flex h-full flex-col gap-3">
-			{
-				meta && (
-					<p class="text-xs font-medium uppercase tracking-wider text-accent">{meta}</p>
-				)
-			}
-			<h3 class="text-lg font-semibold text-foreground transition-colors group-hover:text-accent">
-				{title}
-			</h3>
-			<p class="line-clamp-3 flex-1 text-sm">{description}</p>
+		<div class="content-card__inner">
+			{meta && <p class="type-eyebrow">{meta}</p>}
+			<h3 class="content-card__title">{title}</h3>
+			<p class="content-card__desc line-clamp-3">{description}</p>
 			<TagList tags={tags.slice(0, 3)} />
 		</div>
 	</Card>
 </a>
+
+<style>
+	.content-card {
+		display: block;
+		height: 100%;
+		text-decoration: none;
+	}
+
+	.content-card__inner {
+		display: flex;
+		height: 100%;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.content-card__title {
+		font-size: var(--font-size-body-lg);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+		transition: var(--transition-hover);
+	}
+
+	.content-card:hover .content-card__title {
+		color: var(--color-accent);
+	}
+
+	.content-card__desc {
+		flex: 1;
+		font-size: var(--font-size-small);
+		color: var(--color-text-secondary);
+	}
+</style>

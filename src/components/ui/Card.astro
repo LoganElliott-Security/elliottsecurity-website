@@ -10,20 +10,46 @@ interface Props {
 const { class: className, padding = 'md', hover = false } = Astro.props;
 
 const paddingClasses = {
-	none: '',
-	sm: 'p-4',
-	md: 'p-6',
-	lg: 'p-8',
+	none: 'card-pad-none',
+	sm: 'card-pad-sm',
+	md: 'card-pad-md',
+	lg: 'card-pad-lg',
 };
 ---
 
-<div
-	class={cn(
-		'rounded-lg border border-border bg-surface-elevated shadow-sm',
-		paddingClasses[padding],
-		hover && 'transition-colors duration-200 hover:border-accent/40 hover:bg-surface-muted',
-		className,
-	)}
->
+<div class={cn('es-card', paddingClasses[padding], hover && 'es-card-hover', className)}>
 	<slot />
 </div>
+
+<style>
+	.es-card {
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-elevated);
+		box-shadow: var(--shadow-card);
+		transition: var(--transition-hover);
+	}
+
+	.card-pad-none {
+		padding: 0;
+	}
+
+	.card-pad-sm {
+		padding: var(--space-4);
+	}
+
+	.card-pad-md {
+		padding: var(--space-6);
+	}
+
+	.card-pad-lg {
+		padding: var(--space-8);
+	}
+
+	.es-card-hover:hover {
+		transform: translateY(-2px);
+		border-color: color-mix(in srgb, var(--color-primary) 40%, var(--color-border));
+		background-color: var(--color-surface);
+		box-shadow: var(--shadow-hover), var(--glow-soft);
+	}
+</style>

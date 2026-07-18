@@ -1,0 +1,97 @@
+/**
+ * Typography scale utilities — all sizes from design tokens.
+ */
+
+@layer components {
+	.type-display-xl {
+		font-size: var(--font-size-display-xl);
+		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
+		letter-spacing: var(--letter-spacing-tight);
+		color: var(--color-text);
+	}
+
+	.type-display {
+		font-size: var(--font-size-display);
+		font-weight: var(--font-weight-bold);
+		line-height: var(--line-height-tight);
+		letter-spacing: var(--letter-spacing-tight);
+		color: var(--color-text);
+	}
+
+	.type-h1 {
+		font-size: var(--font-size-h1);
+		font-weight: var(--font-weight-semibold);
+		line-height: var(--line-height-tight);
+		letter-spacing: var(--letter-spacing-tight);
+		color: var(--color-text);
+	}
+
+	.type-h2 {
+		font-size: var(--font-size-h2);
+		font-weight: var(--font-weight-semibold);
+		line-height: var(--line-height-snug);
+		letter-spacing: var(--letter-spacing-tight);
+		color: var(--color-text);
+	}
+
+	.type-h3 {
+		font-size: var(--font-size-h3);
+		font-weight: var(--font-weight-semibold);
+		line-height: var(--line-height-snug);
+		color: var(--color-text);
+	}
+
+	.type-h4 {
+		font-size: var(--font-size-h4);
+		font-weight: var(--font-weight-semibold);
+		line-height: var(--line-height-snug);
+		color: var(--color-text);
+	}
+
+	.type-body-lg {
+		font-size: var(--font-size-body-lg);
+		font-weight: var(--font-weight-regular);
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text-secondary);
+	}
+
+	.type-body {
+		font-size: var(--font-size-body);
+		font-weight: var(--font-weight-regular);
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text-secondary);
+	}
+
+	.type-small {
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-regular);
+		line-height: var(--line-height-normal);
+		color: var(--color-text-muted);
+	}
+
+	.type-caption {
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		line-height: var(--line-height-normal);
+		letter-spacing: var(--letter-spacing-widest);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.type-mono {
+		font-family: var(--font-mono);
+		font-size: var(--font-size-mono);
+		font-weight: var(--font-weight-regular);
+		line-height: var(--line-height-normal);
+		color: var(--color-text);
+	}
+
+	.type-eyebrow {
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-widest);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+}

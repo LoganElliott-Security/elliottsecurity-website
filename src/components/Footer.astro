@@ -9,16 +9,13 @@ const currentYear = new Date().getFullYear();
 const footerSocial = getSocialProfiles({ footer: true });
 ---
 
-<footer class="border-t border-border-subtle bg-surface">
+<footer class="es-footer">
 	<Container>
-		<div class="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
-			<div class="sm:col-span-2">
-				<a href="/" class="inline-flex items-center gap-2 text-foreground no-underline">
-					<span
-						class="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-surface-elevated text-accent"
-						aria-hidden="true"
-					>
-						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+		<div class="es-footer__grid">
+			<div class="es-footer__brand">
+				<a href="/" class="es-footer__brand-link">
+					<span class="es-footer__mark" aria-hidden="true">
+						<svg class="es-footer__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -26,24 +23,24 @@ const footerSocial = getSocialProfiles({ footer: true });
 							></path>
 						</svg>
 					</span>
-					<span class="font-semibold">{PROFILE.name}</span>
+					<span class="es-footer__name">{PROFILE.name}</span>
 				</a>
 				{
 					PROFILE.titles.map((title) => (
-						<p class="mt-3 text-sm font-medium text-foreground">{title}</p>
+						<p class="es-footer__title">{title}</p>
 					))
 				}
-				<p class="mt-4 max-w-xs text-sm">{SITE.motto}</p>
+				<p class="es-footer__motto">{SITE.motto}</p>
 			</div>
 
 			{
 				FOOTER_NAV.map((group) => (
 					<div>
-						<h2 class="text-sm font-semibold text-foreground">{group.title}</h2>
-						<ul class="mt-4 space-y-2" role="list">
+						<h2 class="es-footer__heading">{group.title}</h2>
+						<ul class="es-footer__list" role="list">
 							{group.items.map((item) => (
 								<li>
-									<a href={item.href} class="text-sm text-muted no-underline hover:text-accent">
+									<a href={item.href} class="es-footer__link link-underline">
 										{item.label}
 									</a>
 								</li>
@@ -54,8 +51,8 @@ const footerSocial = getSocialProfiles({ footer: true });
 			}
 		</div>
 
-		<div class="flex flex-col gap-6 border-t border-border-subtle py-6">
-			<ul class="flex flex-wrap gap-4" role="list">
+		<div class="es-footer__bottom">
+			<ul class="es-footer__social" role="list">
 				{
 					footerSocial.map((profile) => {
 						const isExternal =
@@ -64,7 +61,7 @@ const footerSocial = getSocialProfiles({ footer: true });
 							<li>
 								<a
 									href={profile.href}
-									class="text-sm text-muted no-underline hover:text-accent"
+									class="es-footer__link link-underline"
 									target={isExternal ? '_blank' : undefined}
 									rel={isExternal ? 'noopener noreferrer' : undefined}
 									download={profile.id === 'resume' ? true : undefined}
@@ -76,14 +73,152 @@ const footerSocial = getSocialProfiles({ footer: true });
 					})
 				}
 			</ul>
-			<div class="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+			<div class="es-footer__meta">
 				<p>&copy; {currentYear} {PROFILE.name}. All rights reserved.</p>
 				<p>
-					Powered by <a href="https://astro.build" class="text-muted hover:text-accent" target="_blank" rel="noopener noreferrer">Astro</a>
+					Powered by <a href="https://astro.build" class="es-footer__link link-underline" target="_blank" rel="noopener noreferrer">Astro</a>
 					{' · '}
-					Hosted on <a href="https://pages.cloudflare.com" class="text-muted hover:text-accent" target="_blank" rel="noopener noreferrer">Cloudflare Pages</a>
+					Hosted on <a href="https://pages.cloudflare.com" class="es-footer__link link-underline" target="_blank" rel="noopener noreferrer">Cloudflare Pages</a>
 				</p>
 			</div>
 		</div>
 	</Container>
 </footer>
+
+<style>
+	.es-footer {
+		border-top: 1px solid var(--color-border-subtle);
+		background-color: var(--color-bg-secondary);
+	}
+
+	.es-footer__grid {
+		display: grid;
+		gap: var(--space-10);
+		padding-block: var(--space-12);
+	}
+
+	@media (min-width: 640px) {
+		.es-footer__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.es-footer__grid {
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+			gap: var(--space-8);
+		}
+	}
+
+	.es-footer__brand {
+		grid-column: span 1;
+	}
+
+	@media (min-width: 640px) {
+		.es-footer__brand {
+			grid-column: span 2;
+		}
+	}
+
+	.es-footer__brand-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		color: var(--color-text);
+		text-decoration: none;
+	}
+
+	.es-footer__mark {
+		display: flex;
+		height: 2rem;
+		width: 2rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-elevated);
+		color: var(--color-primary);
+	}
+
+	.es-footer__icon {
+		height: 1rem;
+		width: 1rem;
+	}
+
+	.es-footer__name {
+		font-weight: var(--font-weight-semibold);
+	}
+
+	.es-footer__title {
+		margin-top: var(--space-3);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text);
+	}
+
+	.es-footer__motto {
+		margin-top: var(--space-4);
+		max-width: 20rem;
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+
+	.es-footer__heading {
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.es-footer__list {
+		margin: var(--space-4) 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.es-footer__list > * + * {
+		margin-top: var(--space-2);
+	}
+
+	.es-footer__link {
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+		text-decoration: none;
+	}
+
+	.es-footer__link:hover {
+		color: var(--color-accent);
+	}
+
+	.es-footer__bottom {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-6);
+		border-top: 1px solid var(--color-border-subtle);
+		padding-block: var(--space-6);
+	}
+
+	.es-footer__social {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-4);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.es-footer__meta {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+
+	@media (min-width: 640px) {
+		.es-footer__meta {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+</style>
