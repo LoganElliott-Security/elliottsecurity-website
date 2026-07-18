@@ -60,13 +60,14 @@
 		var(--color-soft) 100%
 	);
 	--gradient-hero: radial-gradient(
-		ellipse 80% 60% at 50% -10%,
-		color-mix(in srgb, var(--color-primary) 22%, transparent) 0%,
-		transparent 55%
+		ellipse 90% 70% at 50% -5%,
+		color-mix(in srgb, var(--color-primary) 38%, transparent) 0%,
+		color-mix(in srgb, var(--color-accent) 14%, transparent) 35%,
+		transparent 65%
 	);
 	--gradient-glow: radial-gradient(
-		ellipse 50% 40% at 80% 20%,
-		color-mix(in srgb, var(--color-accent) 12%, transparent) 0%,
+		ellipse 55% 45% at 85% 15%,
+		color-mix(in srgb, var(--color-accent) 22%, transparent) 0%,
 		transparent 60%
 	);
 	--gradient-vignette: radial-gradient(
@@ -219,9 +220,9 @@
 		opacity var(--duration-slow) var(--ease-out);
 
 	/* ── Glow ── */
-	--glow-primary: 0 0 20px color-mix(in srgb, var(--color-primary) 40%, transparent);
-	--glow-accent: 0 0 20px color-mix(in srgb, var(--color-accent) 35%, transparent);
-	--glow-soft: 0 0 40px color-mix(in srgb, var(--color-primary) 18%, transparent);
+	--glow-primary: 0 0 24px color-mix(in srgb, var(--color-primary) 45%, transparent);
+	--glow-accent: 0 0 24px color-mix(in srgb, var(--color-accent) 40%, transparent);
+	--glow-soft: 0 0 48px color-mix(in srgb, var(--color-primary) 28%, transparent);
 
 	/* ── Semantic aliases (component ergonomics) ── */
 	--color-background: var(--color-bg);
