@@ -6,14 +6,20 @@ interface Props {
 }
 
 const { label, value, href } = Astro.props;
+const isExternal = Boolean(href?.startsWith('http://') || href?.startsWith('https://'));
 ---
 
-<div class="flex flex-col gap-1">
+<div class="meta-item">
 	<dt class="meta-item__label">{label}</dt>
-	<dd class="text-sm text-foreground">
+	<dd class="meta-item__value">
 		{
 			href ? (
-				<a href={href} class="meta-item__link" target="_blank" rel="noopener noreferrer">
+				<a
+					href={href}
+					class="meta-item__link"
+					target={isExternal ? '_blank' : undefined}
+					rel={isExternal ? 'noopener noreferrer' : undefined}
+				>
 					{value}
 				</a>
 			) : (
@@ -24,12 +30,25 @@ const { label, value, href } = Astro.props;
 </div>
 
 <style>
+	.meta-item {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		min-width: 0;
+	}
+
 	.meta-item__label {
 		font-size: var(--font-size-caption);
 		font-weight: var(--font-weight-medium);
 		letter-spacing: var(--letter-spacing-wide);
 		text-transform: uppercase;
 		color: var(--color-text-muted);
+	}
+
+	.meta-item__value {
+		margin: 0;
+		font-size: var(--font-size-small);
+		color: var(--color-text);
 	}
 
 	.meta-item__link {

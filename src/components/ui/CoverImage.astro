@@ -1,40 +1,87 @@
 ---
-import { cn } from '../../lib/cn';
+/**
+ * CoverImage — content cover media.
+ *
+ * Only renders when `src` resolves to a valid image.
+ * On client load failure, removes itself (and the parent cover section
+ * when present) so no empty image shell remains.
+ */
+import { resolveCoverImage } from '../../lib/cover-image';
 
 interface Props {
-	src: string;
-	alt: string;
-	class?: string;
+  src: string | null | undefined;
+  alt: string;
+  class?: string;
 }
 
 const { src, alt, class: className } = Astro.props;
+const resolvedSrc = resolveCoverImage(src);
 ---
 
-<div class="cover-image">
-	<img
-		src={src}
-		alt={alt}
-		loading="lazy"
-		decoding="async"
-		class={cn('h-auto w-full object-cover', className)}
-		onerror="this.classList.add('hidden'); this.nextElementSibling?.classList.remove('hidden')"
-	/>
-	<p class="cover-image__fallback hidden" role="status">
-		Cover image unavailable.
-	</p>
-</div>
+{resolvedSrc && (
+  <figure class:list={['cover-image', className]} data-cover-image>
+    <img
+      src={resolvedSrc}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      data-cover-img
+    />
+  </figure>
+)}
 
 <style>
-	.cover-image {
-		overflow: hidden;
-		border-radius: var(--radius-lg);
-		border: 1px solid var(--color-border);
-		background-color: var(--color-surface-muted);
-	}
+  .cover-image {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: transparent;
+    line-height: 0;
+  }
 
-	.cover-image__fallback {
-		padding: var(--space-4);
-		font-size: var(--font-size-small);
-		color: var(--color-text-muted);
-	}
+  .cover-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(52vh, 28rem);
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 640px) {
+    .cover-image img {
+      max-height: min(40vh, 18rem);
+    }
+  }
 </style>
+
+<script>
+  function collapseFailedCover(img: HTMLImageElement) {
+    const figure = img.closest('[data-cover-image]');
+    if (!figure) return;
+
+    const section = figure.closest('.content-hero__cover');
+    if (section) {
+      section.remove();
+      return;
+    }
+
+    figure.remove();
+  }
+
+  document.querySelectorAll<HTMLImageElement>('[data-cover-img]').forEach((img) => {
+    if (img.complete && img.naturalWidth === 0) {
+      collapseFailedCover(img);
+      return;
+    }
+
+    img.addEventListener(
+      'error',
+      () => {
+        collapseFailedCover(img);
+      },
+      { once: true },
+    );
+  });
+</script>

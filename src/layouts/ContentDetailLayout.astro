@@ -11,6 +11,7 @@ import Container from '../components/ui/Container.astro';
 import Section from '../components/ui/Section.astro';
 import { COLLECTION_ROUTES, type ContentCollectionName } from '../types/content';
 import { getEntryUrl } from '../lib/content';
+import { resolveCoverImage } from '../lib/cover-image';
 import {
 	getDetailPageRelatedSections,
 	getMitreTechniques,
@@ -46,6 +47,7 @@ const {
 	eyebrow,
 } = Astro.props;
 
+const resolvedCoverImage = resolveCoverImage(coverImage);
 const route = COLLECTION_ROUTES[collection];
 const pageUrl = getEntryUrl(collection, entry);
 const related = await getDetailPageRelatedSections(collection, entry);
@@ -66,7 +68,7 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 <BaseLayout
 	title={seoTitle ?? title}
 	description={seoDescription ?? description}
-	image={coverImage}
+	image={resolvedCoverImage}
 >
 	<StructuredData slot="head" data={structuredData} />
 	<Section background="default" padding={true}>
@@ -74,20 +76,54 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 			<article>
 				<Breadcrumbs items={breadcrumbs} />
 
-				<header class="content-detail-header">
-					{eyebrow && (
-						<p class="content-detail-header__eyebrow">{eyebrow}</p>
-					)}
-					{coverImage && (
-						<CoverImage src={coverImage} alt={`Cover image for ${title}`} class="mb-8 max-h-80" />
-					)}
-					<h1 class="text-balance text-foreground">{title}</h1>
-					<p class="mt-4 text-lg">{description}</p>
-					<div class="mt-6">
-						<slot name="meta" />
-					</div>
-					{tags.length > 0 && <TagList tags={tags} class="mt-6" />}
-					{mitreTechniques.length > 0 && <MitreTechniqueList techniques={mitreTechniques} class="mt-8" />}
+				<header class="content-hero">
+					{eyebrow && <p class="content-hero__eyebrow">{eyebrow}</p>}
+
+					<h1 class="content-hero__title text-balance">{title}</h1>
+
+					{
+						Astro.slots.has('meta') && (
+							<div class="content-hero__meta">
+								<slot name="meta" />
+							</div>
+						)
+					}
+
+					<p class="content-hero__description">{description}</p>
+
+					{
+						Astro.slots.has('technologies') && (
+							<div class="content-hero__technologies">
+								<p class="content-hero__section-label">Technologies</p>
+								<slot name="technologies" />
+							</div>
+						)
+					}
+
+					{
+						tags.length > 0 && (
+							<div class="content-hero__tags">
+								<p class="content-hero__section-label">Tags</p>
+								<TagList tags={tags} />
+							</div>
+						)
+					}
+
+					{
+						mitreTechniques.length > 0 && (
+							<div class="content-hero__mitre">
+								<MitreTechniqueList techniques={mitreTechniques} />
+							</div>
+						)
+					}
+
+					{
+						resolvedCoverImage && (
+							<div class="content-hero__cover">
+								<CoverImage src={resolvedCoverImage} alt={`Cover image for ${title}`} />
+							</div>
+						)
+					}
 				</header>
 
 				<div class="content-prose">
@@ -108,18 +144,71 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 </BaseLayout>
 
 <style>
-	.content-detail-header {
-		margin-bottom: var(--space-10);
+	.content-hero {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-6);
+		margin-bottom: var(--space-12);
 		border-bottom: 1px solid var(--color-border-subtle);
-		padding-bottom: var(--space-8);
+		padding-bottom: var(--space-10);
 	}
 
-	.content-detail-header__eyebrow {
-		margin-bottom: var(--space-3);
-		font-size: var(--font-size-small);
+	.content-hero__eyebrow {
+		margin: 0;
+		font-size: var(--font-size-caption);
 		font-weight: var(--font-weight-medium);
 		letter-spacing: var(--letter-spacing-widest);
 		text-transform: uppercase;
 		color: var(--color-accent);
+	}
+
+	.content-hero__title {
+		margin: 0;
+		color: var(--color-text);
+	}
+
+	.content-hero__description {
+		margin: 0;
+		max-width: 42rem;
+		font-size: var(--font-size-body-lg);
+		line-height: var(--line-height-relaxed);
+		color: var(--color-text-secondary);
+	}
+
+	.content-hero__meta {
+		display: block;
+	}
+
+	.content-hero__meta :global(dl) {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-4) var(--space-6);
+		margin: 0;
+	}
+
+	@media (min-width: 1024px) {
+		.content-hero__meta :global(dl) {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+
+	.content-hero__section-label {
+		margin: 0 0 var(--space-2);
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+
+	.content-hero__technologies,
+	.content-hero__tags,
+	.content-hero__mitre {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.content-hero__cover {
+		margin-top: var(--space-2);
 	}
 </style>
