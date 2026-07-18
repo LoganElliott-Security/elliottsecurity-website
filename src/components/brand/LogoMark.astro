@@ -1,0 +1,54 @@
+---
+/**
+ * ElliottSecurity geometric monogram mark.
+ * Geometry source: public/logo-mark.svg / public/brand/monogram.svg
+ */
+import { cn } from '../../lib/cn';
+
+interface Props {
+	class?: string;
+	title?: string;
+	decorative?: boolean;
+}
+
+const { class: className, title = 'ElliottSecurity', decorative = true } = Astro.props;
+const uid = `es-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg
+	class={cn('es-logo-mark', className)}
+	viewBox="0 0 64 64"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	aria-hidden={decorative ? 'true' : undefined}
+	aria-label={decorative ? undefined : title}
+>
+	{!decorative && <title>{title}</title>}
+	<defs>
+		<linearGradient id={uid} x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+			<stop stop-color="var(--color-primary, #7C3AED)"></stop>
+			<stop offset="0.5" stop-color="var(--color-primary-hover, #8B5CF6)"></stop>
+			<stop offset="1" stop-color="var(--color-accent, #A855F7)"></stop>
+		</linearGradient>
+	</defs>
+	<path
+		d="M32 5 54.5 18v28L32 59 9.5 46V18L32 5Z"
+		stroke={`url(#${uid})`}
+		stroke-width="3.5"
+		stroke-linejoin="round"
+	></path>
+	<path
+		fill={`url(#${uid})`}
+		d="M20 18h26v7H28.5v4H42v7H28.5v4H46v7H20V18Z"
+	></path>
+</svg>
+
+<style>
+	.es-logo-mark {
+		display: block;
+		width: 1em;
+		height: 1em;
+		flex-shrink: 0;
+	}
+</style>
