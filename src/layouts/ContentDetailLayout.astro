@@ -11,6 +11,7 @@ import Container from '../components/ui/Container.astro';
 import Section from '../components/ui/Section.astro';
 import { COLLECTION_ROUTES, type ContentCollectionName } from '../types/content';
 import { getEntryUrl } from '../lib/content';
+import { resolveCoverImage } from '../lib/cover-image';
 import {
 	getDetailPageRelatedSections,
 	getMitreTechniques,
@@ -46,6 +47,7 @@ const {
 	eyebrow,
 } = Astro.props;
 
+const resolvedCoverImage = resolveCoverImage(coverImage);
 const route = COLLECTION_ROUTES[collection];
 const pageUrl = getEntryUrl(collection, entry);
 const related = await getDetailPageRelatedSections(collection, entry);
@@ -66,7 +68,7 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 <BaseLayout
 	title={seoTitle ?? title}
 	description={seoDescription ?? description}
-	image={coverImage}
+	image={resolvedCoverImage}
 >
 	<StructuredData slot="head" data={structuredData} />
 	<Section background="default" padding={true}>
@@ -78,9 +80,6 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 					{eyebrow && (
 						<p class="content-detail-header__eyebrow">{eyebrow}</p>
 					)}
-					{coverImage && (
-						<CoverImage src={coverImage} alt={`Cover image for ${title}`} class="mb-8 max-h-80" />
-					)}
 					<h1 class="text-balance text-foreground">{title}</h1>
 					<p class="mt-4 text-lg">{description}</p>
 					<div class="mt-6">
@@ -88,6 +87,16 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 					</div>
 					{tags.length > 0 && <TagList tags={tags} class="mt-6" />}
 					{mitreTechniques.length > 0 && <MitreTechniqueList techniques={mitreTechniques} class="mt-8" />}
+					{
+						resolvedCoverImage && (
+							<div class="content-detail-header__cover">
+								<CoverImage
+									src={resolvedCoverImage}
+									alt={`Cover image for ${title}`}
+								/>
+							</div>
+						)
+					}
 				</header>
 
 				<div class="content-prose">
@@ -121,5 +130,9 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 		letter-spacing: var(--letter-spacing-widest);
 		text-transform: uppercase;
 		color: var(--color-accent);
+	}
+
+	.content-detail-header__cover {
+		margin-top: var(--space-8);
 	}
 </style>
