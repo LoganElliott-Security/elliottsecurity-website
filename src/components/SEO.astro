@@ -1,6 +1,7 @@
 ---
 import { getSeoMetadata, type SeoInput } from '../lib/seo';
 import { SITE } from '../config/site';
+import { THEME_COLOR_DARK } from '../config/theme';
 
 interface Props extends SeoInput {}
 
@@ -39,4 +40,4 @@ const seo = getSeoMetadata(Astro.props);
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#09090B" />
+<meta name="theme-color" content={THEME_COLOR_DARK} />
