@@ -36,7 +36,7 @@ export const currentFocusProjects: CurrentFocusProject[] = [
 	},
 	{
 		title: 'Detection Engineering',
-		status: 'in-progress',
+		status: 'planning',
 		progress: 0,
 		href: '/detection-engineering',
 		description:
@@ -44,7 +44,7 @@ export const currentFocusProjects: CurrentFocusProject[] = [
 	},
 	{
 		title: 'Threat Hunting',
-		status: 'in-progress',
+		status: 'planning',
 		progress: 0,
 		href: '/threat-hunts',
 		description:
