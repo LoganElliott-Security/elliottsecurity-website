@@ -22,7 +22,7 @@ tags:
   - dfir
   - threat-hunting
 updatedDate: 2026-07-18
-coverImage: /images/homelab/proxmox-overview.jpg
+coverImage: /images/homelab/enterprise-cybersecurity-homelab.jpg
 ---
 
 # Overview
