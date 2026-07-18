@@ -23,6 +23,7 @@ const detections = sortDetectionsByRecency(await getPublishedCollection('detecti
 				href={getEntryUrl('detections', detection)}
 				meta={`${detection.data.detectionId} · ${detection.data.ruleType.toUpperCase()} · ${formatLabel(detection.data.severity)}`}
 				tags={detection.data.tags}
+				coverImage={detection.data.coverImage}
 			/>
 		))
 	}

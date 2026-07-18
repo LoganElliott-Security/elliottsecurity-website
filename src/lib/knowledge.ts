@@ -428,6 +428,7 @@ export function toContentCardProps(
 		title: string;
 		description: string;
 		tags?: string[];
+		coverImage?: string;
 	};
 
 	return {
@@ -435,5 +436,6 @@ export function toContentCardProps(
 		description: data.description,
 		href: getEntryUrl(collection, entry),
 		tags: data.tags ?? [],
+		coverImage: data.coverImage,
 	};
 }

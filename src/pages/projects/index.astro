@@ -23,6 +23,7 @@ const projects = sortByDateDesc(await getPublishedCollection('projects'), 'start
 				href={getEntryUrl('projects', project)}
 				meta={formatLabel(project.data.status)}
 				tags={project.data.tags}
+				coverImage={project.data.coverImage}
 			/>
 		))
 	}

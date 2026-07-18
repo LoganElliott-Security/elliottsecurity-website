@@ -23,6 +23,7 @@ const entries = sortByDateDesc(await getPublishedCollection('homelab'), 'updated
 				href={getEntryUrl('homelab', entry)}
 				meta={formatDate(entry.data.updatedDate)}
 				tags={entry.data.tags}
+				coverImage={entry.data.coverImage}
 			/>
 		))
 	}

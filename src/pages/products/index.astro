@@ -23,6 +23,7 @@ const products = await getPublishedCollection('products');
 				href={getEntryUrl('products', product)}
 				meta={`${product.data.price} · ${formatLabel(product.data.status)}`}
 				tags={product.data.tags}
+				coverImage={product.data.coverImage}
 			/>
 		))
 	}

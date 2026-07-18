@@ -92,6 +92,7 @@ function getCardMeta(collection: string, entry: (typeof groups)[number]['entries
 										href={card.href}
 										meta={getCardMeta(group.collection, entry)}
 										tags={card.tags}
+										coverImage={card.coverImage}
 									/>
 								);
 							})}

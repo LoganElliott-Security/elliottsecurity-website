@@ -1,6 +1,14 @@
 ---
+/**
+ * ContentCard — listing/preview card for articles, projects, and related content.
+ *
+ * Single flex-column surface. Optional cover image is omitted entirely when
+ * missing/invalid (no placeholder, no reserved height). The card is not wrapped
+ * in an <a> so TagList links stay valid and content cannot escape the card DOM.
+ */
 import Card from '../ui/Card.astro';
 import TagList from './TagList.astro';
+import { resolveCoverImage } from '../../lib/cover-image';
 
 interface Props {
 	title: string;
@@ -8,50 +16,133 @@ interface Props {
 	href: string;
 	meta?: string;
 	tags?: string[];
+	coverImage?: string | null;
 }
 
-const { title, description, href, meta, tags = [] } = Astro.props;
+const { title, description, href, meta, tags = [], coverImage } = Astro.props;
+const resolvedCover = resolveCoverImage(coverImage);
 ---
 
-<a href={href} class="content-card">
-	<Card padding="md" hover={true} class="h-full">
-		<div class="content-card__inner">
-			{meta && <p class="type-eyebrow">{meta}</p>}
-			<h3 class="content-card__title">{title}</h3>
-			<p class="content-card__desc line-clamp-3">{description}</p>
-			<TagList tags={tags.slice(0, 3)} />
+<article class="content-card">
+	<Card padding="none" hover={true} class="h-full">
+		{
+			resolvedCover && (
+				<div class="content-card__cover">
+					<img
+						src={resolvedCover}
+						alt=""
+						loading="lazy"
+						decoding="async"
+						data-content-card-cover
+					/>
+				</div>
+			)
+		}
+
+		<div class="content-card__body">
+			{meta && <p class="content-card__meta">{meta}</p>}
+			<h3 class="content-card__title">
+				<a href={href} class="content-card__link">{title}</a>
+			</h3>
+			<p class="content-card__desc">{description}</p>
+			{tags.length > 0 && <TagList tags={tags.slice(0, 3)} class="content-card__tags" />}
 		</div>
 	</Card>
-</a>
+</article>
 
 <style>
 	.content-card {
 		display: block;
 		height: 100%;
-		text-decoration: none;
 	}
 
-	.content-card__inner {
+	.content-card > :global(.es-card) {
 		display: flex;
+		flex-direction: column;
 		height: 100%;
+		overflow: hidden;
+	}
+
+	.content-card__cover {
+		flex-shrink: 0;
+		line-height: 0;
+		border-bottom: 1px solid var(--color-border-subtle);
+		background: transparent;
+	}
+
+	.content-card__cover img {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.content-card__body {
+		display: flex;
+		flex: 1;
 		flex-direction: column;
 		gap: var(--space-3);
+		padding: var(--space-6);
+	}
+
+	.content-card__meta {
+		margin: 0;
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
 	}
 
 	.content-card__title {
+		margin: 0;
 		font-size: var(--font-size-body-lg);
 		font-weight: var(--font-weight-semibold);
+		line-height: var(--line-height-snug);
 		color: var(--color-text);
-		transition: var(--transition-hover);
 	}
 
-	.content-card:hover .content-card__title {
+	.content-card__link {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.content-card__link:hover,
+	.content-card__link:focus-visible {
 		color: var(--color-accent);
 	}
 
 	.content-card__desc {
+		margin: 0;
 		flex: 1;
 		font-size: var(--font-size-small);
+		line-height: var(--line-height-relaxed);
 		color: var(--color-text-secondary);
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+	}
+
+	.content-card__tags {
+		margin-top: auto;
 	}
 </style>
+
+<script>
+	function removeBrokenCover(img: HTMLImageElement) {
+		const cover = img.closest('.content-card__cover');
+		cover?.remove();
+	}
+
+	document.querySelectorAll<HTMLImageElement>('[data-content-card-cover]').forEach((img) => {
+		if (img.complete && img.naturalWidth === 0) {
+			removeBrokenCover(img);
+			return;
+		}
+
+		img.addEventListener('error', () => removeBrokenCover(img), { once: true });
+	});
+</script>

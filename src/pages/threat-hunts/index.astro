@@ -23,6 +23,7 @@ const hunts = sortByDateDesc(await getPublishedCollection('threat-hunts'), 'hunt
 				href={getEntryUrl('threat-hunts', hunt)}
 				meta={formatDate(hunt.data.huntDate)}
 				tags={hunt.data.tags}
+				coverImage={hunt.data.coverImage}
 			/>
 		))
 	}

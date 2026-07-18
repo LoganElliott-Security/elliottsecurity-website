@@ -23,6 +23,7 @@ const articles = sortByDateDesc(await getPublishedCollection('articles'), 'publi
 				href={getEntryUrl('articles', article)}
 				meta={formatDate(article.data.publishDate)}
 				tags={article.data.tags}
+				coverImage={article.data.coverImage}
 			/>
 		))
 	}
