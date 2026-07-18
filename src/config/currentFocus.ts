@@ -1,3 +1,8 @@
+import {
+	getHomepageCurrentFocus,
+	getSortedCurrentFocusProjects,
+	type CurrentFocusProject,
+} from '../data/currentFocus';
 import type {
 	ActiveTechnology,
 	EngineeringProject,
@@ -6,53 +11,23 @@ import type {
 	RoadmapMilestone,
 } from '../types/currentFocus';
 
-export const CURRENT_FOCUS_UPDATED = '2026-07-11';
+export const CURRENT_FOCUS_UPDATED = '2026-07-18';
 
 export const CURRENT_FOCUS_SEO = {
 	title: 'Current Focus',
 	pageTitle: 'Current Focus | ElliottSecurity',
 	description:
-		'Current engineering projects, research, threat hunting, homelab development, and cybersecurity learning in progress.',
-	subtitle: "What I'm actively building, researching, publishing, and learning.",
+		'Flagship engineering initiatives spanning cybersecurity homelab, detection engineering, and threat hunting.',
+	subtitle: "Major portfolio initiatives I'm actively building and publishing.",
 } as const;
 
-export const ENGINEERING_PROJECTS: EngineeringProject[] = [
-	{
-		title: 'Enterprise Detection Engineering Lab',
-		status: 'in-progress',
-		description:
-			'Building a full-stack detection engineering lab for rule development, validation, and purple team exercises.',
-		progress: 45,
-		href: '/homelab',
-	},
-	{
-		title: 'HP Z820 Homelab',
-		status: 'in-progress',
-		description: 'Proxmox-based virtualization host powering lab VMs, log ingestion, and attack simulation workloads.',
-		progress: 60,
-		href: '/homelab',
-	},
-	{
-		title: 'ELK Stack',
-		status: 'in-progress',
-		description: 'Deploying Elastic Security for centralized log ingestion, detection testing, and hunt queries.',
-		progress: 35,
-	},
-	{
-		title: 'Detection Engineering Platform',
-		status: 'in-progress',
-		description: 'ElliottSecurity Platform — Markdown-driven publishing for detections, hunts, and engineering documentation.',
-		progress: 70,
-		href: '/detection-engineering',
-	},
-	{
-		title: 'Threat Hunting Research',
-		status: 'planning',
-		description: 'Documenting hunt hypotheses, methodologies, and findings from lab and enterprise telemetry analysis.',
-		progress: 15,
-		href: '/threat-hunts',
-	},
-];
+/**
+ * Flagship Current Focus projects.
+ * Source of truth: src/data/currentFocus.ts
+ */
+export const ENGINEERING_PROJECTS: EngineeringProject[] = getSortedCurrentFocusProjects();
+
+export type { CurrentFocusProject };
 
 export const LEARNING_ITEMS: LearningItem[] = [
 	{
@@ -158,7 +133,7 @@ export const ACTIVE_TECH_STACK: ActiveTechnology[] = [
 	{ name: 'Active Directory' },
 ];
 
-/** Top priorities shown on the homepage preview section. */
+/** Top priorities shown on the homepage Current Focus section. */
 export function getHomepagePriorities(limit = 3): EngineeringProject[] {
-	return ENGINEERING_PROJECTS.filter((project) => project.status !== 'completed').slice(0, limit);
+	return getHomepageCurrentFocus(limit);
 }
