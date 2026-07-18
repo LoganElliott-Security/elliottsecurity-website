@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" fill="none" role="img" aria-label="ElliottSecurity">
+  <defs>
+    <linearGradient id="es-logo-grad" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+  <path
+    d="M32 5 54.5 18v28L32 59 9.5 46V18L32 5Z"
+    stroke="url(#es-logo-grad)"
+    stroke-width="3.5"
+    stroke-linejoin="round"
+  />
+  <path
+    fill="url(#es-logo-grad)"
+    d="M20 18h26v7H28.5v4H42v7H28.5v4H46v7H20V18Z"
+  />
+  <text
+    x="76"
+    y="42"
+    fill="#F8FAFC"
+    font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+    font-size="28"
+    font-weight="600"
+    letter-spacing="-0.025em"
+  >ElliottSecurity</text>
+</svg>
