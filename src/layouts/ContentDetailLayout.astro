@@ -11,6 +11,7 @@ import Container from '../components/ui/Container.astro';
 import Section from '../components/ui/Section.astro';
 import { COLLECTION_ROUTES, type ContentCollectionName } from '../types/content';
 import { getEntryUrl } from '../lib/content';
+import { resolveCoverImage } from '../lib/cover-image';
 import {
 	getDetailPageRelatedSections,
 	getMitreTechniques,
@@ -46,7 +47,7 @@ const {
 	eyebrow,
 } = Astro.props;
 
-const hasCoverImage = Boolean(coverImage?.trim());
+const resolvedCoverImage = resolveCoverImage(coverImage);
 const route = COLLECTION_ROUTES[collection];
 const pageUrl = getEntryUrl(collection, entry);
 const related = await getDetailPageRelatedSections(collection, entry);
@@ -67,7 +68,7 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 <BaseLayout
 	title={seoTitle ?? title}
 	description={seoDescription ?? description}
-	image={hasCoverImage ? coverImage : undefined}
+	image={resolvedCoverImage}
 >
 	<StructuredData slot="head" data={structuredData} />
 	<Section background="default" padding={true}>
@@ -79,7 +80,6 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 					{eyebrow && <p class="content-hero__eyebrow">{eyebrow}</p>}
 
 					<h1 class="content-hero__title text-balance">{title}</h1>
-					<p class="content-hero__description">{description}</p>
 
 					{
 						Astro.slots.has('meta') && (
@@ -88,6 +88,8 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 							</div>
 						)
 					}
+
+					<p class="content-hero__description">{description}</p>
 
 					{
 						Astro.slots.has('technologies') && (
@@ -116,9 +118,9 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 					}
 
 					{
-						hasCoverImage && (
+						resolvedCoverImage && (
 							<div class="content-hero__cover">
-								<CoverImage src={coverImage!} alt={`Cover image for ${title}`} />
+								<CoverImage src={resolvedCoverImage} alt={`Cover image for ${title}`} />
 							</div>
 						)
 					}
@@ -208,11 +210,5 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 
 	.content-hero__cover {
 		margin-top: var(--space-2);
-	}
-
-	/* When cover fails to load and removes itself, collapse the wrapper */
-	.content-hero__cover:empty {
-		display: none;
-		margin: 0;
 	}
 </style>
