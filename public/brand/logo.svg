@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="ElliottSecurity">
+  <!-- ElliottSecurity brand mark - source of truth for all app icons -->
+  <rect width="512" height="512" rx="96" fill="#181824"/>
+  <path
+    d="M256 72 112 136v112c0 84 61.6 162.4 144 184 82.4-21.6 144-100 144-184V136L256 72Z"
+    stroke="#7C3AED"
+    stroke-width="28"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M200 264 236 300 312 216"
+    stroke="#A855F7"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

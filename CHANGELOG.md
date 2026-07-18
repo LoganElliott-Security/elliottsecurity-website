@@ -20,6 +20,7 @@ This project follows Semantic Versioning.
 - Navigation, footer, buttons, cards, tags, code blocks, and homepage redesigned on tokens
 - Markdown prose, callouts, and tables styled via design tokens
 - Brand assets (favicon, apple-touch-icon, OG image) updated to purple system
+- Full PWA icon set generated from `public/brand/logo.svg` (favicon.ico/svg, apple-touch-icon.png, android-chrome 192/512)
 
 ## Planned
 

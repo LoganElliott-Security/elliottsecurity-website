@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="ElliottSecurity">
   <rect width="32" height="32" rx="6" fill="#181824"/>
   <path
     d="M16 4.5 7 8.5v7c0 5.25 3.85 10.15 9 11.5 5.15-1.35 9-6.25 9-11.5v-7L16 4.5Z"
