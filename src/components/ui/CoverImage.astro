@@ -8,33 +8,38 @@ interface Props {
 }
 
 const { src, alt, class: className } = Astro.props;
+const resolvedSrc = src?.trim() ?? '';
 ---
 
-<div class="cover-image">
-	<img
-		src={src}
-		alt={alt}
-		loading="lazy"
-		decoding="async"
-		class={cn('h-auto w-full object-cover', className)}
-		onerror="this.classList.add('hidden'); this.nextElementSibling?.classList.remove('hidden')"
-	/>
-	<p class="cover-image__fallback hidden" role="status">
-		Cover image unavailable.
-	</p>
-</div>
+{
+	resolvedSrc && (
+		<figure class={cn('cover-image', className)} data-cover-image>
+			<img
+				src={resolvedSrc}
+				alt={alt}
+				loading="lazy"
+				decoding="async"
+				class="cover-image__img"
+				onerror="const mark=this.closest('[data-cover-image]'); const wrap=mark?.parentElement; mark?.remove(); if (wrap?.classList?.contains('content-hero__cover') && !wrap.querySelector('[data-cover-image]')) wrap.remove();"
+			/>
+		</figure>
+	)
+}
 
 <style>
 	.cover-image {
+		margin: 0;
 		overflow: hidden;
 		border-radius: var(--radius-lg);
 		border: 1px solid var(--color-border);
-		background-color: var(--color-surface-muted);
+		background-color: transparent;
+		line-height: 0;
 	}
 
-	.cover-image__fallback {
-		padding: var(--space-4);
-		font-size: var(--font-size-small);
-		color: var(--color-text-muted);
+	.cover-image__img {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-width: 100%;
 	}
 </style>

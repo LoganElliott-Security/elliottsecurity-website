@@ -11,7 +11,19 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, description, status, github, demo, technologies, difficulty, startDate, updatedDate, tags, coverImage } = entry.data;
+const {
+	title,
+	description,
+	status,
+	github,
+	demo,
+	technologies,
+	difficulty,
+	startDate,
+	updatedDate,
+	tags,
+	coverImage,
+} = entry.data;
 ---
 
 <ContentDetailLayout
@@ -23,15 +35,11 @@ const { title, description, status, github, demo, technologies, difficulty, star
 	tags={tags}
 	eyebrow="Project"
 >
-	<dl slot="meta" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+	<dl slot="meta">
 		<MetaItem label="Status" value={formatLabel(status)} />
 		<MetaItem label="Difficulty" value={formatLabel(difficulty)} href={getTagUrl(difficulty)} />
 		<MetaItem label="Started" value={formatDate(startDate)} />
-		{
-			updatedDate && (
-				<MetaItem label="Updated" value={formatDate(updatedDate)} />
-			)
-		}
+		<MetaItem label="Updated" value={formatDate(updatedDate ?? startDate)} />
 		{
 			github && (
 				<MetaItem label="GitHub" value="View repository" href={github} />
@@ -43,13 +51,12 @@ const { title, description, status, github, demo, technologies, difficulty, star
 			)
 		}
 	</dl>
+
 	{
 		technologies.length > 0 && (
-			<div slot="meta" class="col-span-full mt-2">
-				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Technologies</p>
-				<TechnologyBadgeList technologies={technologies} />
-			</div>
+			<TechnologyBadgeList slot="technologies" technologies={technologies} />
 		)
 	}
+
 	<slot />
 </ContentDetailLayout>
