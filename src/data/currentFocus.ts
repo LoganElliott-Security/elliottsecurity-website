@@ -30,7 +30,7 @@ export const currentFocusProjects: CurrentFocusProject[] = [
 		title: 'Cybersecurity Homelab',
 		status: 'in-progress',
 		progress: 0,
-		href: '/homelab',
+		href: '/homelab/enterprise-cybersecurity-homelab',
 		description:
 			'Building an enterprise-inspired Proxmox homelab featuring Active Directory, WireGuard, OPNsense, Wazuh, Elastic Security, attack simulation, and production-style infrastructure.',
 	},

@@ -90,10 +90,10 @@ export function formatLabel(value: string): string {
 
 export async function getCollectionStaticPaths<T extends ContentCollectionName>(
 	collection: T,
-): Promise<Array<{ params: { id: string }; props: { entry: CollectionEntry<T> } }>> {
+): Promise<Array<{ params: { slug: string }; props: { entry: CollectionEntry<T> } }>> {
 	const entries = await getPublishedCollection(collection);
 	return entries.map((entry) => ({
-		params: { id: entry.id },
+		params: { slug: getEntrySlug(entry) },
 		props: { entry },
 	}));
 }
