@@ -9,11 +9,11 @@ const { label, value, href } = Astro.props;
 ---
 
 <div class="flex flex-col gap-1">
-	<dt class="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</dt>
+	<dt class="meta-item__label">{label}</dt>
 	<dd class="text-sm text-foreground">
 		{
 			href ? (
-				<a href={href} class="text-accent no-underline hover:text-accent-hover" target="_blank" rel="noopener noreferrer">
+				<a href={href} class="meta-item__link" target="_blank" rel="noopener noreferrer">
 					{value}
 				</a>
 			) : (
@@ -22,3 +22,23 @@ const { label, value, href } = Astro.props;
 		}
 	</dd>
 </div>
+
+<style>
+	.meta-item__label {
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+
+	.meta-item__link {
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: var(--transition-hover);
+	}
+
+	.meta-item__link:hover {
+		color: var(--color-soft);
+	}
+</style>

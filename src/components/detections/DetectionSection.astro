@@ -7,7 +7,15 @@ interface Props {
 const { title, id } = Astro.props;
 ---
 
-<section class="mt-10 border-t border-border-subtle pt-10" aria-labelledby={id}>
+<section class="detection-section" aria-labelledby={id}>
 	<h2 id={id} class="mb-6 text-xl font-semibold text-foreground">{title}</h2>
 	<slot />
 </section>
+
+<style>
+	.detection-section {
+		margin-top: var(--space-10);
+		border-top: 1px solid var(--color-border-subtle);
+		padding-top: var(--space-10);
+	}
+</style>

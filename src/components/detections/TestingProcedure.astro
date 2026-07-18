@@ -22,10 +22,28 @@ const { procedure } = Astro.props;
 	}
 	{
 		procedure.expectedResults && (
-			<div class="mt-6 rounded-md border border-border-subtle bg-surface-muted p-4">
-				<p class="text-xs font-medium uppercase tracking-wider text-muted-foreground">Expected Results</p>
+			<div class="testing-procedure__results">
+				<p class="testing-procedure__results-label">Expected Results</p>
 				<p class="mt-1 text-sm">{procedure.expectedResults}</p>
 			</div>
 		)
 	}
 </Card>
+
+<style>
+	.testing-procedure__results {
+		margin-top: var(--space-6);
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border-subtle);
+		background-color: var(--color-surface-muted);
+		padding: var(--space-4);
+	}
+
+	.testing-procedure__results-label {
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+</style>

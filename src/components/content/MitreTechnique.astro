@@ -8,9 +8,27 @@ interface Props {
 const { technique } = Astro.props;
 ---
 
-<a
-	href={getTagUrl(technique)}
-	class="inline-flex items-center rounded-md border border-border bg-surface-muted px-2.5 py-1 text-xs font-medium text-foreground no-underline transition-colors hover:border-accent/40 hover:text-accent"
->
+<a href={getTagUrl(technique)} class="mitre-technique">
 	{technique}
 </a>
+
+<style>
+	.mitre-technique {
+		display: inline-flex;
+		align-items: center;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-muted);
+		padding: var(--space-1) 0.625rem;
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text);
+		text-decoration: none;
+		transition: var(--transition-hover);
+	}
+
+	.mitre-technique:hover {
+		border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+		color: var(--color-accent);
+	}
+</style>

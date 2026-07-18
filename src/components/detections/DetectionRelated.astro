@@ -20,7 +20,7 @@ const sections = [
 
 {
 	sections.length > 0 && (
-		<div class="mt-10 space-y-10 border-t border-border-subtle pt-10">
+		<div class="detection-related">
 			{sections.map((section) => (
 				<section aria-labelledby={`detection-related-${section.title}`}>
 					<h2
@@ -43,3 +43,15 @@ const sections = [
 		</div>
 	)
 }
+
+<style>
+	.detection-related {
+		margin-top: var(--space-10);
+		border-top: 1px solid var(--color-border-subtle);
+		padding-top: var(--space-10);
+	}
+
+	.detection-related > section + section {
+		margin-top: var(--space-10);
+	}
+</style>

@@ -30,7 +30,7 @@ const {
 } = entry.data;
 ---
 
-<div class="rounded-lg border border-border bg-surface-elevated p-6">
+<div class="detection-metadata">
 	<dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		<MetaItem label="Detection ID" value={formatDetectionId(detectionId)} />
 		<MetaItem label="Version" value={version} />
@@ -61,7 +61,7 @@ const {
 	{
 		dataSources.length > 0 && (
 			<div class="mt-6">
-				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Data Sources</p>
+				<p class="detection-metadata__section-label">Data Sources</p>
 				<TechnologyBadgeList technologies={dataSources} />
 			</div>
 		)
@@ -70,7 +70,7 @@ const {
 	{
 		requiredLogs.length > 0 && (
 			<div class="mt-6">
-				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Required Logs</p>
+				<p class="detection-metadata__section-label">Required Logs</p>
 				<ul class="space-y-1 text-sm text-muted" role="list">
 					{requiredLogs.map((log) => (
 						<li>{log}</li>
@@ -83,9 +83,27 @@ const {
 	{
 		requiredTools.length > 0 && (
 			<div class="mt-6">
-				<p class="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Required Tools</p>
+				<p class="detection-metadata__section-label">Required Tools</p>
 				<TechnologyBadgeList technologies={requiredTools} />
 			</div>
 		)
 	}
 </div>
+
+<style>
+	.detection-metadata {
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-elevated);
+		padding: var(--space-6);
+	}
+
+	.detection-metadata__section-label {
+		margin-bottom: var(--space-2);
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+</style>

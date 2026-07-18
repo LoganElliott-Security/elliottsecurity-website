@@ -23,10 +23,7 @@ const categoryLabels: Record<Technology['category'], string> = {
 		technologies.map((tech) => (
 			<li>
 				<Card padding="md" class="h-full text-center">
-					<div
-						class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-surface-muted text-sm font-bold text-accent"
-						aria-hidden="true"
-					>
+					<div class="tech-grid__icon" aria-hidden="true">
 						{tech.name.slice(0, 2).toUpperCase()}
 					</div>
 					<h3 class="text-sm font-semibold text-foreground">{tech.name}</h3>
@@ -36,3 +33,21 @@ const categoryLabels: Record<Technology['category'], string> = {
 		))
 	}
 </ul>
+
+<style>
+	.tech-grid__icon {
+		margin-inline: auto;
+		margin-bottom: var(--space-3);
+		display: flex;
+		height: 3rem;
+		width: 3rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-muted);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-bold);
+		color: var(--color-accent);
+	}
+</style>

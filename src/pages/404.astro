@@ -13,7 +13,7 @@ import Section from '../components/ui/Section.astro';
 	<Section background="default" padding={true}>
 		<Container size="narrow">
 			<div class="py-16 text-center">
-				<p class="text-sm font-medium uppercase tracking-widest text-accent">404</p>
+				<p class="not-found__code">404</p>
 				<h1 class="mt-4 text-foreground">Page not found</h1>
 				<p class="mx-auto mt-4 max-w-lg">
 					The page you requested does not exist or may have moved. Return to the homepage or browse published content.
@@ -26,3 +26,13 @@ import Section from '../components/ui/Section.astro';
 		</Container>
 	</Section>
 </BaseLayout>
+
+<style>
+	.not-found__code {
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-widest);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+</style>

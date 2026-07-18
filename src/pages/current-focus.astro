@@ -48,7 +48,7 @@ const techItems = ACTIVE_TECH_STACK.map((tech) => tech.name);
 				title={CURRENT_FOCUS_SEO.title}
 				description={CURRENT_FOCUS_SEO.subtitle}
 			/>
-			<p class="mb-12 text-sm text-muted-foreground">Last updated: {updatedLabel}</p>
+			<p class="current-focus__updated">Last updated: {updatedLabel}</p>
 
 			<div class="space-y-16">
 				<section aria-labelledby="engineering-projects">
@@ -95,3 +95,11 @@ const techItems = ACTIVE_TECH_STACK.map((tech) => tech.name);
 		</Container>
 	</Section>
 </BaseLayout>
+
+<style>
+	.current-focus__updated {
+		margin-bottom: var(--space-12);
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+</style>

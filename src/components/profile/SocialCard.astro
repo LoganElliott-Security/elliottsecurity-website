@@ -17,7 +17,7 @@ const actionLabel = isResume ? 'Download resume →' : profile.id === 'email' ? 
 
 <a
 	href={profile.href}
-	class="group block h-full no-underline"
+	class="social-card group block h-full no-underline"
 	target={isExternal ? '_blank' : undefined}
 	rel={isExternal ? 'noopener noreferrer' : undefined}
 	download={isResume ? true : undefined}
@@ -25,15 +25,12 @@ const actionLabel = isResume ? 'Download resume →' : profile.id === 'email' ? 
 	<Card
 		padding={isLarge ? 'lg' : 'md'}
 		hover={true}
-		class="h-full transition-colors group-hover:border-accent/40"
+		class="social-card__inner h-full"
 	>
 		<div class="flex h-full flex-col gap-3">
 			<div class="flex items-center gap-3">
 				<span
-					class:list={[
-						'flex items-center justify-center rounded-md border border-border bg-surface-muted font-semibold text-accent',
-						isLarge ? 'h-12 w-12 text-base' : 'h-10 w-10 text-sm',
-					]}
+					class:list={['social-card__icon', isLarge && 'social-card__icon--large']}
 					aria-hidden="true"
 				>
 					{profile.label.slice(0, 1)}
@@ -49,7 +46,46 @@ const actionLabel = isResume ? 'Download resume →' : profile.id === 'email' ? 
 					</p>
 				)
 			}
-			<p class="mt-auto text-sm text-accent group-hover:text-accent-hover">{actionLabel}</p>
+			<p class="social-card__action mt-auto text-sm">{actionLabel}</p>
 		</div>
 	</Card>
 </a>
+
+<style>
+	.social-card__inner {
+		transition: border-color var(--duration-normal) var(--ease-default);
+	}
+
+	.social-card:hover .social-card__inner {
+		border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+	}
+
+	.social-card__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 2.5rem;
+		width: 2.5rem;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-muted);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-accent);
+	}
+
+	.social-card__icon--large {
+		height: 3rem;
+		width: 3rem;
+		font-size: var(--font-size-body);
+	}
+
+	.social-card__action {
+		color: var(--color-accent);
+		transition: var(--transition-hover);
+	}
+
+	.social-card:hover .social-card__action {
+		color: var(--color-soft);
+	}
+</style>

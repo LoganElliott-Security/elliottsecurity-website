@@ -20,9 +20,7 @@ const { coverage } = Astro.props;
 					</div>
 					{
 						item.percentage !== undefined && (
-							<span class="rounded-md border border-border bg-surface-muted px-2 py-1 text-sm font-medium text-accent">
-								{item.percentage}%
-							</span>
+							<span class="detection-coverage__badge">{item.percentage}%</span>
 						)
 					}
 				</div>
@@ -30,3 +28,15 @@ const { coverage } = Astro.props;
 		))
 	}
 </div>
+
+<style>
+	.detection-coverage__badge {
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-muted);
+		padding: var(--space-1) var(--space-2);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-accent);
+	}
+</style>

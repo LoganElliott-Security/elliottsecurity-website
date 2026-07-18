@@ -14,7 +14,7 @@ const { references } = Astro.props;
 			<li>
 				<a
 					href={reference.url}
-					class="text-sm text-accent no-underline hover:text-accent-hover"
+					class="reference-link"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -24,3 +24,16 @@ const { references } = Astro.props;
 		))
 	}
 </ul>
+
+<style>
+	.reference-link {
+		font-size: var(--font-size-small);
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: var(--transition-hover);
+	}
+
+	.reference-link:hover {
+		color: var(--color-soft);
+	}
+</style>

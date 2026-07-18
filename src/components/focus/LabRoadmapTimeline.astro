@@ -15,27 +15,20 @@ const phaseLabels: Record<RoadmapPhase, string> = {
 };
 ---
 
-<ol class="relative space-y-8 border-l border-border pl-6" role="list">
+<ol class="roadmap-timeline" role="list">
 	{
 		milestones.map((milestone) => (
-			<li class="relative">
-				<span
-					class="absolute -left-[1.625rem] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-background"
-					aria-hidden="true"
-				/>
+			<li class="roadmap-timeline__item">
+				<span class="roadmap-timeline__marker" aria-hidden="true" />
 				<Card padding="md">
-					<p class="mb-1 text-xs font-medium uppercase tracking-widest text-accent">
-						{phaseLabels[milestone.phase]}
-					</p>
+					<p class="roadmap-timeline__phase">{phaseLabels[milestone.phase]}</p>
 					<h3 class="text-lg font-semibold text-foreground">{milestone.title}</h3>
 					<p class="mt-3 text-sm leading-relaxed text-muted">{milestone.description}</p>
 					{
 						milestone.items.length > 0 && (
-							<ul class="mt-4 space-y-2" role="list">
+							<ul class="roadmap-timeline__items" role="list">
 								{milestone.items.map((item) => (
-									<li class="text-sm text-muted before:mr-2 before:text-accent before:content-['—']">
-										{item}
-									</li>
+									<li class="roadmap-timeline__item-text">{item}</li>
 								))}
 							</ul>
 						)
@@ -45,3 +38,63 @@ const phaseLabels: Record<RoadmapPhase, string> = {
 		))
 	}
 </ol>
+
+<style>
+	.roadmap-timeline {
+		position: relative;
+		margin: 0;
+		padding: 0;
+		padding-left: var(--space-6);
+		list-style: none;
+		border-left: 1px solid var(--color-border);
+	}
+
+	.roadmap-timeline > li + li {
+		margin-top: var(--space-8);
+	}
+
+	.roadmap-timeline__item {
+		position: relative;
+	}
+
+	.roadmap-timeline__marker {
+		position: absolute;
+		left: calc(-1 * var(--space-6) - 0.375rem);
+		top: 0.375rem;
+		height: 0.75rem;
+		width: 0.75rem;
+		border-radius: var(--radius-pill);
+		border: 2px solid var(--color-accent);
+		background-color: var(--color-bg);
+	}
+
+	.roadmap-timeline__phase {
+		margin-bottom: var(--space-1);
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-widest);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.roadmap-timeline__items {
+		margin-top: var(--space-4);
+		padding: 0;
+		list-style: none;
+	}
+
+	.roadmap-timeline__items > li + li {
+		margin-top: var(--space-2);
+	}
+
+	.roadmap-timeline__item-text {
+		font-size: var(--font-size-small);
+		color: var(--color-text-secondary);
+	}
+
+	.roadmap-timeline__item-text::before {
+		margin-right: var(--space-2);
+		color: var(--color-accent);
+		content: '—';
+	}
+</style>

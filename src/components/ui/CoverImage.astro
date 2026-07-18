@@ -10,7 +10,7 @@ interface Props {
 const { src, alt, class: className } = Astro.props;
 ---
 
-<div class="cover-image-wrapper overflow-hidden rounded-lg border border-border bg-surface-muted">
+<div class="cover-image">
 	<img
 		src={src}
 		alt={alt}
@@ -19,7 +19,22 @@ const { src, alt, class: className } = Astro.props;
 		class={cn('h-auto w-full object-cover', className)}
 		onerror="this.classList.add('hidden'); this.nextElementSibling?.classList.remove('hidden')"
 	/>
-	<p class="hidden p-4 text-sm text-muted-foreground" role="status">
+	<p class="cover-image__fallback hidden" role="status">
 		Cover image unavailable.
 	</p>
 </div>
+
+<style>
+	.cover-image {
+		overflow: hidden;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-muted);
+	}
+
+	.cover-image__fallback {
+		padding: var(--space-4);
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+</style>

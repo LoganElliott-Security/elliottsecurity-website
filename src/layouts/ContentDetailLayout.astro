@@ -74,9 +74,9 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 			<article>
 				<Breadcrumbs items={breadcrumbs} />
 
-				<header class="mb-10 border-b border-border-subtle pb-8">
+				<header class="content-detail-header">
 					{eyebrow && (
-						<p class="mb-3 text-sm font-medium uppercase tracking-widest text-accent">{eyebrow}</p>
+						<p class="content-detail-header__eyebrow">{eyebrow}</p>
 					)}
 					{coverImage && (
 						<CoverImage src={coverImage} alt={`Cover image for ${title}`} class="mb-8 max-h-80" />
@@ -106,3 +106,20 @@ const structuredData = [webPageSchema, breadcrumbSchema, articleSchema].filter(
 		</Container>
 	</Section>
 </BaseLayout>
+
+<style>
+	.content-detail-header {
+		margin-bottom: var(--space-10);
+		border-bottom: 1px solid var(--color-border-subtle);
+		padding-bottom: var(--space-8);
+	}
+
+	.content-detail-header__eyebrow {
+		margin-bottom: var(--space-3);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-widest);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+</style>
