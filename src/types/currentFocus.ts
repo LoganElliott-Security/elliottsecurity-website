@@ -1,9 +1,20 @@
-export type ProjectStatus = 'planning' | 'in-progress' | 'testing' | 'completed';
+export type CurrentFocusStatus = 'planning' | 'in-progress' | 'completed';
+
+/** Includes legacy `testing` for cards that still support it. */
+export type ProjectStatus = CurrentFocusStatus | 'testing';
+
+export interface CurrentFocusProject {
+	title: string;
+	description: string;
+	status: CurrentFocusStatus;
+	progress: number;
+	href?: string;
+}
 
 export interface EngineeringProject {
 	title: string;
-	status: ProjectStatus;
 	description: string;
+	status: ProjectStatus;
 	progress: number;
 	href?: string;
 }
