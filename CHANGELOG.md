@@ -10,6 +10,8 @@ This project follows Semantic Versioning.
 
 ## Added
 
+- Lab Progress page (`/lab-progress`) with `status` content collection synced from KnowledgeOS
+- `docs/LAB_STATUS_SYNC.md` describing KnowledgeOS → website synchronization
 - Centralized design token system (`tokens.css`, `theme.css`, `typography.css`, `animations.css`, `utilities.css`)
 - Future theme stubs: dark (default), light, high-contrast
 - Atmosphere backgrounds with layered purple gradients, vignette, and subtle noise

@@ -21,7 +21,7 @@ tags:
   - infrastructure
   - dfir
   - threat-hunting
-updatedDate: 2026-07-18
+updatedDate: 2026-07-19
 coverImage: /images/homelab/enterprise-cybersecurity-homelab.jpg
 ---
 
@@ -43,13 +43,16 @@ Rather than functioning as a simple virtualization server, this environment serv
 
 The lab is built incrementally. Architecture planning is complete; implementation work is in progress and will be documented as each milestone is finished.
 
+Live build status: **[Lab Progress](/lab-progress)** (synced from KnowledgeOS).
+
 ---
 
 # Current Objectives
 
 Near-term priorities:
 
-- Deploy Proxmox infrastructure
+- ~~Deploy Proxmox infrastructure~~ (DCP-001 complete)
+- Build golden templates (Ubuntu, Windows Server, Windows 11) — **DCP-002**
 - Configure WireGuard remote access
 - Build segmented virtual networks
 - Deploy Active Directory
@@ -122,23 +125,20 @@ This page is the **canonical landing page** for the homelab section and will lin
 
 # Current Progress
 
-**Overall Progress: 0%**
+**Overall Progress: 5%** · **Current Milestone: DCP-001** · **Phase: Foundation**
 
 Completed to date:
 
 - Architecture and roadmap finalized for Version 1
 - Publishing structure established on ElliottSecurity Platform
+- Installed and hardened Proxmox VE (DCP-001)
+- Created backup administrator accounts and disabled root GUI login
+- Created enterprise VM pools
+- Established synchronized Lab Progress dashboard
 
-Implementation has not yet begun. Build order:
+Next milestone (**DCP-002**): Golden Templates — Ubuntu, Windows Server, Windows 11.
 
-1. WireGuard
-2. Proxmox
-3. Network segmentation
-4. Active Directory
-5. Elastic Security
-6. Detection Engineering platform
-
-Progress percentages and milestone notes will be updated as each phase is completed. No infrastructure deployment is claimed ahead of documented evidence.
+Canonical public tracker: [Lab Progress](/lab-progress). Progress percentages and milestone notes update as each DCP lands. No infrastructure is claimed ahead of documented evidence.
 
 ---
 

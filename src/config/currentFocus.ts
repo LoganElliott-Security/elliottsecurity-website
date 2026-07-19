@@ -11,7 +11,7 @@ import type {
 	RoadmapMilestone,
 } from '../types/currentFocus';
 
-export const CURRENT_FOCUS_UPDATED = '2026-07-18';
+export const CURRENT_FOCUS_UPDATED = '2026-07-19';
 
 export const CURRENT_FOCUS_SEO = {
 	title: 'Current Focus',
@@ -88,32 +88,33 @@ export const PUBLISHING_QUEUE: PublishingItem[] = [
 export const LAB_ROADMAP: RoadmapMilestone[] = [
 	{
 		phase: 'current',
-		title: 'Lab Foundation',
-		description: 'Establish core infrastructure for detection engineering and log collection.',
+		title: 'Foundation → Templates',
+		description:
+			'DCP-001 Proxmox foundation is complete. Current focus is DCP-002 golden templates and continued host readiness.',
 		items: [
-			'Proxmox cluster on HP Z820',
-			'Windows Server and Active Directory domain',
-			'Initial Elastic Stack deployment',
+			'Proxmox VE installed, updated, and hardened',
+			'Enterprise VM pools created',
+			'Golden Ubuntu / Windows Server / Windows 11 templates (next)',
 		],
 	},
 	{
 		phase: 'next',
-		title: 'Detection Pipeline',
-		description: 'Deploy endpoint telemetry and validate detection rules in the lab.',
+		title: 'Networking & Identity',
+		description: 'Segment the lab and establish identity for enterprise-style operations.',
 		items: [
-			'Fleet server and Elastic Agent enrollment',
-			'Sysmon baseline across lab endpoints',
-			'Velociraptor for artifact collection',
+			'OPNsense and VLAN segmentation',
+			'WireGuard remote access',
+			'Active Directory baseline',
 		],
 	},
 	{
 		phase: 'future',
-		title: 'Research & Publishing',
-		description: 'Run purple team exercises and publish engineering documentation.',
+		title: 'Telemetry, Detection & Publishing',
+		description: 'Stand up the detection pipeline and publish engineering evidence.',
 		items: [
-			'Threat hunt case studies',
-			'Sigma rule collection publication',
-			'Full lab architecture documentation series',
+			'Elastic Security / log pipeline',
+			'Detection validation and hunt case studies',
+			'Architecture documentation series',
 		],
 	},
 ];

@@ -1,0 +1,100 @@
+---
+interface Milestone {
+	id: string;
+	title: string;
+	summary: string;
+	completed?: string;
+}
+
+interface Props {
+	title: string;
+	milestones: Milestone[];
+	variant?: 'completed' | 'upcoming';
+}
+
+const { title, milestones, variant = 'upcoming' } = Astro.props;
+---
+
+<section class="milestone-list" aria-labelledby={`milestone-${variant}`}>
+	<h2 id={`milestone-${variant}`} class="milestone-list__title">{title}</h2>
+	<ol class="milestone-list__items" role="list">
+		{
+			milestones.map((milestone) => (
+				<li class:list={['milestone-list__item', `milestone-list__item--${variant}`]}>
+					<div class="milestone-list__meta">
+						<span class="milestone-list__id">{milestone.id}</span>
+						{milestone.completed && (
+							<span class="milestone-list__date">{milestone.completed}</span>
+						)}
+					</div>
+					<h3 class="milestone-list__name">{milestone.title}</h3>
+					<p class="milestone-list__summary">{milestone.summary}</p>
+				</li>
+			))
+		}
+	</ol>
+</section>
+
+<style>
+	.milestone-list__title {
+		margin: 0 0 var(--space-6);
+		font-size: var(--font-size-h3);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.milestone-list__items {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+	}
+
+	.milestone-list__item {
+		padding: var(--space-5);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+	}
+
+	.milestone-list__item--completed {
+		border-color: color-mix(in srgb, var(--color-success) 35%, var(--color-border));
+	}
+
+	.milestone-list__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-3);
+		align-items: center;
+		margin-bottom: var(--space-2);
+	}
+
+	.milestone-list__id {
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.milestone-list__date {
+		font-size: var(--font-size-caption);
+		color: var(--color-text-muted);
+	}
+
+	.milestone-list__name {
+		margin: 0 0 var(--space-2);
+		font-size: var(--font-size-body-lg);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.milestone-list__summary {
+		margin: 0;
+		font-size: var(--font-size-small);
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+	}
+</style>

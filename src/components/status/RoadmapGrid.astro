@@ -1,0 +1,156 @@
+---
+interface RoadmapPhase {
+	phase: string;
+	status: string;
+	progress: number;
+	items: string[];
+}
+
+interface Props {
+	phases: RoadmapPhase[];
+}
+
+const { phases } = Astro.props;
+
+function formatStatus(status: string): string {
+	return status.replace(/-/g, ' ');
+}
+---
+
+<section class="roadmap-grid" aria-labelledby="lab-roadmap">
+	<h2 id="lab-roadmap" class="roadmap-grid__title">Roadmap</h2>
+	<ul class="roadmap-grid__list" role="list">
+		{
+			phases.map((phase) => (
+				<li class="roadmap-grid__item">
+					<div class="roadmap-grid__header">
+						<h3 class="roadmap-grid__phase">{phase.phase}</h3>
+						<span class="roadmap-grid__status">{formatStatus(phase.status)}</span>
+					</div>
+					<div
+						class="roadmap-grid__bar"
+						role="progressbar"
+						aria-valuemin={0}
+						aria-valuemax={100}
+						aria-valuenow={phase.progress}
+						aria-label={`${phase.phase} progress`}
+					>
+						<span class="roadmap-grid__bar-fill" style={`width: ${phase.progress}%`}></span>
+					</div>
+					<p class="roadmap-grid__progress">{phase.progress}%</p>
+					{
+						phase.items.length > 0 && (
+							<ul class="roadmap-grid__items" role="list">
+								{phase.items.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+						)
+					}
+				</li>
+			))
+		}
+	</ul>
+</section>
+
+<style>
+	.roadmap-grid__title {
+		margin: 0 0 var(--space-6);
+		font-size: var(--font-size-h3);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.roadmap-grid__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: var(--space-4);
+	}
+
+	@media (min-width: 768px) {
+		.roadmap-grid__list {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 1100px) {
+		.roadmap-grid__list {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	.roadmap-grid__item {
+		padding: var(--space-5);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		background: var(--color-surface);
+	}
+
+	.roadmap-grid__header {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--space-3);
+		align-items: baseline;
+		margin-bottom: var(--space-4);
+	}
+
+	.roadmap-grid__phase {
+		margin: 0;
+		font-size: var(--font-size-body);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.roadmap-grid__status {
+		font-size: var(--font-size-caption);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-accent);
+		white-space: nowrap;
+	}
+
+	.roadmap-grid__bar {
+		height: 0.35rem;
+		border-radius: var(--radius-pill);
+		background: var(--color-border-subtle);
+		overflow: hidden;
+	}
+
+	.roadmap-grid__bar-fill {
+		display: block;
+		height: 100%;
+		border-radius: inherit;
+		background: var(--gradient-primary);
+	}
+
+	.roadmap-grid__progress {
+		margin: var(--space-2) 0 var(--space-4);
+		font-size: var(--font-size-caption);
+		color: var(--color-text-muted);
+	}
+
+	.roadmap-grid__items {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.roadmap-grid__items li {
+		font-size: var(--font-size-small);
+		color: var(--color-text-secondary);
+		padding-left: var(--space-4);
+		position: relative;
+	}
+
+	.roadmap-grid__items li::before {
+		content: '—';
+		position: absolute;
+		left: 0;
+		color: var(--color-accent);
+	}
+</style>

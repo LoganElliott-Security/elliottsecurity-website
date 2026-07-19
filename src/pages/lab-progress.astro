@@ -1,0 +1,387 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import MilestoneList from '../components/status/MilestoneList.astro';
+import ProgressRing from '../components/status/ProgressRing.astro';
+import RoadmapGrid from '../components/status/RoadmapGrid.astro';
+import StatusStat from '../components/status/StatusStat.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import Button from '../components/ui/Button.astro';
+import Container from '../components/ui/Container.astro';
+import ContentPlaceholder from '../components/ui/ContentPlaceholder.astro';
+import Section from '../components/ui/Section.astro';
+import { getLabStatusEntry } from '../lib/labStatus';
+import { formatDate } from '../lib/content';
+import { buildBreadcrumbSchema, buildListingBreadcrumbs, buildWebPageSchema } from '../lib/structured-data';
+
+const entry = await getLabStatusEntry();
+const { Content } = await render(entry);
+const data = entry.data;
+const breadcrumbs = buildListingBreadcrumbs(data.pageTitle, '/lab-progress');
+const updatedLabel = formatDate(data.lastUpdated);
+---
+
+<BaseLayout title={data.pageTitle} description={data.description}>
+	<title slot="head">{data.pageTitle} | ElliottSecurity</title>
+	<StructuredData
+		slot="head"
+		data={[
+			buildWebPageSchema({
+				title: `${data.pageTitle} | ElliottSecurity`,
+				description: data.description,
+				url: '/lab-progress',
+			}),
+			buildBreadcrumbSchema(breadcrumbs),
+		]}
+	/>
+
+	<section class="lab-hero">
+		<div class="lab-hero__glow" aria-hidden="true"></div>
+		<Container size="narrow">
+			<Breadcrumbs items={breadcrumbs} />
+			<p class="type-eyebrow animate-fade-in">{data.eyebrow}</p>
+			<h1 class="lab-hero__title type-display animate-slide-up">Enterprise Homelab Progress</h1>
+			<p class="lab-hero__summary animate-slide-up-delay-1">{data.description}</p>
+
+			<div class="lab-hero__dashboard animate-slide-up-delay-2">
+				<ProgressRing value={data.overallProgress} label="Complete" />
+				<div class="lab-hero__stats">
+					<StatusStat label="Current Milestone" value={data.currentMilestone} />
+					<StatusStat label="Current Phase" value={data.currentPhase} />
+					<StatusStat label="Next Milestone" value={data.nextMilestone} />
+					<StatusStat label="Next Objective" value={data.nextObjective} />
+				</div>
+			</div>
+			<p class="lab-hero__updated">Last updated: {updatedLabel}</p>
+		</Container>
+	</section>
+
+	<Section background="secondary" padding={true}>
+		<Container size="narrow">
+			<section class="lab-block" aria-labelledby="current-focus">
+				<h2 id="current-focus" class="lab-block__title">Current Focus</h2>
+				<p class="lab-block__body">{data.currentFocus}</p>
+				<div class="lab-block__actions">
+					<Button href="/homelab/enterprise-cybersecurity-homelab" variant="outline" size="sm">
+						Homelab overview
+					</Button>
+					<Button href="/current-focus" variant="ghost" size="sm">Engineering dashboard</Button>
+				</div>
+			</section>
+		</Container>
+	</Section>
+
+	<Section padding={true}>
+		<Container size="narrow">
+			<div class="lab-sections">
+			<section class="lab-block" aria-labelledby="timeline">
+				<h2 id="timeline" class="lab-block__title">Timeline</h2>
+				<ol class="lab-timeline" role="list">
+					{
+						data.timeline.map((item) => (
+							<li class="lab-timeline__item">
+								<span class="lab-timeline__date">{item.date}</span>
+								<span class="lab-timeline__label">{item.label}</span>
+							</li>
+						))
+					}
+				</ol>
+			</section>
+
+			<div class="lab-split">
+				<MilestoneList title="Completed Milestones" milestones={data.completedMilestones} variant="completed" />
+				<MilestoneList title="Upcoming Milestones" milestones={data.upcomingMilestones} variant="upcoming" />
+			</div>
+
+			<section class="lab-block" aria-labelledby="architecture-overview">
+				<h2 id="architecture-overview" class="lab-block__title">Architecture Overview</h2>
+				<p class="lab-block__body">{data.architectureOverview}</p>
+			</section>
+
+			<RoadmapGrid phases={data.roadmap} />
+
+			<section class="lab-block" aria-labelledby="recent-changes">
+				<h2 id="recent-changes" class="lab-block__title">Recent Changes</h2>
+				<ul class="lab-changes" role="list">
+					{
+						data.recentChanges.map((change) => (
+							<li class="lab-changes__item">
+								<p class="lab-changes__meta">
+									<span>{change.date}</span>
+									<span aria-hidden="true">·</span>
+									<span>{change.title}</span>
+								</p>
+								<p class="lab-changes__detail">{change.detail}</p>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+
+			<section class="lab-block" aria-labelledby="recently-completed">
+				<h2 id="recently-completed" class="lab-block__title">Recently Completed</h2>
+				<ul class="lab-done" role="list">
+					{data.recentlyCompleted.map((item) => <li>{item}</li>)}
+				</ul>
+			</section>
+
+			<section class="lab-block" aria-labelledby="placeholders">
+				<h2 id="placeholders" class="lab-block__title">Evidence & Diagrams</h2>
+				<div class="lab-placeholders">
+					<div>
+						<h3 class="lab-placeholders__label">Screenshots</h3>
+						<ContentPlaceholder message={data.screenshotsPlaceholder} />
+					</div>
+					<div>
+						<h3 class="lab-placeholders__label">Architecture Diagram</h3>
+						<ContentPlaceholder message={data.architectureDiagramPlaceholder} />
+					</div>
+				</div>
+			</section>
+
+			<section class="lab-block lab-prose" aria-labelledby="status-detail">
+				<h2 id="status-detail" class="lab-block__title">Build Narrative</h2>
+				<div class="content-prose">
+					<Content />
+				</div>
+			</section>
+			</div>
+		</Container>
+	</Section>
+</BaseLayout>
+
+<style>
+	.lab-hero {
+		position: relative;
+		overflow: hidden;
+		padding-block: var(--space-12) var(--space-16);
+	}
+
+	.lab-hero__glow {
+		pointer-events: none;
+		position: absolute;
+		inset: 0;
+		background:
+			var(--gradient-hero),
+			var(--gradient-glow);
+		opacity: 0.9;
+	}
+
+	.lab-hero :global(.container),
+	.lab-hero :global(.breadcrumbs) {
+		position: relative;
+		z-index: 1;
+	}
+
+	.lab-hero__title {
+		margin: var(--space-3) 0 var(--space-4);
+		max-width: 18ch;
+		text-wrap: balance;
+	}
+
+	.lab-hero__summary {
+		max-width: 42rem;
+		margin: 0 0 var(--space-10);
+		font-size: var(--font-size-body-lg);
+		color: var(--color-text-secondary);
+		line-height: 1.7;
+	}
+
+	.lab-hero__dashboard {
+		display: grid;
+		gap: var(--space-8);
+		align-items: center;
+		padding: var(--space-6);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-xl);
+		background: color-mix(in srgb, var(--color-surface-elevated) 88%, transparent);
+		backdrop-filter: blur(8px);
+	}
+
+	@media (min-width: 768px) {
+		.lab-hero__dashboard {
+			grid-template-columns: auto 1fr;
+			padding: var(--space-8);
+		}
+	}
+
+	.lab-hero__stats {
+		display: grid;
+		gap: var(--space-5);
+	}
+
+	@media (min-width: 640px) {
+		.lab-hero__stats {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.lab-hero__updated {
+		margin: var(--space-4) 0 0;
+		font-size: var(--font-size-small);
+		color: var(--color-text-muted);
+	}
+
+	.lab-sections {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-16);
+	}
+
+	.lab-block__title {
+		margin: 0 0 var(--space-5);
+		font-size: var(--font-size-h3);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.lab-block__body {
+		margin: 0;
+		font-size: var(--font-size-body);
+		line-height: 1.7;
+		color: var(--color-text-secondary);
+		max-width: 48rem;
+	}
+
+	.lab-block__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-3);
+		margin-top: var(--space-6);
+	}
+
+	.lab-timeline {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-left: 1px solid var(--color-border);
+		padding-left: var(--space-6);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-5);
+	}
+
+	.lab-timeline__item {
+		position: relative;
+		display: grid;
+		gap: var(--space-1);
+	}
+
+	.lab-timeline__item::before {
+		content: '';
+		position: absolute;
+		left: calc(-1 * var(--space-6) - 0.3rem);
+		top: 0.35rem;
+		width: 0.65rem;
+		height: 0.65rem;
+		border-radius: var(--radius-pill);
+		border: 2px solid var(--color-accent);
+		background: var(--color-bg);
+	}
+
+	.lab-timeline__date {
+		font-size: var(--font-size-caption);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.lab-timeline__label {
+		font-size: var(--font-size-body);
+		color: var(--color-text);
+	}
+
+	.lab-split {
+		display: grid;
+		gap: var(--space-10);
+	}
+
+	@media (min-width: 900px) {
+		.lab-split {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: var(--space-8);
+		}
+	}
+
+	.lab-changes {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-5);
+	}
+
+	.lab-changes__meta {
+		margin: 0 0 var(--space-2);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text);
+	}
+
+	.lab-changes__detail {
+		margin: 0;
+		font-size: var(--font-size-small);
+		line-height: 1.65;
+		color: var(--color-text-secondary);
+	}
+
+	.lab-done {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: var(--space-3);
+	}
+
+	@media (min-width: 640px) {
+		.lab-done {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.lab-done li {
+		padding: var(--space-3) var(--space-4);
+		border: 1px solid color-mix(in srgb, var(--color-success) 30%, var(--color-border));
+		border-radius: var(--radius-md);
+		font-size: var(--font-size-small);
+		color: var(--color-text-secondary);
+		background: var(--color-success-muted);
+	}
+
+	.lab-done li::before {
+		content: '✓ ';
+		color: var(--color-success);
+		font-weight: var(--font-weight-semibold);
+	}
+
+	.lab-placeholders {
+		display: grid;
+		gap: var(--space-6);
+	}
+
+	@media (min-width: 768px) {
+		.lab-placeholders {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.lab-placeholders__label {
+		margin: 0 0 var(--space-3);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text);
+	}
+
+	.lab-prose :global(h1) {
+		display: none;
+	}
+
+	.lab-prose :global(h2) {
+		margin-top: var(--space-10);
+	}
+</style>

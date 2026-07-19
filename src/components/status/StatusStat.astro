@@ -1,0 +1,40 @@
+---
+interface Props {
+	label: string;
+	value: string;
+}
+
+const { label, value } = Astro.props;
+---
+
+<div class="status-stat">
+	<p class="status-stat__label">{label}</p>
+	<p class="status-stat__value">{value}</p>
+</div>
+
+<style>
+	.status-stat {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		min-width: 0;
+	}
+
+	.status-stat__label {
+		margin: 0;
+		font-size: var(--font-size-caption);
+		font-weight: var(--font-weight-medium);
+		letter-spacing: var(--letter-spacing-widest);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+
+	.status-stat__value {
+		margin: 0;
+		font-size: var(--font-size-body-lg);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+		line-height: 1.35;
+		text-wrap: balance;
+	}
+</style>

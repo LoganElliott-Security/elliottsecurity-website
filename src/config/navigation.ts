@@ -27,6 +27,11 @@ export const MAIN_NAV: NavItem[] = [
 		description: 'Infrastructure and lab documentation',
 	},
 	{
+		label: 'Lab Progress',
+		href: '/lab-progress',
+		description: 'Enterprise Homelab build status',
+	},
+	{
 		label: 'Articles',
 		href: '/articles',
 		description: 'Educational technical content',
@@ -63,6 +68,7 @@ export const FOOTER_NAV: FooterNavGroup[] = [
 		items: [
 			{ label: 'Detection Engineering', href: '/detection-engineering' },
 			{ label: 'Homelab', href: '/homelab' },
+			{ label: 'Lab Progress', href: '/lab-progress' },
 			{ label: 'Products', href: '/products' },
 		],
 	},
@@ -71,6 +77,7 @@ export const FOOTER_NAV: FooterNavGroup[] = [
 		items: [
 			{ label: 'About', href: '/about' },
 			{ label: 'Current Focus', href: '/current-focus' },
+			{ label: 'Lab Progress', href: '/lab-progress' },
 			{ label: 'Contact', href: '/contact' },
 		],
 	},
