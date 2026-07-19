@@ -200,6 +200,67 @@ const products = defineCollection({
 	}),
 });
 
+const milestoneSchema = z.object({
+	id: z.string(),
+	title: z.string(),
+	summary: z.string(),
+	completed: z.string().optional(),
+});
+
+const status = defineCollection({
+	loader: glob({ base: './src/content/status', pattern: '**/*.{md,mdx}' }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		slug: z.string().optional(),
+		pageTitle: z.string().default('Lab Progress'),
+		eyebrow: z.string().default('Now Building'),
+		overallProgress: z.number().min(0).max(100),
+		currentMilestone: z.string(),
+		currentPhase: z.string(),
+		nextObjective: z.string(),
+		nextMilestone: z.string(),
+		currentFocus: z.string(),
+		lastUpdated: z.coerce.date(),
+		draft: z.boolean().default(false),
+		featured: z.boolean().default(true),
+		tags: tagsSchema,
+		timeline: z
+			.array(
+				z.object({
+					date: z.string(),
+					label: z.string(),
+				}),
+			)
+			.default([]),
+		completedMilestones: z.array(milestoneSchema).default([]),
+		upcomingMilestones: z.array(milestoneSchema).default([]),
+		roadmap: z
+			.array(
+				z.object({
+					phase: z.string(),
+					status: z.string(),
+					progress: z.number().min(0).max(100),
+					items: z.array(z.string()).default([]),
+				}),
+			)
+			.default([]),
+		recentChanges: z
+			.array(
+				z.object({
+					date: z.string(),
+					title: z.string(),
+					detail: z.string(),
+				}),
+			)
+			.default([]),
+		recentlyCompleted: z.array(z.string()).default([]),
+		architectureOverview: z.string(),
+		screenshotsPlaceholder: z.string(),
+		architectureDiagramPlaceholder: z.string(),
+	}),
+});
+
 export const collections = {
 	articles,
 	projects,
@@ -207,4 +268,5 @@ export const collections = {
 	detections,
 	homelab,
 	products,
+	status,
 };
