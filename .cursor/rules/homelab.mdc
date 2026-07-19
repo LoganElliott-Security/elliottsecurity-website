@@ -1,0 +1,24 @@
+---
+description: Homelab documentation conventions
+globs: **/knowledgeos/01-Homelab/**
+alwaysApply: false
+---
+# Homelab Rules
+
+## Intent
+Document the homelab as an enterprise lab: segmented, monitored, recoverable, and evidence-backed.
+
+## Conventions
+- Link hosts to [[Homelab Inventory]].
+- Map capabilities to [[Homelab Maturity Model]].
+- Every lab scenario belongs in [[Lab Catalog]] or a child note.
+- Prefer system notes from Homelab System Template.
+
+## Naming
+- VMs/LXCs: `role-name-##`
+- Keep zone labels consistent with networking docs.
+
+## Required Links
+- [[ARCHITECTURE]]
+- [[Networking Overview]]
+- [[Infrastructure Overview]]

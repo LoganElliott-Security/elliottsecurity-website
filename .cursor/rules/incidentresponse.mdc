@@ -1,0 +1,23 @@
+---
+description: Incident response documentation rules
+globs: **/knowledgeos/06-Incident-Response/**
+alwaysApply: false
+---
+# Incident Response Rules
+
+## Doctrine
+Follow [[IR Doctrine]] and [[IR Intake Process]].
+
+## Cases
+- IDs: `ES-IR-YYYY-####`
+- Register in [[Cases Index]]
+- Use [[IR Case Template]]
+
+## Playbooks
+- Actionable steps with validation and rollback/containment notes.
+- Link detections/hunts that feed the playbook.
+
+## Evidence Handling
+- Preserve integrity notes.
+- No secrets/PII dumps in Git.
+- Lab drills should still use professional case discipline.

@@ -1,0 +1,9 @@
+{
+  "id": "metadata-menu",
+  "name": "metadata-menu",
+  "version": "0.0.0-placeholder",
+  "minAppVersion": "1.0.0",
+  "description": "Placeholder for metadata-menu. Install the real community plugin in Obsidian.",
+  "author": "ElliottSecurity KnowledgeOS",
+  "isDesktopOnly": false
+}

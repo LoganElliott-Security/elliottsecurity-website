@@ -1,0 +1,20 @@
+---
+description: Template authoring and usage rules
+globs: **/knowledgeos/22-Templates/**
+alwaysApply: false
+---
+# Template Rules
+
+## Principles
+- Templates are canonical; improve them instead of forking.
+- Keep placeholders explicit: `{{title}}`, `{{date}}`.
+- Include frontmatter stubs and Related Notes sections.
+
+## Compatibility
+- Templates must work with Templater/core Templates plugin patterns.
+- Stay conceptually aligned with `docs/templates/` for website publishing.
+
+## When Adding a Template
+1. Add file under `knowledgeos/22-Templates/`
+2. Link from [[Templates Index]]
+3. Mention intended domain and ID scheme if applicable

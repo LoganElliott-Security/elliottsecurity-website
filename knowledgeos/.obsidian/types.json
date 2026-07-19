@@ -1,0 +1,13 @@
+{
+  "types": {
+    "title": "text",
+    "tags": "tags",
+    "status": "text",
+    "type": "text",
+    "created": "date",
+    "updated": "date",
+    "mitre": "multitext",
+    "severity": "text",
+    "id": "text"
+  }
+}

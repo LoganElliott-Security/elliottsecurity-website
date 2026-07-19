@@ -15,6 +15,19 @@ Static cybersecurity knowledge platform built with Astro 7, TypeScript, Tailwind
 - Node.js >= 22.12.0
 - npm
 
+
+
+## Internal KnowledgeOS
+
+The repository includes **ElliottSecurity KnowledgeOS**, an Obsidian-native internal knowledge operating system under `knowledgeos/`.
+
+- Open `knowledgeos/` as the Obsidian vault root
+- Canonical AI context: `PROJECT_CONTEXT.md`, `ARCHITECTURE.md`, `STANDARDS.md`, `ROADMAP.md`
+- Cursor rules: `.cursor/rules/`
+- Obsidian placeholders: `knowledgeos/.obsidian/`
+
+KnowledgeOS is the broader internal source of truth. The Astro site remains the public rendering engine for curated content collections.
+
 ## Installation
 
 ```bash

@@ -1,0 +1,23 @@
+---
+description: Obsidian vault conventions for KnowledgeOS
+globs: **/knowledgeos/**
+alwaysApply: false
+---
+# Obsidian Rules
+
+## Vault Root
+- Open `knowledgeos/` as the Obsidian vault root.
+- Keep `.obsidian/` placeholders Git-friendly.
+
+## Linking & Graph
+- Use wikilinks, not bare URLs, for internal notes.
+- Maintain Related Notes on durable content.
+- Dashboards stay thin; indexes hold registries.
+
+## Plugins (Recommended)
+Dataview, Tasks, Templater, Git, Kanban, Homepage, Excalidraw, Metadata Menu, Calendar, Style Settings.
+
+## Daily Notes
+- Path: `21-Daily-Notes/Journal/`
+- Template: [[Daily Note Template]]
+- Promote durable outcomes out of daily notes quickly.

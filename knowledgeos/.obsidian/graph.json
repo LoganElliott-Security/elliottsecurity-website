@@ -1,0 +1,58 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:01-Homelab",
+      "color": {
+        "a": 1,
+        "rgb": 15
+      }
+    },
+    {
+      "query": "path:04-Detection-Engineering",
+      "color": {
+        "a": 1,
+        "rgb": 120
+      }
+    },
+    {
+      "query": "path:05-Threat-Hunting",
+      "color": {
+        "a": 1,
+        "rgb": 200
+      }
+    },
+    {
+      "query": "path:06-Incident-Response",
+      "color": {
+        "a": 1,
+        "rgb": 300
+      }
+    },
+    {
+      "query": "path:14-Business",
+      "color": {
+        "a": 1,
+        "rgb": 40
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.5,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 1,
+  "close": false
+}

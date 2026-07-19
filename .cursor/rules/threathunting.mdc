@@ -1,0 +1,20 @@
+---
+description: Threat hunting documentation rules
+globs: **/knowledgeos/05-Threat-Hunting/**
+alwaysApply: false
+---
+# Threat Hunting Rules
+
+## Method
+Follow [[Hunt Methodology]]. Convert outcomes into detections or IR improvements.
+
+## IDs & Registry
+- Assign `ES-HUNT-####`
+- Register in [[Hunts Index]]
+
+## Note Structure
+Hypothesis → Scope → Data → Method → Findings → Outcomes → Related Notes
+
+## Quality
+- Distinguish evidence from interpretation.
+- Record negative results; they have value.

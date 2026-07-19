@@ -1,0 +1,63 @@
+{
+  "main": {
+    "id": "knowledgeos-main",
+    "type": "split",
+    "children": [
+      {
+        "id": "knowledgeos-leaf",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "00-Home/00 Home.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "knowledgeos-left",
+    "type": "split",
+    "children": [
+      {
+        "id": "knowledgeos-file-explorer",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {}
+        }
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "knowledgeos-right",
+    "type": "split",
+    "children": [
+      {
+        "id": "knowledgeos-backlinks",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "file": "00-Home/00 Home.md"
+          }
+        }
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "knowledgeos-leaf",
+  "lastOpenFiles": [
+    "00-Home/00 Home.md",
+    "PROJECT_CONTEXT.md",
+    "ARCHITECTURE.md",
+    "STANDARDS.md",
+    "ROADMAP.md"
+  ]
+}

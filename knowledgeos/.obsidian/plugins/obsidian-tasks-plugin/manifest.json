@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-tasks-plugin",
+  "name": "obsidian-tasks-plugin",
+  "version": "0.0.0-placeholder",
+  "minAppVersion": "1.0.0",
+  "description": "Placeholder for obsidian-tasks-plugin. Install the real community plugin in Obsidian.",
+  "author": "ElliottSecurity KnowledgeOS",
+  "isDesktopOnly": false
+}

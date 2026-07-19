@@ -1,0 +1,22 @@
+---
+description: Detection engineering documentation rules
+globs: **/knowledgeos/04-Detection-Engineering/**
+alwaysApply: false
+---
+# Detection Engineering Rules
+
+## Definition of Done
+Follow [[Detection Quality Bar]]:
+- Intent, data source, logic, MITRE, validation, FP notes, response hints.
+
+## IDs & Registry
+- Assign `ES-DET-####`
+- Register in [[Detections Index]]
+
+## Linking
+- Link to hunts and IR playbooks when outcomes require response.
+- Map ATT&CK carefully via [[MITRE Mapping Guide]].
+
+## Safety
+- No unauthorized offensive payloads.
+- Validation should be lab-safe and documented.

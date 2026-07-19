@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-kanban",
+  "name": "obsidian-kanban",
+  "version": "0.0.0-placeholder",
+  "minAppVersion": "1.0.0",
+  "description": "Placeholder for obsidian-kanban. Install the real community plugin in Obsidian.",
+  "author": "ElliottSecurity KnowledgeOS",
+  "isDesktopOnly": false
+}

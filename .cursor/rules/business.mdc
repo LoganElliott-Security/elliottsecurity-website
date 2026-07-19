@@ -1,0 +1,19 @@
+---
+description: Business, products, marketing, revenue documentation rules
+globs: **/knowledgeos/{14-Business/**,17-Products/**,18-Marketing/**,19-Revenue/**}
+alwaysApply: false
+---
+# Business Rules
+
+## Tone
+- Professional operator tone; no hype.
+- Separate facts, hypotheses, and decisions.
+
+## Structure
+- Strategy notes link to [[Goals and OKRs]] and [[ROADMAP]].
+- Product notes include stage, audience, and validation status.
+- Revenue notes distinguish model vs active offer.
+
+## Non-Goals
+- Do not store banking credentials, tax IDs, or private financial account numbers.
+- Keep sensitive personal finance detail out of Git if not needed for ops.

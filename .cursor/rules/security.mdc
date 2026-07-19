@@ -1,0 +1,29 @@
+---
+description: Security documentation and secret-handling rules
+globs: **/knowledgeos/**/*.{md,mdc}
+alwaysApply: false
+---
+# Security Rules
+
+## Secrets
+- Never commit passwords, API keys, private keys, tokens, or session material.
+- Use placeholders: `<API_KEY>`, `<WG_PRIVATE_KEY>`.
+- Reference external secret locations; do not embed values.
+
+## Operational Security
+- Do not commit malware samples or memory dumps.
+- Hash-only sample registries are allowed.
+- Redact customer/personal data from case notes before commit.
+
+## Trust Boundaries
+- Document zone assumptions explicitly (Edge/Core/Lab/Management).
+- Lab compromise must not be treated as equivalent to management access.
+- VPN and firewall changes require rationale notes.
+
+## Detection & IR Safety
+- Validation commands must be safe for lab context.
+- Do not provide exploit PoCs intended for unauthorized systems.
+- Prefer defensive engineering guidance.
+
+## Alignment
+- Follow [[STANDARDS]] and [[ARCHITECTURE]].

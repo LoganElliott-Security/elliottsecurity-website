@@ -1,0 +1,17 @@
+{
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "21-Daily-Notes/Journal",
+  "attachmentFolderPath": "99-Meta/Attachments",
+  "showLineNumber": true,
+  "strictLineBreaks": false,
+  "showFrontmatter": true,
+  "useMarkdownLinks": false,
+  "readableLineLength": true,
+  "promptDelete": true,
+  "trashOption": "local",
+  "legacyEditor": false,
+  "livePreview": true,
+  "defaultViewMode": "source",
+  "vimMode": false
+}

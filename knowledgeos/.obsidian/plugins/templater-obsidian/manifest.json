@@ -1,0 +1,9 @@
+{
+  "id": "templater-obsidian",
+  "name": "templater-obsidian",
+  "version": "0.0.0-placeholder",
+  "minAppVersion": "1.0.0",
+  "description": "Placeholder for templater-obsidian. Install the real community plugin in Obsidian.",
+  "author": "ElliottSecurity KnowledgeOS",
+  "isDesktopOnly": false
+}

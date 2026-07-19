@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-style-settings",
+  "name": "obsidian-style-settings",
+  "version": "0.0.0-placeholder",
+  "minAppVersion": "1.0.0",
+  "description": "Placeholder for obsidian-style-settings. Install the real community plugin in Obsidian.",
+  "author": "ElliottSecurity KnowledgeOS",
+  "isDesktopOnly": false
+}

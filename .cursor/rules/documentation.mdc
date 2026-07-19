@@ -1,0 +1,33 @@
+---
+description: Documentation quality and structure standards
+globs: **/knowledgeos/**/*.md
+alwaysApply: false
+---
+# Documentation Rules
+
+## Core Doctrine
+- KnowledgeOS is the internal source of truth.
+- The website is a curated rendering surface.
+- Avoid duplication: link to canonical notes.
+
+## Structure for Durable Notes
+1. Frontmatter
+2. H1 title
+3. Summary callout
+4. Body sections
+5. Related Notes
+6. TODOs
+
+## Quality Bar
+- Scannable in under 60 seconds for overview notes.
+- Runbooks must include preconditions, steps, validation, rollback.
+- Indexes/registries use tables with stable IDs.
+
+## Cross-System Docs
+- When documenting website publishing, reference `src/content/` and `docs/templates/`.
+- When documenting infra, reference [[ARCHITECTURE]].
+
+## AI Behavior
+- Update existing notes before creating near-duplicates.
+- Keep enterprise tone.
+- Preserve wikilinks and frontmatter.

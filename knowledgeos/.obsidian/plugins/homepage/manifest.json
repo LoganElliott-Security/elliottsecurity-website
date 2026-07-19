@@ -1,0 +1,9 @@
+{
+  "id": "homepage",
+  "name": "Homepage",
+  "version": "0.0.0-placeholder",
+  "minAppVersion": "1.0.0",
+  "description": "Placeholder config for Homepage plugin. Install from Community Plugins.",
+  "author": "ElliottSecurity KnowledgeOS",
+  "isDesktopOnly": false
+}

@@ -1,0 +1,54 @@
+---
+description: Markdown formatting standards for KnowledgeOS and docs
+globs: **/*.md
+alwaysApply: false
+---
+# Markdown Rules — ElliottSecurity KnowledgeOS
+
+## Formatting
+- One H1 per file; H1 must match `title` frontmatter.
+- Use ATX headings (`##`, `###`); never skip levels.
+- Prefer short paragraphs, lists, and tables over walls of text.
+- Use fenced code blocks with language tags.
+- Use Obsidian callouts for summary/warning/todo signals.
+
+## Writing Style
+- Enterprise SOC tone: precise, operational, non-hype.
+- Prefer actionable language ("Do X when Y") over vague advice.
+- Mark unknowns with TODOs; never invent facts.
+
+## Folder Conventions
+- KnowledgeOS lives under `knowledgeos/`.
+- Numbered domain roots are stable; do not rename casually.
+- Never leave empty folders — include README + Overview + starter notes.
+
+## Naming
+- Note titles: `Title Case With Spaces.md`
+- Folders: `NN-Title-Case-With-Hyphens`
+- IDs: `ES-DET-####`, `ES-HUNT-####`, `ES-IR-YYYY-####`
+
+## Linking
+- Primary links: `[[Note Title]]`
+- Every durable note needs a **Related Notes** section.
+- Update domain Overview when adding major notes.
+
+## Metadata
+```yaml
+---
+title: "Example"
+tags: [domain, topic]
+status: draft | active | canonical | archived
+type: note
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+```
+
+## Templates
+- Prefer templates from `knowledgeos/22-Templates/`.
+- Align with [[STANDARDS]] and [[PROJECT_CONTEXT]].
+
+## Documentation Standards
+- Answer: what / why / how / dependencies / risks.
+- No secrets in Git.
+- Mermaid for diagrams where helpful.

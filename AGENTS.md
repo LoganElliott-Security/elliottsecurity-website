@@ -20,3 +20,17 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+
+## KnowledgeOS
+
+Internal Obsidian vault lives in `knowledgeos/`.
+
+Before editing KnowledgeOS notes, align with:
+
+- `knowledgeos/PROJECT_CONTEXT.md`
+- `knowledgeos/ARCHITECTURE.md`
+- `knowledgeos/STANDARDS.md`
+- `knowledgeos/ROADMAP.md`
+
+Cursor rules for KnowledgeOS are under `.cursor/rules/`.

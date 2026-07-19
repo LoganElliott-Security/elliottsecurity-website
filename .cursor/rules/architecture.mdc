@@ -1,0 +1,23 @@
+---
+description: Architecture documentation conventions
+globs: **/knowledgeos/{ARCHITECTURE.md,03-Infrastructure/**,01-Homelab/**,02-Networking/**,15-Platform/**}
+alwaysApply: false
+---
+# Architecture Rules
+
+## Sources of Truth
+- [[ARCHITECTURE]] is canonical for environment topology.
+- Domain overviews specialize; they must not contradict the brain file.
+
+## Diagrams
+- Prefer Mermaid for topology, trust boundaries, and data flows.
+- One diagram answers one question.
+- Keep VLAN/subnet values accurate or mark as placeholders with TODOs.
+
+## Inventories
+- Use tables for hosts/services.
+- Include role, zone, platform, status, last-verified when known.
+
+## Change Management
+- Topology changes update [[ARCHITECTURE]] and affected overviews in the same change set.
+- Record significant decisions with Decision Record template.

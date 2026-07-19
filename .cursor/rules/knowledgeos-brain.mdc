@@ -1,0 +1,14 @@
+---
+description: Always-on KnowledgeOS brain alignment
+globs: **/knowledgeos/**
+alwaysApply: true
+---
+# KnowledgeOS Brain Alignment
+
+Before creating or heavily editing KnowledgeOS notes:
+1. Align with `knowledgeos/PROJECT_CONTEXT.md`
+2. Align topology with `knowledgeos/ARCHITECTURE.md`
+3. Follow `knowledgeos/STANDARDS.md`
+4. Track execution against `knowledgeos/ROADMAP.md`
+
+Prefer updating canonical notes over duplication. Keep the vault modular, linked, and enterprise-quality.
