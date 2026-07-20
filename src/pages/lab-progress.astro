@@ -3,7 +3,9 @@ import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
 import MilestoneList from '../components/status/MilestoneList.astro';
+import ProgressFlags from '../components/status/ProgressFlags.astro';
 import ProgressRing from '../components/status/ProgressRing.astro';
+import InfrastructureInventory from '../components/status/InfrastructureInventory.astro';
 import RoadmapGrid from '../components/status/RoadmapGrid.astro';
 import StatusStat from '../components/status/StatusStat.astro';
 import StructuredData from '../components/seo/StructuredData.astro';
@@ -89,10 +91,14 @@ const updatedLabel = formatDate(data.lastUpdated);
 				</ol>
 			</section>
 
+			<ProgressFlags flags={data.progressFlags} />
+
 			<div class="lab-split">
 				<MilestoneList title="Completed Milestones" milestones={data.completedMilestones} variant="completed" />
 				<MilestoneList title="Upcoming Milestones" milestones={data.upcomingMilestones} variant="upcoming" />
 			</div>
+
+			<InfrastructureInventory items={data.infrastructureInventory} />
 
 			<section class="lab-block" aria-labelledby="architecture-overview">
 				<h2 id="architecture-overview" class="lab-block__title">Architecture Overview</h2>

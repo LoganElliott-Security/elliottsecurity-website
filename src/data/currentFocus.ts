@@ -29,10 +29,10 @@ export const currentFocusProjects: CurrentFocusProject[] = [
 	{
 		title: 'Cybersecurity Homelab',
 		status: 'in-progress',
-		progress: 5,
+		progress: 15,
 		href: '/lab-progress',
 		description:
-			'Enterprise Homelab in progress — DCP-001 Proxmox foundation complete; next is DCP-002 golden templates (Ubuntu, Windows Server, Windows 11).',
+			'Enterprise Homelab at 15% — DCP-002 networking/edge foundation complete (OPNsense, WiFi bridge, lab network). Active Directory on ES-DC-01 is in progress.',
 	},
 	{
 		title: 'Detection Engineering',

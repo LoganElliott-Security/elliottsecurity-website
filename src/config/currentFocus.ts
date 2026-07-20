@@ -11,7 +11,7 @@ import type {
 	RoadmapMilestone,
 } from '../types/currentFocus';
 
-export const CURRENT_FOCUS_UPDATED = '2026-07-19';
+export const CURRENT_FOCUS_UPDATED = '2026-07-20';
 
 export const CURRENT_FOCUS_SEO = {
 	title: 'Current Focus',
@@ -88,33 +88,33 @@ export const PUBLISHING_QUEUE: PublishingItem[] = [
 export const LAB_ROADMAP: RoadmapMilestone[] = [
 	{
 		phase: 'current',
-		title: 'Foundation → Templates',
+		title: 'Identity Baseline',
 		description:
-			'DCP-001 Proxmox foundation is complete. Current focus is DCP-002 golden templates and continued host readiness.',
+			'DCP-002 networking foundation is complete. Current focus is Windows Server + Active Directory on ES-DC-01.',
 		items: [
-			'Proxmox VE installed, updated, and hardened',
-			'Enterprise VM pools created',
-			'Golden Ubuntu / Windows Server / Windows 11 templates (next)',
+			'ES-OPNSENSE-01 online with validated WAN/LAN',
+			'Proxmox vmbr0 / vmbr1 / vmbr2 configured',
+			'ES-DC-01 created — AD install in progress',
 		],
 	},
 	{
 		phase: 'next',
-		title: 'Networking & Identity',
-		description: 'Segment the lab and establish identity for enterprise-style operations.',
+		title: 'Templates & Telemetry Prep',
+		description: 'Build golden images and prepare the detection telemetry path.',
 		items: [
-			'OPNsense and VLAN segmentation',
+			'Golden Ubuntu / Windows Server / Windows 11 templates',
 			'WireGuard remote access',
-			'Active Directory baseline',
+			'Elastic Security / log pipeline groundwork',
 		],
 	},
 	{
 		phase: 'future',
-		title: 'Telemetry, Detection & Publishing',
+		title: 'Detection, Hunting & Publishing',
 		description: 'Stand up the detection pipeline and publish engineering evidence.',
 		items: [
-			'Elastic Security / log pipeline',
 			'Detection validation and hunt case studies',
 			'Architecture documentation series',
+			'Screenshot and diagram evidence gallery',
 		],
 	},
 ];

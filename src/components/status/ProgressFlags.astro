@@ -1,0 +1,108 @@
+---
+interface ProgressFlag {
+	name: string;
+	status: 'complete' | 'in-progress' | 'planned';
+}
+
+interface Props {
+	flags: ProgressFlag[];
+}
+
+const { flags } = Astro.props;
+
+const labels: Record<ProgressFlag['status'], string> = {
+	complete: 'Complete',
+	'in-progress': 'In Progress',
+	planned: 'Planned',
+};
+---
+
+{
+	flags.length > 0 && (
+		<section class="progress-flags" aria-labelledby="progress-flags">
+			<h2 id="progress-flags" class="progress-flags__title">
+				Progress Indicators
+			</h2>
+			<ul class="progress-flags__list" role="list">
+				{flags.map((flag) => (
+					<li class:list={['progress-flags__item', `progress-flags__item--${flag.status}`]}>
+						<span class="progress-flags__name">{flag.name}</span>
+						<span class="progress-flags__status">{labels[flag.status]}</span>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}
+
+<style>
+	.progress-flags__title {
+		margin: 0 0 var(--space-5);
+		font-size: var(--font-size-h3);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.progress-flags__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: var(--space-3);
+	}
+
+	@media (min-width: 640px) {
+		.progress-flags__list {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 900px) {
+		.progress-flags__list {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	.progress-flags__item {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--space-3);
+		align-items: center;
+		padding: var(--space-3) var(--space-4);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+	}
+
+	.progress-flags__item--complete {
+		border-color: color-mix(in srgb, var(--color-success) 35%, var(--color-border));
+		background: var(--color-success-muted);
+	}
+
+	.progress-flags__item--in-progress {
+		border-color: color-mix(in srgb, var(--color-warning) 35%, var(--color-border));
+		background: var(--color-warning-muted);
+	}
+
+	.progress-flags__name {
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text);
+	}
+
+	.progress-flags__status {
+		font-size: var(--font-size-caption);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+		white-space: nowrap;
+	}
+
+	.progress-flags__item--complete .progress-flags__status {
+		color: var(--color-success);
+	}
+
+	.progress-flags__item--in-progress .progress-flags__status {
+		color: var(--color-warning);
+	}
+</style>

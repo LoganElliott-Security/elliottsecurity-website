@@ -21,7 +21,7 @@ tags:
   - infrastructure
   - dfir
   - threat-hunting
-updatedDate: 2026-07-19
+updatedDate: 2026-07-20
 coverImage: /images/homelab/enterprise-cybersecurity-homelab.jpg
 ---
 
@@ -52,15 +52,34 @@ Live build status: **[Lab Progress](/lab-progress)** (synced from KnowledgeOS).
 Near-term priorities:
 
 - ~~Deploy Proxmox infrastructure~~ (DCP-001 complete)
-- Build golden templates (Ubuntu, Windows Server, Windows 11) — **DCP-002**
+- ~~Install OPNsense / internal networking / WiFi edge bridge~~ (DCP-002 complete)
+- Deploy Active Directory on **ES-DC-01** — **in progress** (VM created)
+- Build golden templates (Ubuntu, Windows Server, Windows 11)
 - Configure WireGuard remote access
-- Build segmented virtual networks
-- Deploy Active Directory
 - Deploy Elastic Security
 - Establish detection engineering workflows
 - Publish architecture documentation
 
 These objectives define the Version 1 roadmap. Completion status for each item will be updated as work lands.
+
+---
+
+# Live Architecture (current)
+
+Current documented path:
+
+```text
+Internet → Home Router → ES-EDGE-01 (WiFi bridge) → Proxmox Host
+  → vmbr0 Management 192.168.1.0/24
+  → vmbr1 Internal Lab 10.10.10.0/24 → ES-OPNSENSE-01 / ES-DC-01
+  → vmbr2 nic1 expansion
+```
+
+| Plane | CIDR | Purpose |
+|-------|------|---------|
+| Management | `192.168.1.0/24` | Proxmox admin (`vmbr0`) |
+| Infrastructure / Lab | `10.10.10.0/24` | OPNsense LAN + infrastructure VMs (`vmbr1`) |
+| WAN Transit | `10.20.20.0/24` | OPNsense WAN hop |
 
 ---
 
@@ -70,17 +89,18 @@ The following architecture is the **planned** Version 1 design. Components liste
 
 ## Infrastructure
 
-- Proxmox VE
+- Proxmox VE ✅
 - TrueNAS
 - Docker
 - GitHub Actions Runner
 
 ## Networking
 
-- OPNsense
+- OPNsense ✅ (installed)
+- Raspberry Pi WiFi edge bridge ✅ (ES-EDGE-01)
 - WireGuard VPN
-- VLAN segmentation
-- Internal lab networks
+- Additional VLAN segmentation
+- Internal lab networks ✅ (`10.10.10.0/24`)
 
 ## Security
 
@@ -125,7 +145,17 @@ This page is the **canonical landing page** for the homelab section and will lin
 
 # Current Progress
 
-**Overall Progress: 5%** · **Current Milestone: DCP-001** · **Phase: Foundation**
+**Overall Progress: 15%** · **Current Milestone: DCP-002** · **Phase: Networking → Identity**
+
+### Progress indicators
+
+| Capability | Status |
+|------------|--------|
+| WiFi Bridge (ES-EDGE-01) | ✅ Complete |
+| OPNsense (ES-OPNSENSE-01) | ✅ Complete |
+| Internal Networking | ✅ Complete |
+| Infrastructure Foundation | ✅ Complete |
+| Active Directory (ES-DC-01) | 🔄 In Progress |
 
 Completed to date:
 
@@ -135,10 +165,25 @@ Completed to date:
 - Created backup administrator accounts and disabled root GUI login
 - Created enterprise VM pools
 - Established synchronized Lab Progress dashboard
+- Built Raspberry Pi WiFi-to-Ethernet bridge (**ES-EDGE-01**)
+- Installed OPNsense with validated LAN/WAN (**ES-OPNSENSE-01**)
+- Configured Proxmox bridges `vmbr0` / `vmbr1` / `vmbr2`
+- Created Domain Controller VM (**ES-DC-01**) on the internal lab network
+- Uploaded required installation ISOs
 
-Next milestone (**DCP-002**): Golden Templates — Ubuntu, Windows Server, Windows 11.
+Next milestone (**DCP-003**): Identity Baseline — Windows Server + Active Directory on ES-DC-01.
 
 Canonical public tracker: [Lab Progress](/lab-progress). Progress percentages and milestone notes update as each DCP lands. No infrastructure is claimed ahead of documented evidence.
+
+---
+
+# Infrastructure Inventory
+
+| Host | Role | Status |
+|------|------|--------|
+| **ES-EDGE-01** | Ubuntu Server WiFi-to-Ethernet bridge (`192.168.255.104`) providing upstream connectivity without a dedicated Ethernet drop to the Proxmox server | Active |
+| **ES-OPNSENSE-01** | Lab firewall/router — LAN `10.10.10.1/24`, WAN `10.20.20.10/24`, boot on startup | Installed |
+| **ES-DC-01** | Future Active Directory domain controller on `vmbr1` — Windows/AD roles pending | Created |
 
 ---
 
