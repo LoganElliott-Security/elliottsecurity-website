@@ -7,13 +7,13 @@ description: "Public progress tracker for the ElliottSecurity Enterprise Homelab
 slug: lab-status
 pageTitle: "Lab Progress"
 eyebrow: "Now Building"
-overallProgress: 5
-currentMilestone: "DCP-001"
-currentPhase: "Foundation"
-nextObjective: "DCP-002 — Golden Templates (Ubuntu, Windows Server, Windows 11)"
-nextMilestone: "DCP-002"
-currentFocus: "Hardening the Proxmox foundation and preparing golden VM templates for Ubuntu, Windows Server, and Windows 11."
-lastUpdated: 2026-07-19
+overallProgress: 15
+currentMilestone: "DCP-002"
+currentPhase: "Networking"
+nextObjective: "DCP-003 — Identity Baseline (Windows Server + Active Directory on ES-DC-01)"
+nextMilestone: "DCP-003"
+currentFocus: "Active Directory is in progress on ES-DC-01. Networking foundation is online: WiFi edge bridge, OPNsense, Proxmox bridges, and the internal lab network."
+lastUpdated: 2026-07-20
 draft: false
 featured: true
 tags:
@@ -21,60 +21,76 @@ tags:
   - status
   - lab-progress
   - dcp
+progressFlags:
+  - name: "WiFi Bridge"
+    status: "complete"
+  - name: "OPNsense"
+    status: "complete"
+  - name: "Internal Networking"
+    status: "complete"
+  - name: "Infrastructure Foundation"
+    status: "complete"
+  - name: "Active Directory"
+    status: "in-progress"
 timeline:
+  - date: "2026-07-20"
+    label: "DCP-002 — OPNsense, WiFi bridge, Proxmox networking, ES-DC-01"
   - date: "2026-07-19"
     label: "DCP-001 completed — Proxmox foundation"
   - date: "TBD"
-    label: "DCP-002 — Golden templates"
+    label: "DCP-003 — Identity baseline (AD on ES-DC-01)"
   - date: "TBD"
-    label: "DCP-003 — Core networking and segmentation"
+    label: "DCP-004 — Golden templates"
 completedMilestones:
   - id: DCP-001
     title: "Proxmox Foundation"
     summary: "Installed and hardened Proxmox VE, created backup administrator accounts, disabled root GUI login, and established enterprise VM pools."
     completed: "2026-07-19"
-upcomingMilestones:
   - id: DCP-002
+    title: "Networking & Edge Foundation"
+    summary: "Built ES-EDGE-01 WiFi bridge, installed OPNsense with validated WAN/LAN, configured Proxmox bridges, uploaded ISOs, and created ES-DC-01."
+    completed: "2026-07-20"
+upcomingMilestones:
+  - id: DCP-003
+    title: "Identity Baseline"
+    summary: "Install Windows Server and Active Directory roles on ES-DC-01."
+  - id: DCP-004
     title: "Golden Templates"
     summary: "Build reusable Ubuntu, Windows Server, and Windows 11 templates."
-  - id: DCP-003
-    title: "Core Networking"
-    summary: "Deploy OPNsense, VLAN segmentation, and lab routing foundations."
-  - id: DCP-004
-    title: "Identity Baseline"
-    summary: "Stand up Active Directory and privileged access patterns."
   - id: DCP-005
     title: "Telemetry Platform"
     summary: "Deploy Elastic Security / log pipeline for detection engineering."
 roadmap:
   - phase: "Foundation"
     status: "in-progress"
-    progress: 60
+    progress: 85
     items:
       - "Proxmox VE host install and hardening"
       - "Enterprise VM pool structure"
-      - "Golden OS templates"
+      - "ISO library uploaded"
+      - "Golden OS templates (remaining)"
   - phase: "Infrastructure"
-    status: "planned"
-    progress: 0
+    status: "in-progress"
+    progress: 25
     items:
-      - "Storage and backup jobs"
-      - "Core infrastructure VMs"
-      - "Container host baseline"
+      - "Infrastructure inventory established"
+      - "ES-DC-01 VM created"
+      - "Windows / AD install pending"
   - phase: "Networking"
-    status: "planned"
-    progress: 0
+    status: "in-progress"
+    progress: 45
     items:
-      - "OPNsense edge firewall"
-      - "VLAN segmentation"
-      - "WireGuard remote access"
+      - "ES-EDGE-01 WiFi bridge"
+      - "OPNsense LAN/WAN online"
+      - "Proxmox vmbr0 / vmbr1 / vmbr2"
+      - "WireGuard and extra VLANs (remaining)"
   - phase: "Security"
-    status: "planned"
-    progress: 0
+    status: "in-progress"
+    progress: 10
     items:
-      - "Active Directory"
+      - "OPNsense security boundary"
+      - "Active Directory in progress"
       - "Endpoint baselines"
-      - "Privileged access model"
   - phase: "Monitoring"
     status: "planned"
     progress: 0
@@ -94,17 +110,21 @@ roadmap:
       - "Hunt hypotheses and case studies"
   - phase: "Automation"
     status: "planned"
-    progress: 0
+    progress: 5
     items:
+      - "Status sync automation"
       - "Infrastructure-as-code patterns"
-      - "Repeatable provisioning"
   - phase: "Portfolio"
-    status: "planned"
-    progress: 0
+    status: "in-progress"
+    progress: 25
     items:
-      - "Public writeups and diagrams"
-      - "Website Lab Progress sync"
+      - "Lab Progress sync"
+      - "Public infrastructure inventory"
+      - "Screenshots and diagram assets"
 recentChanges:
+  - date: "2026-07-20"
+    title: "DCP-002 — Networking & edge foundation"
+    detail: "Installed OPNsense, built Raspberry Pi WiFi bridge, configured Proxmox networking bridges, created Domain Controller VM, uploaded ISOs."
   - date: "2026-07-19"
     title: "DCP-001 — Proxmox foundation complete"
     detail: "Proxmox VE installed, packages updated, host hardening applied, backup admin accounts created, root GUI login disabled, VM pools created."
@@ -112,83 +132,113 @@ recentChanges:
     title: "Lab Status Dashboard established"
     detail: "KnowledgeOS Status/LAB_STATUS.md created as engineering source of truth with synchronized public Lab Progress page on ElliottSecurity."
 recentlyCompleted:
-  - "Installed Proxmox VE"
-  - "Updated repositories and packages"
-  - "Initial host hardening"
-  - "Backup Linux / PAM / PVE administrator accounts"
-  - "Disabled root login through the Proxmox Web GUI"
-  - "Created enterprise VM pools"
-architectureOverview: "Planned Version 1 stack: Proxmox VE hypervisor; OPNsense firewall with VLAN segmentation and WireGuard; Active Directory for identity; Elastic Security for telemetry and detection; Docker for supporting services; TrueNAS for storage/backups. Current live state is foundation-only — Proxmox host and pool structure. Remaining layers land in subsequent DCP milestones."
-screenshotsPlaceholder: "Screenshots from DCP-001 (Proxmox dashboard, pool layout, hardening evidence) will be added here."
-architectureDiagramPlaceholder: "Architecture diagram placeholder — export from KnowledgeOS ARCHITECTURE.md / Excalidraw when Version 1 topology is validated."
+  - "Installed OPNsense (ES-OPNSENSE-01)"
+  - "Built Raspberry Pi WiFi bridge (ES-EDGE-01)"
+  - "Configured Proxmox networking (vmbr0 / vmbr1 / vmbr2)"
+  - "Created Domain Controller VM (ES-DC-01)"
+  - "Created internal lab network 10.10.10.0/24"
+  - "Uploaded required VM ISO images"
+infrastructureInventory:
+  - name: "ES-EDGE-01"
+    role: "WiFi-to-Ethernet edge bridge"
+    status: "Active"
+    detail: "Ubuntu Server Raspberry Pi at 192.168.255.104 providing upstream WiFi connectivity so Proxmox/lab can operate without a dedicated Ethernet drop."
+  - name: "ES-OPNSENSE-01"
+    role: "Lab firewall and router"
+    status: "Installed"
+    detail: "Network pool VM with boot on startup. LAN 10.10.10.1/24, WAN 10.20.20.10/24. Connectivity validated to 10.20.20.2, 1.1.1.1, and google.com."
+  - name: "ES-DC-01"
+    role: "Future Active Directory domain controller"
+    status: "Created"
+    detail: "Infrastructure pool VM attached to vmbr1. Windows install and AD / DNS / DHCP / Group Policy / Certificate Services are still pending."
+architectureOverview: "Live path: Internet → Home Router → ES-EDGE-01 (WiFi bridge) → Proxmox Host → vmbr0 management (192.168.1.0/24), vmbr1 internal lab (10.10.10.0/24), vmbr2 nic1 expansion. ES-OPNSENSE-01 routes LAN 10.10.10.1 and WAN transit 10.20.20.10. ES-DC-01 sits on vmbr1 awaiting Windows/AD installation."
+screenshotsPlaceholder: "Screenshots pending for OPNsense interfaces, Proxmox bridges, ES-EDGE-01, and ES-DC-01 hardware view."
+architectureDiagramPlaceholder: "Architecture diagram placeholder — live Mermaid topology is published below; static export assets TBD."
 ---
 
 # Enterprise Homelab Progress
 
-The ElliottSecurity Enterprise Homelab is a production-inspired cybersecurity lab built on Proxmox VE. Version 1 focuses on segmented networks, identity, telemetry, detection engineering, threat hunting, and incident response workflows. Foundation work (DCP-001) is complete: Proxmox is installed, repositories and packages are current, host hardening and backup admin accounts are in place, root GUI login is disabled, and enterprise VM pools are created. Next up is golden template engineering under DCP-002.
+The ElliottSecurity Enterprise Homelab is a production-inspired cybersecurity lab on Proxmox VE. DCP-001 delivered the hardened hypervisor foundation. DCP-002 delivered networking and edge foundation: Raspberry Pi WiFi bridge (ES-EDGE-01), OPNsense firewall/router (ES-OPNSENSE-01), Proxmox management and lab bridges, uploaded installation ISOs, and the Domain Controller VM shell (ES-DC-01). Active Directory installation is the current in-progress work.
 
 ## Current Focus
 
-Hardening the Proxmox foundation and preparing golden VM templates for Ubuntu, Windows Server, and Windows 11.
+Active Directory is in progress on ES-DC-01. Networking foundation is online: WiFi edge bridge, OPNsense, Proxmox bridges, and the internal lab network.
+
+## Progress Indicators
+
+- **WiFi Bridge** — complete
+- **OPNsense** — complete
+- **Internal Networking** — complete
+- **Infrastructure Foundation** — complete
+- **Active Directory** — in progress
 
 ## Timeline
 
+- **2026-07-20** — DCP-002 — OPNsense, WiFi bridge, Proxmox networking, ES-DC-01
 - **2026-07-19** — DCP-001 completed — Proxmox foundation
-- **TBD** — DCP-002 — Golden templates
-- **TBD** — DCP-003 — Core networking and segmentation
+- **TBD** — DCP-003 — Identity baseline (AD on ES-DC-01)
+- **TBD** — DCP-004 — Golden templates
 
 ## Completed Milestones
 
 - **DCP-001 — Proxmox Foundation** (2026-07-19): Installed and hardened Proxmox VE, created backup administrator accounts, disabled root GUI login, and established enterprise VM pools.
+- **DCP-002 — Networking & Edge Foundation** (2026-07-20): Built ES-EDGE-01 WiFi bridge, installed OPNsense with validated WAN/LAN, configured Proxmox bridges, uploaded ISOs, and created ES-DC-01.
 
 ## Upcoming Milestones
 
-- **DCP-002 — Golden Templates**: Build reusable Ubuntu, Windows Server, and Windows 11 templates.
-- **DCP-003 — Core Networking**: Deploy OPNsense, VLAN segmentation, and lab routing foundations.
-- **DCP-004 — Identity Baseline**: Stand up Active Directory and privileged access patterns.
+- **DCP-003 — Identity Baseline**: Install Windows Server and Active Directory roles on ES-DC-01.
+- **DCP-004 — Golden Templates**: Build reusable Ubuntu, Windows Server, and Windows 11 templates.
 - **DCP-005 — Telemetry Platform**: Deploy Elastic Security / log pipeline for detection engineering.
+
+## Infrastructure Inventory
+
+- **ES-EDGE-01** (Active): Ubuntu Server Raspberry Pi at 192.168.255.104 providing upstream WiFi connectivity so Proxmox/lab can operate without a dedicated Ethernet drop.
+- **ES-OPNSENSE-01** (Installed): Network pool VM with boot on startup. LAN 10.10.10.1/24, WAN 10.20.20.10/24. Connectivity validated to 10.20.20.2, 1.1.1.1, and google.com.
+- **ES-DC-01** (Created): Infrastructure pool VM attached to vmbr1. Windows install and AD / DNS / DHCP / Group Policy / Certificate Services are still pending.
 
 ## Architecture Overview
 
-Planned Version 1 stack: Proxmox VE hypervisor; OPNsense firewall with VLAN segmentation and WireGuard; Active Directory for identity; Elastic Security for telemetry and detection; Docker for supporting services; TrueNAS for storage/backups. Current live state is foundation-only — Proxmox host and pool structure. Remaining layers land in subsequent DCP milestones.
+Live path: Internet → Home Router → ES-EDGE-01 (WiFi bridge) → Proxmox Host → vmbr0 management (192.168.1.0/24), vmbr1 internal lab (10.10.10.0/24), vmbr2 nic1 expansion. ES-OPNSENSE-01 routes LAN 10.10.10.1 and WAN transit 10.20.20.10. ES-DC-01 sits on vmbr1 awaiting Windows/AD installation.
 
 ## Roadmap
 
 ### Foundation
 
 - **Status:** in-progress
-- **Progress:** 60%
+- **Progress:** 85%
 
   - Proxmox VE host install and hardening
   - Enterprise VM pool structure
-  - Golden OS templates
+  - ISO library uploaded
+  - Golden OS templates (remaining)
 
 ### Infrastructure
 
-- **Status:** planned
-- **Progress:** 0%
+- **Status:** in-progress
+- **Progress:** 25%
 
-  - Storage and backup jobs
-  - Core infrastructure VMs
-  - Container host baseline
+  - Infrastructure inventory established
+  - ES-DC-01 VM created
+  - Windows / AD install pending
 
 ### Networking
 
-- **Status:** planned
-- **Progress:** 0%
+- **Status:** in-progress
+- **Progress:** 45%
 
-  - OPNsense edge firewall
-  - VLAN segmentation
-  - WireGuard remote access
+  - ES-EDGE-01 WiFi bridge
+  - OPNsense LAN/WAN online
+  - Proxmox vmbr0 / vmbr1 / vmbr2
+  - WireGuard and extra VLANs (remaining)
 
 ### Security
 
-- **Status:** planned
-- **Progress:** 0%
+- **Status:** in-progress
+- **Progress:** 10%
 
-  - Active Directory
+  - OPNsense security boundary
+  - Active Directory in progress
   - Endpoint baselines
-  - Privileged access model
 
 ### Monitoring
 
@@ -216,54 +266,53 @@ Planned Version 1 stack: Proxmox VE hypervisor; OPNsense firewall with VLAN segm
 ### Automation
 
 - **Status:** planned
-- **Progress:** 0%
+- **Progress:** 5%
 
+  - Status sync automation
   - Infrastructure-as-code patterns
-  - Repeatable provisioning
 
 ### Portfolio
 
-- **Status:** planned
-- **Progress:** 0%
+- **Status:** in-progress
+- **Progress:** 25%
 
-  - Public writeups and diagrams
-  - Website Lab Progress sync
+  - Lab Progress sync
+  - Public infrastructure inventory
+  - Screenshots and diagram assets
 
 ## Recent Changes
 
+- **2026-07-20 — DCP-002 — Networking & edge foundation**: Installed OPNsense, built Raspberry Pi WiFi bridge, configured Proxmox networking bridges, created Domain Controller VM, uploaded ISOs.
 - **2026-07-19 — DCP-001 — Proxmox foundation complete**: Proxmox VE installed, packages updated, host hardening applied, backup admin accounts created, root GUI login disabled, VM pools created.
 - **2026-07-19 — Lab Status Dashboard established**: KnowledgeOS Status/LAB_STATUS.md created as engineering source of truth with synchronized public Lab Progress page on ElliottSecurity.
 
 ## Recently Completed
 
-- Installed Proxmox VE
-- Updated repositories and packages
-- Initial host hardening
-- Backup Linux / PAM / PVE administrator accounts
-- Disabled root login through the Proxmox Web GUI
-- Created enterprise VM pools
+- Installed OPNsense (ES-OPNSENSE-01)
+- Built Raspberry Pi WiFi bridge (ES-EDGE-01)
+- Configured Proxmox networking (vmbr0 / vmbr1 / vmbr2)
+- Created Domain Controller VM (ES-DC-01)
+- Created internal lab network 10.10.10.0/24
+- Uploaded required VM ISO images
 
 ## Screenshots Placeholder
 
-> Screenshots from DCP-001 (Proxmox dashboard, pool layout, hardening evidence) will be added here.
+> Screenshots pending for OPNsense interfaces, Proxmox bridges, ES-EDGE-01, and ES-DC-01 hardware view.
 
 ## Architecture Diagram Placeholder
 
-> Architecture diagram placeholder — export from KnowledgeOS ARCHITECTURE.md / Excalidraw when Version 1 topology is validated.
+> Architecture diagram placeholder — live Mermaid topology is published below; static export assets TBD.
 
 ## Mermaid Diagram Placeholder
 
 ```mermaid
 flowchart TB
-  Internet((Internet)) --> CF[Cloudflare]
-  CF --> OPN[OPNsense]
-  WG[WireGuard] --> OPN
-  OPN --> PX[Proxmox VE]
-  PX --> Pools[VM Pools]
-  Pools --> Infra[Infrastructure]
-  Pools --> Sec[Security]
-  Pools --> Mon[Monitoring]
-  Pools --> Ana[Analysis]
-  Pools --> Dev[Development]
-  Pools --> Lab[Lab]
+  Internet((Internet)) --> HomeRouter[Home Router]
+  HomeRouter --> EDGE["ES-EDGE-01<br/>192.168.255.104<br/>WiFi Bridge"]
+  EDGE --> PX[Proxmox Host]
+  PX --> VMBR0["vmbr0 Mgmt 192.168.1.0/24"]
+  PX --> VMBR1["vmbr1 Lab 10.10.10.0/24"]
+  PX --> VMBR2["vmbr2 nic1 expansion"]
+  VMBR1 --> OPN["ES-OPNSENSE-01<br/>LAN 10.10.10.1<br/>WAN 10.20.20.10"]
+  VMBR1 --> DC["ES-DC-01<br/>Future AD"]
 ```

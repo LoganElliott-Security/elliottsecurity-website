@@ -1,0 +1,98 @@
+---
+interface InventoryItem {
+	name: string;
+	role: string;
+	status: string;
+	detail: string;
+}
+
+interface Props {
+	items: InventoryItem[];
+}
+
+const { items } = Astro.props;
+---
+
+{
+	items.length > 0 && (
+		<section class="infra-inventory" aria-labelledby="infra-inventory">
+			<h2 id="infra-inventory" class="infra-inventory__title">
+				Infrastructure Inventory
+			</h2>
+			<ul class="infra-inventory__list" role="list">
+				{items.map((item) => (
+					<li class="infra-inventory__item">
+						<div class="infra-inventory__header">
+							<h3 class="infra-inventory__name">{item.name}</h3>
+							<span class="infra-inventory__status">{item.status}</span>
+						</div>
+						<p class="infra-inventory__role">{item.role}</p>
+						<p class="infra-inventory__detail">{item.detail}</p>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}
+
+<style>
+	.infra-inventory__title {
+		margin: 0 0 var(--space-5);
+		font-size: var(--font-size-h3);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+	}
+
+	.infra-inventory__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: var(--space-4);
+	}
+
+	.infra-inventory__item {
+		padding: var(--space-5);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		background: var(--color-surface);
+	}
+
+	.infra-inventory__header {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--space-3);
+		align-items: baseline;
+		margin-bottom: var(--space-2);
+	}
+
+	.infra-inventory__name {
+		margin: 0;
+		font-size: var(--font-size-body-lg);
+		font-weight: var(--font-weight-semibold);
+		color: var(--color-text);
+		font-family: var(--font-mono, ui-monospace, monospace);
+	}
+
+	.infra-inventory__status {
+		font-size: var(--font-size-caption);
+		letter-spacing: var(--letter-spacing-wide);
+		text-transform: uppercase;
+		color: var(--color-accent);
+		white-space: nowrap;
+	}
+
+	.infra-inventory__role {
+		margin: 0 0 var(--space-3);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-text-secondary);
+	}
+
+	.infra-inventory__detail {
+		margin: 0;
+		font-size: var(--font-size-small);
+		line-height: 1.65;
+		color: var(--color-text-muted);
+	}
+</style>

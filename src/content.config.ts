@@ -255,6 +255,24 @@ const status = defineCollection({
 			)
 			.default([]),
 		recentlyCompleted: z.array(z.string()).default([]),
+		progressFlags: z
+			.array(
+				z.object({
+					name: z.string(),
+					status: z.enum(['complete', 'in-progress', 'planned']),
+				}),
+			)
+			.default([]),
+		infrastructureInventory: z
+			.array(
+				z.object({
+					name: z.string(),
+					role: z.string(),
+					status: z.string(),
+					detail: z.string(),
+				}),
+			)
+			.default([]),
 		architectureOverview: z.string(),
 		screenshotsPlaceholder: z.string(),
 		architectureDiagramPlaceholder: z.string(),
